@@ -14,9 +14,8 @@
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href=" <?= media(); ?>/css/main.css">
     <link rel="stylesheet" type="text/css" href=" <?= media(); ?>/css/style.css">
-    <!-- Font-icon css-->
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
+
   <body class="app sidebar-mini">
     <!-- Navbar-->
     <header class="app-header"><a class="app-header__logo" href="<?= base_url(); ?>/dashboard">Tienda Virtual</a>
