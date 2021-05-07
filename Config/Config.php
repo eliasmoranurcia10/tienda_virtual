@@ -8,7 +8,7 @@
     
     //Datos a la conexión de la  base de datos
     const DB_HOST     = "localhost";
-    const DB_NAME     = "tienda";
+    const DB_NAME     = "db_tiendavirtual";
     const DB_USER     = "admin";
     const DB_PASSWORD = "admin";
     const DB_CHARSET  = "charset=utf8"; 
