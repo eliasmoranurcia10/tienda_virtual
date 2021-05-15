@@ -41,6 +41,11 @@
             echo json_encode($arrData,JSON_UNESCAPED_UNICODE); // Forzarlo a que se convierta e un objeto
             die(); //Finalizar el proceso
         }
+
+        public function setRol()
+        {
+            dep($_POST);
+        }
     }
 
 ?>
