@@ -44,7 +44,28 @@
 
         public function setRol()
         {
-            dep($_POST);
+            //Limpiar toda la cadena para dejar data pura, esta función es creada en los Helpers
+            $strRol         = strClean($_POST['txtNombre']);
+            $strDescripcion = strClean($_POST['txtDescripcion']);
+            $intStatus      = intval($_POST['listStatus']);
+
+            //Enviar la información al modelo
+            $request_rol = $this->model->insertRol($strRol,$strDescripcion,$intStatus);
+
+            //Evaluar si ya se insertó el registro
+            if($request_rol > 0) {
+                $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
+
+            } else if($request_rol == 'exist'){
+                $arrResponse = array('status' => false, 'msg' => '¡Atención! El Rol ya existe.');
+            } else {
+                $arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos');
+            }
+            //Retornar el array en formato json
+            echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+            //detener el proceso
+            die();
+
         }
     }
 

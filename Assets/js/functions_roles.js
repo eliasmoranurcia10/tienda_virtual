@@ -56,7 +56,21 @@ document.addEventListener('DOMContentLoaded', function(){
         request.onreadystatechange = function(){
             
             if(request.readyState == 4 && request.status == 200){
-                console.log(request.log);
+                
+                var objData = JSON.parse(request.responseText);
+
+                if(objData.status) {
+
+                    $('#modalFormRol').modal("hide");
+                    //Resetear o limpiar campos
+                    formRol.reset();
+                    swal("Roles de usuario", objData.msg,"success");
+                    tableRoles.api().ajax.reload(function(){
+                        //Insertar funciones
+                    });
+                } else {
+                    swal("Error", objData.msg, "error");
+                }
             }
 
             console.log(request);
