@@ -42,6 +42,29 @@
             die(); //Finalizar el proceso
         }
 
+        public function getRol(int $idrol)
+        {
+            # intval convierte el string en entero, con strClean protege de alguna inyeccióon sql
+            $intIdrol = intval(strClean($idrol));
+
+            if($intIdrol > 0)
+            {
+                $arrData = $this->model->selectRol($intIdrol);
+
+                if(empty($arrData))
+                {
+                    $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados');
+
+                } else {
+                    $arrResponse = array('status' => true, 'data' => $arrData);
+                }
+                #Convertir en un formato json, obtenemos la respuesta en javaScript
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            }
+
+            die();
+        }
+
         public function setRol()
         {
             //Limpiar toda la cadena para dejar data pura, esta función es creada en los Helpers

@@ -1,4 +1,5 @@
 
+
 .app-sidebar__user-avatar {
     width: 50px;
 }
@@ -12,3 +13,10 @@
     background-color: #007bff;
     color: #FFF;
 }
+
+
+.notBlock{
+    display: none;
+}
+
+

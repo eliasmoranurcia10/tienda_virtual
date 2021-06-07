@@ -112,7 +112,49 @@ function fntEditRol(){
             document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
             document.querySelector('#btnText').innerHTML = "Actualizar";
 
-            $('#modalFormRol').modal('show');
+            var idrol      = this.getAttribute("rl");
+            //Validamos si estamos en un navegador
+            var request    = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            var ajaxUrl = base_url + '/Roles/getRol/' + idrol; 
+
+            request.open("GET",ajaxUrl,true);
+            //Envío de la solicitud
+            request.send();
+
+            //Respuesta de la información
+            request.onreadystatechange = function() {
+                
+                if(request.readyState==4 && request.status== 200){
+                    // '''console.log(request.responseText);''' Se utiliza para comprobar los datos en la consola
+
+                    var objData = JSON.parse(request.responseText);
+
+                    if(objData.status)
+                    {
+                        document.querySelector("#idRol").value          = objData.data.idrol;
+                        document.querySelector("#txtNombre").value       = objData.data.nombrerol;
+                        document.querySelector("#txtDescripcion").value = objData.data.descripcion;
+
+                        if(objData.data.status == 1){
+                            var optionSelect = '<option value="1" selected style="display:none;">Activo</option>' ;
+                        } else {
+                            var optionSelect = '<option value="2" selected style="display:none;">Inactivo</option>';
+                        }
+
+                        var htmlSelect = `${optionSelect}
+                                            <option value="1">Activo</option>
+                                            <option value="2">Inactivo</option>
+                                        `;
+
+                        document.querySelector("#listStatus").innerHTML =  htmlSelect;
+                        $('#modalFormRol').modal('show');
+
+                    } else {
+                        swal("Error", objData.msg , "error");
+                    }
+
+                }
+            }
             
         });
     });

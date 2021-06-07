@@ -10,6 +10,7 @@
         $controller = new $controller();
 
         if(method_exists($controller, $method)){
+            //LLama a la función del controlador
             $controller->{$method}($params);
         } else {
             require_once("Controllers/Error.php");
