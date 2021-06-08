@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         //Insertar funciones, para que de nuevo funcionen los botones de editar
                         fntEditRol();
                         fntDelRol();
+                        fntPermisos();
                     });
                 } else {
                     swal("Error", objData.msg, "error");
@@ -103,6 +104,7 @@ function openModal(){
 window.addEventListener('load', function() {
     fntEditRol();
     fntDelRol();
+    fntPermisos();
 }, false);
 
 //EDITAR ROL PARA CADA UNO CUANDO SE HAGA CLICK
@@ -220,6 +222,7 @@ function fntDelRol() {
 
                                         fntEditRol();
                                         fntDelRol();
+                                        fntPermisos();
 
                                     });
                                 } else {
@@ -238,4 +241,24 @@ function fntDelRol() {
 
     });
 }
+
+
+//FUNCIÓN PARA LOS PERMISOS DE LOS ROLES DE USUARIO
+function fntPermisos() {
+
+    var btnPermisosRol = document.querySelectorAll(".btnPermisosRol");
+
+    btnPermisosRol.forEach(function(btnPermisosRol){
+
+        btnPermisosRol.addEventListener('click', function(){
+
+            $('.modalPermisos').modal('show');
+
+        });
+
+    });
+
+}
+
+
 
