@@ -81,6 +81,37 @@
             return $request;
         }
 
+        public function deleteRol(int $idrol)
+        {
+            # code...
+            $this->intIdrol = $idrol;
+            #verificamos si el rol está asociado a un usuario, integridad referencial de los datos
+            $sql        = "SELECT * FROM persona WHERE rolid = $this->intIdrol";
+            $request    = $this->select_all($sql);
+
+            if (empty($request)) 
+            {
+                # code...
+                $sql        = "UPDATE rol SET status = ? WHERE idrol = $this->intIdrol";
+                $arrData    = array(0);
+                $request    = $this->update($sql, $arrData);
+                
+                if ($request) 
+                {
+                    $request = 'ok';
+                } else 
+                {
+                    $request = 'error';
+                }
+                
+
+            } else {
+                $request = 'exist';
+            }
+            
+            return $request;
+        }
+
     }
 
 ?>

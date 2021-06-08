@@ -3,6 +3,7 @@ var tableRoles;
 
 document.addEventListener('DOMContentLoaded', function(){
 
+    //Se cargan las tablas
 	tableRoles = $('#tableRoles').dataTable( {
 		"aProcessing":true,
 		"aServerSide":true,
@@ -69,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     tableRoles.api().ajax.reload(function(){
                         //Insertar funciones, para que de nuevo funcionen los botones de editar
                         fntEditRol();
+                        fntDelRol();
                     });
                 } else {
                     swal("Error", objData.msg, "error");
@@ -100,6 +102,7 @@ function openModal(){
 //Se a agregar el evento load cuando se cargue todo el documento
 window.addEventListener('load', function() {
     fntEditRol();
+    fntDelRol();
 }, false);
 
 //EDITAR ROL PARA CADA UNO CUANDO SE HAGA CLICK
@@ -114,6 +117,7 @@ function fntEditRol(){
             document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
             document.querySelector('#btnText').innerHTML = "Actualizar";
 
+            //Busca el identificador
             var idrol      = this.getAttribute("rl");
             //Validamos si estamos en un navegador
             var request    = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -159,6 +163,79 @@ function fntEditRol(){
             }
             
         });
+    });
+}
+
+//FUNCION PARA ELIMINAR ROL
+function fntDelRol() {
+    //Dirigiendonos a todas las clases que lleven btnDelRol
+    var btnDelRol = document.querySelectorAll(".btnDelRol");
+    
+    //Recorrer mediante forEach porque son varios elementos
+    btnDelRol.forEach(function(btnDelRol){
+        //Agregar el evento click
+        btnDelRol.addEventListener('click', function(){
+            var idrol = this.getAttribute("rl");
+
+            swal(
+                {
+                    title: "Eliminar Rol",
+                    text: "¿Realmente quiere eliminar el Rol?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Si, eliminar!",
+                    cancelButtonText: "No, cancelar!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }, function(isConfirm)
+                {
+
+                    if(isConfirm){
+                        //Validamos el navegador - si es firefox o chrome se crea XMLHttpRequest - si es edge o iternet explorer se crea Microsoft.XMLHTTP 
+                        var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                        //Ruta por la cual Llamamos al controlador y a su método delRol
+                        var ajaxUrl  = base_url+'/Roles/delRol';
+                        var strData     = "idrol="+idrol;
+
+                        //Abrimos la conexión
+                        request.open("POST",ajaxUrl, true);
+                        //La forma cómo se van a enviar los datos
+                        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                        //Enviamos la solicitud con el parámetro
+                        request.send(strData);
+
+                        //Recibimos la respuesta
+                        request.onreadystatechange = function(){
+                            //Validamos si la operació fué exitosa
+                            if(request.readyState == 4 && request.status == 200)
+                            {
+                                var objData = JSON.parse(request.responseText);
+
+                                if(objData.status)
+                                {
+                                    //Emitir la alerta
+                                    swal("Eliminar!", objData.msg, "success");
+                                    //Actualizamos para que se recargue la tabla y sus funciones
+                                    tableRoles.api().ajax.reload(function(){
+
+                                        fntEditRol();
+                                        fntDelRol();
+
+                                    });
+                                } else {
+                                    swal("Atención!", objData.msg , "error");
+                                }
+                            }
+
+                        }
+                    }
+                    
+                }
+
+            );
+            
+        });
+
     });
 }
 
