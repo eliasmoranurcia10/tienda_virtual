@@ -32,9 +32,10 @@ document.addEventListener('DOMContentLoaded', function(){
     formRol.onsubmit = function(e){         //al momento de que se envíe la información, lo que hace es que se ejecuta la función
         e.preventDefault();                 //prevenir a que se recarge la página
 
-        var strNombre      = document.querySelector('#txtNombre').value;
-        var strDescripcion = document.querySelector('#txtDescripcion').value;
-        var intStatus      = document.querySelector('#listStatus').value;
+        var intIdRol        = document.querySelector('#idRol').value;
+        var strNombre       = document.querySelector('#txtNombre').value;
+        var strDescripcion  = document.querySelector('#txtDescripcion').value;
+        var intStatus       = document.querySelector('#listStatus').value;
 
         //Verifica si los labels no están vacíos
         if(strNombre=='' || strDescripcion=='' || intStatus=='')
@@ -66,7 +67,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     formRol.reset();
                     swal("Roles de usuario", objData.msg,"success");
                     tableRoles.api().ajax.reload(function(){
-                        //Insertar funciones
+                        //Insertar funciones, para que de nuevo funcionen los botones de editar
+                        fntEditRol();
                     });
                 } else {
                     swal("Error", objData.msg, "error");
