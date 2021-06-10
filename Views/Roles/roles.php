@@ -3,6 +3,8 @@
   getModal("modalRoles",$data);
 ?>
 
+    <div id="contentAjax"></div>
+
     <main class="app-content">
       <div class="app-title">
         <div>

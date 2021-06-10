@@ -262,9 +262,12 @@ function fntPermisos() {
             //Validación
             request.onreadystatechange = function(){
 
-                if(request.status == 200) {
+                if(request.readyState == 4 && request.status == 200) {
 
                     console.log(request.responseText);
+                    //Se hace referencia al html que se obtiene en el controlador Permisos.php
+                    document.querySelector('#contentAjax').innerHTML = request.responseText;
+
                     $('.modalPermisos').modal('show');
 
                 }
