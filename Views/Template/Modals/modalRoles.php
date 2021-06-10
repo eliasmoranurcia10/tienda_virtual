@@ -1,4 +1,4 @@
-<!-- Modal -->
+<!-- Modal de formulario para crear rol o actualizar rol-->
 <div class="modal fade" id="modalFormRol" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -52,6 +52,7 @@
   </div>
 </div>
 
+<!-- Modal para los módulos de permisos de los usuarios-->
 
 <div class="modal fade modalPermisos" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
