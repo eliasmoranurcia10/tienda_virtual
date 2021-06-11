@@ -295,6 +295,23 @@ function fntSavePermisos(evnet) {
     //Abriendo la conexión
     request.open("POST", ajaxUrl, true);
     request.send(formData);
+
+    //Script de validación
+    request.onreadystatechange = function(){
+        //quiere decir que si se hizo la petición y si está devolviendo datos
+        if(request.readyState == 4 && request.status == 200){
+
+            var objData = JSON.parse(request.responseText);
+
+            if (objData.status) {
+                swal("Permisos de usuario", objData.msg, "success")
+            } else {
+                swal("Error", objData.msg, "error");
+            }
+
+        }
+
+    }
     
 }
 

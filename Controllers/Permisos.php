@@ -16,16 +16,16 @@
             if($rolid > 0){
 
                 $arrModulos     = $this->model->selectModulos();
-                $arrPemisosRol  = $this->model->selectPermisosRol($rolid);
+                $arrPermisosRol  = $this->model->selectPermisosRol($rolid);
 
                 #CÓDIGO PARA DEPURAR LA LISTA DE MÓDULOS Y LOS PERMISOS DEL ROL
                 #dep($arrModulos);
-                #dep($arrPemisosRol);
+                #dep($arrPremisosRol);
 
                 $arrPermisos    = array('r' => 0, 'w' => 0, 'u' => 0, 'd' => 0);
                 $arrPermisoRol  = array('idrol' => $rolid);
 
-                if (empty($arrPemisosRol)) 
+                if (empty($arrPermisosRol)) 
                 {
                     for ($i=0; $i < count($arrModulos) ; $i++) { 
                         
@@ -35,14 +35,14 @@
                 } else {
                     for ($i=0 ; $i < count($arrModulos) ; $i++ ) 
                     {
-                        $arrPemisosRol = array(
-                            'r' => $arrPemisosRol[$i]['r'],
-                            'w' => $arrPemisosRol[$i]['w'],
-                            'u' => $arrPemisosRol[$i]['u'],
-                            'd' => $arrPermisoRol[$i]['d']
+                        $arrPermisos = array(
+                            'r' => $arrPermisosRol[$i]['r'],
+                            'w' => $arrPermisosRol[$i]['w'],
+                            'u' => $arrPermisosRol[$i]['u'],
+                            'd' => $arrPermisosRol[$i]['d']
                         );
 
-                        if($arrModulos[$i]['idmodulo'] == $arrPemisosRol[$i]['moduloid'])
+                        if($arrModulos[$i]['idmodulo'] == $arrPermisosRol[$i]['moduloid'])
                         {
                             $arrModulos[$i]['permisos'] = $arrPermisos;
                         }
@@ -62,8 +62,41 @@
 
         public function setPermisos()
         {
-            # code...
-            dep($_POST);
+            //dep($_POST);
+            
+            if ($_POST) {
+
+                $intIdrol   = intval($_POST['idrol']);
+                $modulos    = $_POST['modulos'];
+
+                $this->model->deletePermisos($intIdrol);
+
+                foreach ($modulos as $modulo) {
+
+                    $idModulo = $modulo['idmodulo'];
+
+                    $r  = empty($modulo['r']) ? 0 : 1 ;
+                    $w  = empty($modulo['w']) ? 0 : 1 ;
+                    $u  = empty($modulo['u']) ? 0 : 1 ;
+                    $d  = empty($modulo['d']) ? 0 : 1 ;
+
+                    $requestPermiso = $this->model->insertPermisos($intIdrol, $idModulo, $r, $w, $u, $d);
+
+                }
+
+                if ($requestPermiso > 0) {
+
+                    $arrResponse = array('status' => true, 'msg' => 'Permisos asignados correctamente.');
+
+                } else {
+                    
+                    $arrResponse = array('status' => true, 'msg' => 'No es posible asignar los permisos.');
+
+                }
+                //Convertir el archivo en json para ser enviado a function_roles
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+                
+            }
             die();
         }
 
