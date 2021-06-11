@@ -30,6 +30,8 @@
             <div class="tile">
               
               <form action="" id="formPermisos" name="formPermisos">
+                <!-- Guarda el idrol y lo mantiene escondido en el modal-->
+                <input type="hidden" name="idrol" value="<?= $data['idrol']; ?>" required ="" >
 
                 <div class="table-responsive">
 

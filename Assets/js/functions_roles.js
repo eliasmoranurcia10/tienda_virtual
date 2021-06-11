@@ -264,11 +264,13 @@ function fntPermisos() {
 
                 if(request.readyState == 4 && request.status == 200) {
 
-                    console.log(request.responseText);
+                    //console.log(request.responseText);
                     //Se hace referencia al html que se obtiene en el controlador Permisos.php
                     document.querySelector('#contentAjax').innerHTML = request.responseText;
 
                     $('.modalPermisos').modal('show');
+
+                    document.querySelector('#formPermisos').addEventListener('submit',fntSavePermisos, false);
 
                 }
             }
@@ -279,6 +281,21 @@ function fntPermisos() {
 
     });
 
+}
+
+function fntSavePermisos(evnet) {
+    //Evita que se recargue la página al presionar Guardar
+    evnet.preventDefault();
+    //validar el navegador
+    var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    var ajaxUrl     = base_url+'/Permisos/setPermisos';
+    //Seleccionamos los elementos del formulario #formPermisos
+    var formElement = document.querySelector("#formPermisos");
+    var formData    = new FormData(formElement);
+    //Abriendo la conexión
+    request.open("POST", ajaxUrl, true);
+    request.send(formData);
+    
 }
 
 

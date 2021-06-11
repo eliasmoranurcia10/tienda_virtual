@@ -60,6 +60,13 @@
 
         }
 
+        public function setPermisos()
+        {
+            # code...
+            dep($_POST);
+            die();
+        }
+
     }
 
 ?>
