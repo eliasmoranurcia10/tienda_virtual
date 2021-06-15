@@ -18,6 +18,18 @@
 
         }
 
+        public function setUsuario()
+        {
+            if($_POST){
+                //dep($_POST);
+
+                echo $_POST['txtIdentificacion'];
+
+
+            }
+            die();
+        }
+
         
 
     }
