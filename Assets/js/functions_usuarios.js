@@ -1,4 +1,30 @@
 
+window.addEventListener('load', function() {
+    fntRolesUsuarios();
+}, false);
+
+function fntRolesUsuarios() {
+
+    var ajaxUrl = base_url + '/Roles/getSelectRoles';
+    var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); 
+
+    request.open("GET",ajaxUrl, true);
+    request.send();
+
+    request.onreadystatechange = function(){
+
+        if(request.readyState == 4 && request.status == 200){
+
+            document.querySelector('#listRolid').innerHTML  = request.responseText;
+            document.querySelector('#listRolid').value      = 1;
+
+            //Actualizar el select para que se muestren los registros
+            $('#listRolid').selectpicker('render');
+            //$('#listRolid).selectpicker('refresh');
+        }
+
+    }
+}
 
 function openModal(){
     
