@@ -1,4 +1,7 @@
 
+var tableUsuarios;
+
+
 //Indica que al momento de cargar la vista, va a agregar los elementos que se van a configurar dentro de la función
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -15,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function(){
         var strEmail            = document.querySelector('#txtEmail').value;
         var intTelefono         = document.querySelector('#txtTelefono').value;
         var intTipousuario      = document.querySelector('#listRolid').value;
-        // var strPassword         = document.querySelector('#txtPassword').value;
+        var strPassword         = document.querySelector('#txtPassword').value;
 
         if (strIdentificacion == '' || strApellido == '' || strNombre == '' || strEmail == '' || intTelefono == '' || intTipousuario == '') {
 
@@ -31,6 +34,33 @@ document.addEventListener('DOMContentLoaded', function(){
         request.open("POST",ajaxUrl,true);
         request.send(formData);
 
+        //OBTENER LA RESPUESTA DEL CONTROLADOR
+        request.onreadystatechange  = function(){
+
+            if (request.readyState == 4 && request.status == 200) {
+                
+                var objData     = JSON.parse(request.responseText);
+
+                if (objData.status) 
+                {
+                    //Ocultar el modal
+                    $('#modalFormUsuario').modal("hide");
+                    //resetear todos los campos
+                    formUsuario.reset();
+                    //Mostrar la alerta
+                    swal("Usuarios", objData.msg, "success");
+
+                    tableUsuarios.api().ajax.reload(function(){
+
+                    });
+                
+                } else {
+                    swal("Error", objData.msg, "error");
+                }
+
+            }
+
+        }
     }
 
 }, false);
