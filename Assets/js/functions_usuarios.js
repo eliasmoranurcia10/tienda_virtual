@@ -1,9 +1,36 @@
 
 var tableUsuarios;
 
-
 //Indica que al momento de cargar la vista, va a agregar los elementos que se van a configurar dentro de la función
 document.addEventListener('DOMContentLoaded', function(){
+
+    //Se cargan las tablas
+	tableUsuarios = $('#tableUsuarios').dataTable( {
+		"aProcessing":true,
+		"aServerSide":true,
+        "language": {
+        	"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+        },
+        "ajax":{
+            "url": " "+base_url+"/Usuarios/getUsuarios",
+            "dataSrc":""
+        },
+        "columns":[
+            {"data":"idpersona"},
+            {"data":"nombres"},
+            {"data":"apellidos"},
+            {"data":"email_user"},
+            {"data":"telefono"},
+            {"data":"nombrerol"},
+            {"data":"status"},
+            {"data":"options"}
+        ],
+        "resonsieve":"true",
+        "bDestroy": true,
+        "iDisplayLength": 10,
+        "order":[[0,"desc"]]  
+    });
+
 
     var formUsuario = document.querySelector("#formUsuario");
 
@@ -70,6 +97,7 @@ window.addEventListener('load', function() {
     fntRolesUsuarios();
 }, false);
 
+//Carga los roles en el select para ser seleccuonados en el modal
 function fntRolesUsuarios() {
 
     var ajaxUrl = base_url + '/Roles/getSelectRoles';

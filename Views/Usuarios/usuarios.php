@@ -29,25 +29,15 @@
                         <th>ID</th>
                         <th>Nombres</th>
                         <th>Apellidos</th>
-                        <th>Email</th>
+                        <th>E-mail</th>
                         <th>Teléfono</th>
                         <th>Rol</th>
                         <th>Status</th>
-                        <th>Acciones</th>
+                        <th>Opciones</th>
                       </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Carlos</td>
-                            <td>Moran</td>
-                            <td>carlos@gmail.com</td>
-                            <td>87675654</td>
-                            <td>Admin</td>
-                            <td>Activo</td>
-                            <td>Ver</td>
-                        </tr>
-                        
+                    
                     </tbody>
                   </table>
                 </div>
