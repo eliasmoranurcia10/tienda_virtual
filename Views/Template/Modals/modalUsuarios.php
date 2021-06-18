@@ -1,3 +1,4 @@
+
 <!-- Modal de formulario para crear usuario o actualizar usuario-->
 <div class="modal fade" id="modalFormUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" >
@@ -96,6 +97,72 @@
                 </form>
 
             </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal para visualizar a cada usuario-->
+<div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+
+
+            <div class="modal-header header-primary">
+                <h5 class="modal-title" id="titleModal">Datos del Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div class="modal-body">
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Identificación:</td>
+                            <td id="celIdentificacion">75492652</td>
+                        </tr>
+                        <tr>
+                            <td>Nombres:</td>
+                            <td id="celNombre">Elias</td>
+                        </tr>
+                        <tr>
+                            <td>Apellidos:</td>
+                            <td id="celApellido">Moran</td>
+                        </tr>
+                        <tr>
+                            <td>Teléfono:</td>
+                            <td id="celTelefono">933212236</td>
+                        </tr>
+                        <tr>
+                            <td>Email (Usuario):</td>
+                            <td id="celEmail">yoexer@gmail.com</td>
+                        </tr>
+                        <tr>
+                            <td>Tipo Usuario:</td>
+                            <td id="celTipoUsuario">Jefe</td>
+                        </tr>
+                        <tr>
+                            <td>Estado:</td>
+                            <td id="celEstado">Activo</td>
+                        </tr>
+                        <tr>
+                            <td>Fecha de Registro:</td>
+                            <td id="celFechaRegistro">10/08/1998</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+
         </div>
     </div>
 </div>

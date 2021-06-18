@@ -99,6 +99,13 @@
             die(); //Finalizar el proceso
         }
 
+        public function getUsuario(int $idpersona)
+        {
+            # code...
+            echo $idpersona;
+            die();
+        }
+
     }
 
 ?>

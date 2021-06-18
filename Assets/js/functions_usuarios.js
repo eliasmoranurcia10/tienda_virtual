@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     swal("Usuarios", objData.msg, "success");
 
                     tableUsuarios.api().ajax.reload(function(){
-
+                        fntViewUsuario();
                     });
                 
                 } else {
@@ -95,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 window.addEventListener('load', function() {
     fntRolesUsuarios();
+    fntViewUsuario();
 }, false);
 
 //Carga los roles en el select para ser seleccuonados en el modal
@@ -119,6 +120,32 @@ function fntRolesUsuarios() {
         }
 
     }
+}
+
+//FUNCIÓN PARA VISUALIZAR A LOS USUARIOS
+function fntViewUsuario(){
+
+    var btnViewUsuario  = document.querySelectorAll(".btnViewUsuario");
+    //Recorrer todos los elemntos 
+    btnViewUsuario.forEach(function(btnViewUsuario){
+
+        //AGREGAR EL EVENTO
+        btnViewUsuario.addEventListener('click', function(){
+
+            var idpersona = this.getAttribute("us");
+
+            var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            var ajaxUrl     = base_url + '/Usuarios/getUsuario/'+idpersona;
+
+            request.open("GET",ajaxUrl,true);
+            request.send();
+
+            $('#modalViewUser').modal('show');
+
+        });
+
+    });
+
 }
 
 function openModal(){

@@ -1,10 +1,15 @@
 
 
+
+
 .app-sidebar__user-avatar {
     width: 50px;
 }
 
-.headerRegister{
+
+
+
+.headerRegister, .header-primary {
     background-color: #009688;
     color: #FFF;
 }
