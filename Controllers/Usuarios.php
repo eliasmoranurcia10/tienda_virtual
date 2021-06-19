@@ -22,7 +22,6 @@
         {
             //Validar si se ha realizado una petición vía POST
             if($_POST){
-                //dep($_POST);
 
                 if ( empty($_POST['txtIdentificacion']) || empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono']) || empty($_POST['txtEmail']) || empty($_POST['listRolid']) || empty($_POST['listStatus']) ) {
 
@@ -30,6 +29,7 @@
 
                 } else {
 
+                    $idUsuario          = intval($_POST['idUsuario']);
                     $strIdentificacion  = strClean($_POST['txtIdentificacion']);
                     $strNombre          = ucwords( strClean($_POST['txtNombre']) );
                     $strApellido        = ucwords( strClean($_POST['txtApellido']) );
@@ -38,23 +38,53 @@
                     $intTipoId          = intval(strClean($_POST['listRolid']));
                     $intStatus          = intval(strClean($_POST['listStatus']));
 
-                    //hash tiene la función de encriptar la contraseña
-                    $strPassword        = empty( $_POST['txtPassword'] ) ? hash("SHA256", passGenerator() ) : hash("SHA256", $_POST['txtPassword']);
+                    if($idUsuario == 0)
+                    {
+                        $option     = 1;
 
-                    $request_user       = $this->model->insertUsuario(
-                        $strIdentificacion,
-                        $strNombre,
-                        $strApellido,
-                        $intTelefono,
-                        $strEmail,
-                        $strPassword,
-                        $intTipoId,
-                        $intStatus
-                    );
+                        //hash tiene la función de encriptar la contraseña
+                        $strPassword        = empty( $_POST['txtPassword'] ) ? hash("SHA256", passGenerator() ) : hash("SHA256", $_POST['txtPassword']);
+
+                        $request_user       = $this->model->insertUsuario(
+                            $strIdentificacion,
+                            $strNombre,
+                            $strApellido,
+                            $intTelefono,
+                            $strEmail,
+                            $strPassword,
+                            $intTipoId,
+                            $intStatus
+                        );
+
+                    } else {
+
+                        $option     = 2;
+
+                        $strPassword        = empty( $_POST['txtPassword'] ) ? "" : hash("SHA256", $_POST['txtPassword']);
+
+                        $request_user       = $this->model->updateUsuario(
+                            $idUsuario,
+                            $strIdentificacion,
+                            $strNombre,
+                            $strApellido,
+                            $intTelefono,
+                            $strEmail,
+                            $strPassword,
+                            $intTipoId,
+                            $intStatus
+                        );
+
+                    }
+
+                    
 
                     if( $request_user > 0)
                     {
-                        $arrResponse    = array('status' => true , 'msg' => 'Datos guardados correctamente.');
+                        if($option == 1 ){
+                            $arrResponse    = array('status' => true , 'msg' => 'Datos guardados correctamente.');
+                        } else {
+                            $arrResponse    = array('status' => true , 'msg' => 'Datos Actualizados correctamente.');
+                        }
                         
                     } else if( $request_user == 'exist' )
                     {
