@@ -146,6 +146,17 @@
 
             return $request;
         }
+
+        public function deleteUsuario(int $intIdPersona)
+        {
+            $this->intIdUsuario     = $intIdPersona;
+
+            $sql        = "UPDATE persona SET status = ? WHERE idpersona = $this->intIdUsuario ";
+            $arrData    = array(0);
+            $request    = $this->update($sql,$arrData);
+
+            return $request;
+        }
     }
 
 ?>

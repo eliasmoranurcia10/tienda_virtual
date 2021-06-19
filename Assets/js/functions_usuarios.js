@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     tableUsuarios.api().ajax.reload(function(){
                         fntViewUsuario();
                         fntEditUsuario();
+                        fntDelUsuario();
                     });
                 
                 } else {
@@ -98,6 +99,7 @@ window.addEventListener('load', function() {
     fntRolesUsuarios();
     fntViewUsuario();
     fntEditUsuario();
+    fntDelUsuario();
 }, false);
 
 //Carga los roles en el select para ser seleccuonados en el modal
@@ -242,6 +244,81 @@ function fntEditUsuario(){
 
 }
 
+//FUNCION PARA ELIMINAR USUARIO
+function fntDelUsuario() {
+    //Dirigiendonos a todas las clases que lleven btnDelUsuario
+    var btnDelUsuario = document.querySelectorAll(".btnDelUsuario");
+    
+    //Recorrer mediante forEach porque son varios elementos
+    btnDelUsuario.forEach(function(btnDelUsuario){
+        //Agregar el evento click
+        btnDelUsuario.addEventListener('click', function(){
+            var idUsuario = this.getAttribute("us");
+
+            swal(
+                {
+                    title: "Eliminar Usuario",
+                    text: "¿Realmente quiere eliminar el Usuario?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Si, eliminar!",
+                    cancelButtonText: "No, cancelar!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                }, function(isConfirm)
+                {
+
+                    if(isConfirm){
+                        //Validamos el navegador - si es firefox o chrome se crea XMLHttpRequest - si es edge o iternet explorer se crea Microsoft.XMLHTTP 
+                        var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                        //Ruta por la cual Llamamos al controlador y a su método delRol
+                        var ajaxUrl  = base_url+'/Usuarios/delUsuario/';
+                        var strData     = "idUsuario="+idUsuario;
+
+                        //Abrimos la conexión
+                        request.open("POST",ajaxUrl, true);
+                        //La forma cómo se van a enviar los datos
+                        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                        //Enviamos la solicitud con el parámetro
+                        request.send(strData);
+
+                        //Recibimos la respuesta
+                        request.onreadystatechange = function(){
+                            //Validamos si la operació fué exitosa
+                            if(request.readyState == 4 && request.status == 200)
+                            {
+                                var objData = JSON.parse(request.responseText);
+
+                                if(objData.status)
+                                {
+                                    //Emitir la alerta
+                                    swal("Eliminar!", objData.msg, "success");
+                                    //Actualizamos para que se recargue la tabla y sus funciones
+                                    tableUsuarios.api().ajax.reload(function(){
+
+                                        fntRolesUsuarios();
+                                        fntViewUsuario();
+                                        fntEditUsuario();
+                                        fntDelUsuario();
+
+                                    });
+                                } else {
+                                    swal("Atención!", objData.msg , "error");
+                                }
+                            }
+
+                        }
+                    }
+                    
+                }
+
+            );
+            
+        });
+
+    });
+}
+
 function openModal(){
     
     document.querySelector('#idUsuario').value      = "";
@@ -255,3 +332,4 @@ function openModal(){
     //Mostrar el modal
     $('#modalFormUsuario').modal('show');
 }
+
