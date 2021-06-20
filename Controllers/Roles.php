@@ -10,10 +10,11 @@
 
         public function Roles(){
 
-            $data['page_id']     = 3;
-            $data['page_tag']    = "Roles Usuario";
-            $data['page_name']   = "rol_usuario";
-            $data['page_title']  = "Roles Usuario <small>Tienda Virtual</small>";
+            $data['page_id']            = 3;
+            $data['page_tag']           = "Roles Usuario";
+            $data['page_name']          = "rol_usuario";
+            $data['page_title']         = "Roles Usuario <small>Tienda Virtual</small>";
+            $data['page_functions_js']  = "functions_roles.js";
             
             $this->views->getView($this,"roles",$data);
 
@@ -32,9 +33,9 @@
                 }
 
                 $arrData[$i]['options'] = '<div class="text-center">
-                <button class="btn btn-secondary btn-sm btnPermisosRol" rl="'.$arrData[$i]['idrol'].'" title="Permisos"><i class="fas fa-key"></i></button>
-				<button class="btn btn-primary btn-sm btnEditRol" rl="'.$arrData[$i]['idrol'].'" title="Editar"><i class="fas fa-pencil-alt"></i></button>
-				<button class="btn btn-danger btn-sm btnDelRol" rl="'.$arrData[$i]['idrol'].'" title="Eliminar"><i class="far fa-trash-alt"></i></button>                           
+                <button class="btn btn-secondary btn-sm btnPermisosRol" onClick="fntPermisos('.$arrData[$i]['idrol'].')" title="Permisos"><i class="fas fa-key"></i></button>
+				<button class="btn btn-primary btn-sm btnEditRol" onClick="fntEditRol('.$arrData[$i]['idrol'].')" title="Editar"><i class="fas fa-pencil-alt"></i></button>
+				<button class="btn btn-danger btn-sm btnDelRol" onClick="fntDelRol('.$arrData[$i]['idrol'].')" title="Eliminar"><i class="far fa-trash-alt"></i></button>                           
                 </div>';
             }
 

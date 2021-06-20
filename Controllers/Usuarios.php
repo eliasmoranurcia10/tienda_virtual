@@ -13,6 +13,7 @@
             $data['page_tag']    = "Usuarios";
             $data['page_title']  = "USUARIOS <small>Tienda Virtual</small>";
             $data['page_name']   = "usuarios";
+            $data['page_functions_js']  = "functions_usuarios.js";
             
             $this->views->getView($this,"usuarios",$data);
 
@@ -118,9 +119,9 @@
                 }
 
                 $arrData[$i]['options'] = '<div class="text-center">
-                <button class="btn btn-info btn-sm btnViewUsuario" us="'.$arrData[$i]['idpersona'].'" title="Ver Usuario"><i class="far fa-eye"></i></button>
-                <button class="btn btn-primary btn-sm btnEditUsuario" us="'.$arrData[$i]['idpersona'].'" title="Editar Usuario"><i class="fas fa-user-edit"></i></i></button>
-				<button class="btn btn-danger btn-sm btnDelUsuario" us="'.$arrData[$i]['idpersona'].'" title="Eliminar Usuario"><i class="far fa-trash-alt"></i></button>                           
+                <button class="btn btn-info btn-sm btnViewUsuario" onClick="fntViewUsuario('.$arrData[$i]['idpersona'].')" title="Ver Usuario"><i class="far fa-eye"></i></button>
+                <button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar Usuario"><i class="fas fa-user-edit"></i></i></button>
+				<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar Usuario"><i class="far fa-trash-alt"></i></button>                           
                 </div>';
             }
 

@@ -67,12 +67,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     //Resetear o limpiar campos
                     formRol.reset();
                     swal("Roles de usuario", objData.msg,"success");
-                    tableRoles.api().ajax.reload(function(){
-                        //Insertar funciones, para que de nuevo funcionen los botones de editar
-                        fntEditRol();
-                        fntDelRol();
-                        fntPermisos();
-                    });
+                    tableRoles.api().ajax.reload();
+
                 } else {
                     swal("Error", objData.msg, "error");
                 }
@@ -102,185 +98,150 @@ function openModal(){
 
 //Se a agregar el evento load cuando se cargue todo el documento
 window.addEventListener('load', function() {
-    fntEditRol();
+    /*fntEditRol();
     fntDelRol();
-    fntPermisos();
+    fntPermisos();*/
 }, false);
 
 //EDITAR ROL PARA CADA UNO CUANDO SE HAGA CLICK
-function fntEditRol(){
-    var btnEditRol = document.querySelectorAll(".btnEditRol");
-    btnEditRol.forEach(function(btnEditRol) {
-        btnEditRol.addEventListener('click', function(){
+function fntEditRol(idrol){
 
-            //Cambiar texto de las etiquetas
-            document.querySelector('#titleModal').innerHTML = "Actualizar Rol";
-            document.querySelector('.modal-header').classList.replace("headerRegister","headerUpdate");
-            document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
-            document.querySelector('#btnText').innerHTML = "Actualizar";
+    //Cambiar texto de las etiquetas
+    document.querySelector('#titleModal').innerHTML = "Actualizar Rol";
+    document.querySelector('.modal-header').classList.replace("headerRegister","headerUpdate");
+    document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
+    document.querySelector('#btnText').innerHTML = "Actualizar";
 
-            //Busca el identificador
-            var idrol      = this.getAttribute("rl");
-            //Validamos si estamos en un navegador
-            var request    = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl = base_url + '/Roles/getRol/' + idrol; 
+    //Busca el identificador
+    var idrol      = idrol;
+    //Validamos si estamos en un navegador
+    var request    = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    var ajaxUrl = base_url + '/Roles/getRol/' + idrol; 
 
-            request.open("GET",ajaxUrl,true);
-            //Envío de la solicitud
-            request.send();
+    request.open("GET",ajaxUrl,true);
+    //Envío de la solicitud
+    request.send();
 
-            //Respuesta de la información
-            request.onreadystatechange = function() {
-                
-                if(request.readyState==4 && request.status== 200){
-                    // '''console.log(request.responseText);''' Se utiliza para comprobar los datos en la consola
+    //Respuesta de la información
+    request.onreadystatechange = function() {
+        
+        if(request.readyState==4 && request.status== 200){
+            // '''console.log(request.responseText);''' Se utiliza para comprobar los datos en la consola
 
-                    var objData = JSON.parse(request.responseText);
+            var objData = JSON.parse(request.responseText);
 
-                    if(objData.status)
+            if(objData.status)
+            {
+                document.querySelector("#idRol").value          = objData.data.idrol;
+                document.querySelector("#txtNombre").value       = objData.data.nombrerol;
+                document.querySelector("#txtDescripcion").value = objData.data.descripcion;
+
+                if(objData.data.status == 1){
+                    var optionSelect = '<option value="1" selected style="display:none;">Activo</option>' ;
+                } else {
+                    var optionSelect = '<option value="2" selected style="display:none;">Inactivo</option>';
+                }
+
+                var htmlSelect = `${optionSelect}
+                                    <option value="1">Activo</option>
+                                    <option value="2">Inactivo</option>
+                                `;
+
+                document.querySelector("#listStatus").innerHTML =  htmlSelect;
+                $('#modalFormRol').modal('show');
+
+            } else {
+                swal("Error", objData.msg , "error");
+            }
+
+        }
+    }
+}
+
+//FUNCION PARA ELIMINAR ROL
+function fntDelRol(idrol) {
+    
+    var idrol = idrol;
+
+    swal(
+        {
+            title: "Eliminar Rol",
+            text: "¿Realmente quiere eliminar el Rol?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, eliminar!",
+            cancelButtonText: "No, cancelar!",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        }, function(isConfirm)
+        {
+
+            if(isConfirm){
+                //Validamos el navegador - si es firefox o chrome se crea XMLHttpRequest - si es edge o iternet explorer se crea Microsoft.XMLHTTP 
+                var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                //Ruta por la cual Llamamos al controlador y a su método delRol
+                var ajaxUrl  = base_url+'/Roles/delRol';
+                var strData     = "idrol="+idrol;
+
+                //Abrimos la conexión
+                request.open("POST",ajaxUrl, true);
+                //La forma cómo se van a enviar los datos
+                request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                //Enviamos la solicitud con el parámetro
+                request.send(strData);
+
+                //Recibimos la respuesta
+                request.onreadystatechange = function(){
+                    //Validamos si la operació fué exitosa
+                    if(request.readyState == 4 && request.status == 200)
                     {
-                        document.querySelector("#idRol").value          = objData.data.idrol;
-                        document.querySelector("#txtNombre").value       = objData.data.nombrerol;
-                        document.querySelector("#txtDescripcion").value = objData.data.descripcion;
+                        var objData = JSON.parse(request.responseText);
 
-                        if(objData.data.status == 1){
-                            var optionSelect = '<option value="1" selected style="display:none;">Activo</option>' ;
+                        if(objData.status)
+                        {
+                            //Emitir la alerta
+                            swal("Eliminar!", objData.msg, "success");
+                            //Actualizamos para que se recargue la tabla y sus funciones
+                            tableRoles.api().ajax.reload();
                         } else {
-                            var optionSelect = '<option value="2" selected style="display:none;">Inactivo</option>';
+                            swal("Atención!", objData.msg , "error");
                         }
-
-                        var htmlSelect = `${optionSelect}
-                                            <option value="1">Activo</option>
-                                            <option value="2">Inactivo</option>
-                                        `;
-
-                        document.querySelector("#listStatus").innerHTML =  htmlSelect;
-                        $('#modalFormRol').modal('show');
-
-                    } else {
-                        swal("Error", objData.msg , "error");
                     }
 
                 }
             }
             
-        });
-    });
-}
+        }
 
-//FUNCION PARA ELIMINAR ROL
-function fntDelRol() {
-    //Dirigiendonos a todas las clases que lleven btnDelRol
-    var btnDelRol = document.querySelectorAll(".btnDelRol");
-    
-    //Recorrer mediante forEach porque son varios elementos
-    btnDelRol.forEach(function(btnDelRol){
-        //Agregar el evento click
-        btnDelRol.addEventListener('click', function(){
-            var idrol = this.getAttribute("rl");
-
-            swal(
-                {
-                    title: "Eliminar Rol",
-                    text: "¿Realmente quiere eliminar el Rol?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Si, eliminar!",
-                    cancelButtonText: "No, cancelar!",
-                    closeOnConfirm: false,
-                    closeOnCancel: true
-                }, function(isConfirm)
-                {
-
-                    if(isConfirm){
-                        //Validamos el navegador - si es firefox o chrome se crea XMLHttpRequest - si es edge o iternet explorer se crea Microsoft.XMLHTTP 
-                        var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-                        //Ruta por la cual Llamamos al controlador y a su método delRol
-                        var ajaxUrl  = base_url+'/Roles/delRol';
-                        var strData     = "idrol="+idrol;
-
-                        //Abrimos la conexión
-                        request.open("POST",ajaxUrl, true);
-                        //La forma cómo se van a enviar los datos
-                        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                        //Enviamos la solicitud con el parámetro
-                        request.send(strData);
-
-                        //Recibimos la respuesta
-                        request.onreadystatechange = function(){
-                            //Validamos si la operació fué exitosa
-                            if(request.readyState == 4 && request.status == 200)
-                            {
-                                var objData = JSON.parse(request.responseText);
-
-                                if(objData.status)
-                                {
-                                    //Emitir la alerta
-                                    swal("Eliminar!", objData.msg, "success");
-                                    //Actualizamos para que se recargue la tabla y sus funciones
-                                    tableRoles.api().ajax.reload(function(){
-
-                                        fntEditRol();
-                                        fntDelRol();
-                                        fntPermisos();
-
-                                    });
-                                } else {
-                                    swal("Atención!", objData.msg , "error");
-                                }
-                            }
-
-                        }
-                    }
-                    
-                }
-
-            );
-            
-        });
-
-    });
+    );
 }
 
 
 //FUNCIÓN PARA LOS PERMISOS DE LOS ROLES DE USUARIO
-function fntPermisos() {
+function fntPermisos(idrol) {
 
-    var btnPermisosRol = document.querySelectorAll(".btnPermisosRol");
+    var idrol       = idrol;
+    var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    var ajaxUrl    = base_url + '/Permisos/getPermisosRol/' + idrol;
 
-    btnPermisosRol.forEach(function(btnPermisosRol){
+    request.open("GET", ajaxUrl, true);
+    request.send();
 
-        btnPermisosRol.addEventListener('click', function(){
+    //Validación
+    request.onreadystatechange = function(){
 
-            var idrol       = this.getAttribute("rl");
-            var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl    = base_url + '/Permisos/getPermisosRol/' + idrol;
+        if(request.readyState == 4 && request.status == 200) {
 
-            request.open("GET", ajaxUrl, true);
-            request.send();
+            //console.log(request.responseText);
+            //Se hace referencia al html que se obtiene en el controlador Permisos.php
+            document.querySelector('#contentAjax').innerHTML = request.responseText;
 
-            //Validación
-            request.onreadystatechange = function(){
+            $('.modalPermisos').modal('show');
 
-                if(request.readyState == 4 && request.status == 200) {
+            document.querySelector('#formPermisos').addEventListener('submit',fntSavePermisos, false);
 
-                    //console.log(request.responseText);
-                    //Se hace referencia al html que se obtiene en el controlador Permisos.php
-                    document.querySelector('#contentAjax').innerHTML = request.responseText;
-
-                    $('.modalPermisos').modal('show');
-
-                    document.querySelector('#formPermisos').addEventListener('submit',fntSavePermisos, false);
-
-                }
-            }
-
-            
-
-        });
-
-    });
-
+        }
+    }
 }
 
 function fntSavePermisos(evnet) {
