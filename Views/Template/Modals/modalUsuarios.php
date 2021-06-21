@@ -33,14 +33,14 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
-                            <label for="txtNombre">Nombre</label>
-                            <input type="text" class="form-control" id="txtNombre" name="txtNombre" required="">
+                            <label for="txtNombre">Nombres</label>
+                            <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" required="">
                         </div>
 
                         <div class="form-group col-md-6">
                             <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
                             <label for="txtApellido">Apellidos</label>
-                            <input type="text" class="form-control" id="txtApellido" name="txtApellido" required="">
+                            <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" required="">
                         </div>
 
                     </div>
@@ -49,13 +49,13 @@
                         <div class="form-group col-md-6">
                             <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
                             <label for="txtTelefono">Teléfono</label>
-                            <input type="text" class="form-control" id="txtTelefono" name="txtTelefono" required="">
+                            <input type="text" class="form-control valid validNumber" id="txtTelefono" name="txtTelefono" required="" onkeypress="return controlTag(event);">
                         </div>
 
                         <div class="form-group col-md-6">
                             <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
                             <label for="txtEmail">Email</label>
-                            <input type="email" class="form-control" id="txtEmail" name="txtEmail" required="">
+                            <input type="email" class="form-control valid validEmail" id="txtEmail" name="txtEmail" required="">
                         </div>
 
                     </div>

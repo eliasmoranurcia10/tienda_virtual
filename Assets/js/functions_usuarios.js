@@ -82,6 +82,17 @@ document.addEventListener('DOMContentLoaded', function(){
             return false;
         }
 
+        //Verifica que todos estos elementos no tengan la clase is-invalid
+        let elementsValid = document.getElementsByClassName("valid");
+        for (let i = 0; i < elementsValid.length; i++){
+
+            if(elementsValid[i].classList.contains('is-invalid')){
+                swal("Atención", "Por favor verifique los campos en rojo.", "error");
+                return false;
+            }
+
+        }
+
         var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         var ajaxUrl     = base_url + '/Usuarios/setUsuario';
         var formData    = new FormData(formUsuario);
