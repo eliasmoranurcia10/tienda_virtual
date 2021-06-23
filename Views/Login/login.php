@@ -26,21 +26,21 @@
     </section>
     <section class="login-content">
       <div class="logo">
-        <h1>Tienda Virtual - Edankia</h1>
+        <h1><?= $data['page_title']; ?></h1>
       </div>
       <div class="login-box">
 
-        <form class="login-form" action="index.html">
+        <form class="login-form" name="formLogin" id="formLogin" action="">
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>INICIAR SESIÓN</h3>
 
           <div class="form-group">
             <label class="control-label">USUARIO</label>
-            <input id="txtEmail" class="form-control" type="email" placeholder="Email" autofocus>
+            <input id="txtEmail" name="txtEmail" class="form-control" type="email" placeholder="Email" autofocus>
           </div>
 
           <div class="form-group">
             <label class="control-label">CONTRASEÑA</label>
-            <input id="txtPassword" class="form-control" type="password" placeholder="Contraseña">
+            <input id="txtPassword" name="txtPassword" class="form-control" type="password" placeholder="Contraseña">
           </div>
 
           <div class="form-group">
@@ -74,6 +74,10 @@
       </div>
     </section>
 
+    <script>
+      const base_url = "<?= base_url(); ?>";
+    </script>
+
     <!-- Essential javascripts for application to work-->
     <script src="<?= media(); ?>/js/jquery-3.3.1.min.js"></script>
     <script src="<?= media(); ?>/js/popper.min.js"></script>
@@ -86,6 +90,11 @@
 
     <!-- The javascript plugin to display page loading on top-->
     <script src="<?= media(); ?>/js/plugins/pace.min.js"></script>
+
+    <!-- Page specific javascripts-->
+    <script type="text/javascript" src="<?= media(); ?>/js/plugins/sweetalert.min.js"></script>
+
+
     <!--Llama a su respectivo script js-->
     <script src="<?= media(); ?>/js/<?= $data['page_functions_js']; ?>"></script>
 
