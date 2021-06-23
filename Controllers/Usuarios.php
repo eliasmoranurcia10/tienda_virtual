@@ -3,9 +3,15 @@
     class Usuarios extends Controllers{
         public function __construct(){
 
+            session_start();
+
+            // Si la session esta vacía o muestra false entonces nos redirecciona a login
+            if( empty($_SESSION['login']) )
+            {
+                header('location: ' . base_url().'/login');
+            }
+
             parent::__construct();
-
-
         }
 
         public function Usuarios(){

@@ -34,7 +34,28 @@ document.addEventListener('DOMContentLoaded', function(){
                 request.open("POST", ajaxUrl, true);
                 request.send(formData);
 
-                console.log(request);
+                request.onreadystatechange = function(){
+
+                    if( request.readyState != 4 ) return;
+                    if( request.status == 200 ){
+
+                        var objData = JSON.parse(request.responseText);
+
+                        if( objData.status )
+                        {
+                            window.location = base_url + '/dashboard';
+                        } else {
+                            swal("Atención", objData.msg, "error");
+                            document.querySelector("#txtPassword").value = "";
+                        }
+                    } else 
+                    {
+                        swal("Atención", "Error en el proceso", "error");
+                    }
+
+                    return false;
+
+                }
             }
 
 

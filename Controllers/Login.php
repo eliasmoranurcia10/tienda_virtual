@@ -4,6 +4,13 @@
         public function __construct(){
 
             session_start();
+
+            //Verificar si la session esta abierta, si está abierta o es true entonces nos redirecciona al dashboard
+            if( isset($_SESSION['login']) )
+            {
+                header('location: ' . base_url().'/dashboard');
+            }
+
             parent::__construct();
 
         }
