@@ -63,4 +63,40 @@ document.addEventListener('DOMContentLoaded', function(){
 
     }
 
+    if( document.querySelector("#formRecetPass") ){
+
+        // let significa que va a ser utilizadasolamente dentro de la función
+        let formRecetPass = document.querySelector("#formRecetPass");
+
+        formRecetPass.onsubmit = function (e) {  
+
+            e.preventDefault();
+
+            let strEmail = document.querySelector("#txtEmailReset").value;
+
+            if( strEmail == "" ){
+                swal("Por favor", "Escribe tu correo electrónico.", "error");
+                return false;
+            } else {
+                //Verificar en qué navegador estamos
+                var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                //Definir ruta del controlador
+                var ajaxUrl     = base_url + '/Login/resetPass';
+                //Definir la data a enviar del formulario
+                var formData    = new FormData(formRecetPass);
+
+                //Abrir y enviar la conexión
+                request.open("POST", ajaxUrl, true);
+                request.send(formData);
+
+
+                request.onreadystatechange = function(){
+                    console.log(request);
+                }
+            }
+
+        }
+
+    }
+
 }, false);
