@@ -110,12 +110,33 @@
 
         public function confirmUser(string $params)
         {
-            $data['page_tag']    = "Cambiar contraseña";
-            $data['page_name']   = "cambiar_contrasenia";
-            $data['page_title']  = "Cambiar Contraseña";
-            $data['idpersona']   = 1;
 
-            $this->views->getView($this,"cambiar_password",$data);
+            if( empty($params) ){
+                header('Location: '.base_url() );
+            } else {
+                //Crear un array de los datos que están separados por las comas.
+                $arrParams      = explode(',',$params);
+
+                $strEmail       = strClean( $arrParams[0] );
+                $strToken       = strClean( $arrParams[1] );
+
+                $arrResponse    = $this->model->getUsuario($strEmail, $strToken); 
+
+                if ( empty($arrResponse) )
+                {
+                    header('Location: '.base_url() );
+                } else {
+                    $data['page_tag']    = "Cambiar contraseña";
+                    $data['page_name']   = "cambiar_contrasenia";
+                    $data['page_title']  = "Cambiar Contraseña";
+                    $data['idpersona']   = $arrResponse['idpersona'];
+
+                    $this->views->getView($this,"cambiar_password",$data);
+                }
+        
+            }
+
+            die();
         }
 
     }
