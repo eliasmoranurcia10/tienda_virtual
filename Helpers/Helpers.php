@@ -41,6 +41,32 @@
         require_once $view_modal;
     }
 
+    //Envía en email para la recuperación de la contraseña
+    function sendEmail($data, $template)
+    {
+        $asunto         = $data['asunto'];
+        $emailDestino   = $data['email'];
+        $empresa        = NOMBRE_REMITENTE;
+        $remitente      = EMAIL_REMITENTE;
+        
+        #ENVÍO DE CORREO ELECTRÓNICO
+        //ENCABEZADOS PARA QUE EL CORREO SE ENVÍE CORRECTAMENTE
+        $de = "MIME-Version: 1.0\r\n";
+        #Tipo de contenido que se va a enviar
+        $de.= "Content-type: text/html; charset=UTF-8\r\n";
+        #Sirve para indicar quien esta enviando el correo
+        $de.= "From: {$empresa} <{$remitente}>\r\n";
+
+        //Cargar en memoria o en buffer un archivo
+        ob_start();
+        require_once("Views/Template/Email/".$template.".php");
+        //devuelve el archivo que se ha cargado
+        $mensaje    = ob_get_clean();
+        //Función que hace el envío de correos
+        $send       = mail($emailDestino, $asunto, $mensaje, $de);
+        return $send;
+    }
+
     //Elimina exceso de espacios entre palabras 
     function strClean($strCadena){
         $string = preg_replace(['/\s+/','/^\s|\s$/'],[' ',''], $strCadena);

@@ -91,9 +91,26 @@
                         //Modifico el token de la persona
                         $requestUpdate  = $this->model->setTokenUser($idpersona, $token);
 
+                        $dataUsuario    = array(
+                            'nombreUsuario' => $nombreUsuario,
+                            'email'         => $strEmail,
+                            'Asunto'        => 'Recuperar cuenta - '.NOMBRE_REMITENTE,
+                            'url_recovery'  => $url_recovery
+                        );
+
                         if( $requestUpdate )
                         {
-                            $arrResponse    = array('status' => true , 'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.');
+                            //Esta función se encuentra en Helpers
+                            $sendmail = sendEmail($dataUsuario, 'email_cambioPassword');
+
+                            if( $sendmail ){
+
+                                $arrResponse    = array('status' => true , 'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.');
+                            } else {
+                                $arrResponse    = array('status' => false, 'msg' => 'No es posible realizar el proceso, intenta más tarde.');
+                            }
+
+                            
 
                         } else {
                             $arrResponse    = array('status' => false, 'msg' => 'No es posible realizar el proceso, intenta más tarde.');
