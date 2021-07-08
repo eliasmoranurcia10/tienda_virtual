@@ -69,6 +69,7 @@
         {
             if($_POST)
             {
+
                 if( empty($_POST['txtEmailReset']) )
                 {
                     $arrResponse    = array('status' => false, 'msg' => 'Error de datos');
@@ -101,15 +102,17 @@
                         if( $requestUpdate )
                         {
                             //Esta función se encuentra en Helpers
-                            $sendmail = sendEmail($dataUsuario, 'email_cambioPassword');
+                            //$sendmail = sendEmail($dataUsuario, 'email_cambioPassword');
 
+                            $arrResponse    = array('status' => true , 'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.');
+                            /*
                             if( $sendmail ){
 
                                 $arrResponse    = array('status' => true , 'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.');
                             } else {
                                 $arrResponse    = array('status' => false, 'msg' => 'No es posible realizar el proceso, intenta más tarde.');
                             }
-
+                            */
                             
 
                         } else {

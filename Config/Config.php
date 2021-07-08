@@ -22,7 +22,7 @@
 
     //Datos envío de correo
     const NOMBRE_REMITENTE  = "Tienda Virtual";
-    const EMAIL_REMITENTE   = "yoexereliasmoranurcia@gmail.com";
+    const EMAIL_REMITENTE   = "no-reply@edankia.store";
     const NOMBRE_EMPRESA    = "Tienda Virtual";
     const WEB_EMPRESA       = "www.edankia.store";
 
