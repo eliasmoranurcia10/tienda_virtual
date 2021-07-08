@@ -5,6 +5,7 @@ $('.login-content [data-toggle="flip"]').click(function() {
     return false;
 });
 
+var divLoading = document.querySelector("#divLoading");
 
 //Funciones que se va a cargar al momento de cargar la página
 document.addEventListener('DOMContentLoaded', function(){
@@ -26,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 swal("Por favor", "Escribe usuario y contraseña.", "error");
                 return false;
             } else {
+                //muestra el loading en el logeo
+                divLoading.style.display = "flex";
 
                 var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 var ajaxUrl     = base_url + '/Login/loginUser';
@@ -52,6 +55,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     {
                         swal("Atención", "Error en el proceso", "error");
                     }
+                    //oculta el loading en el logeo
+                    divLoading.style.display = "none";
 
                     return false;
 
@@ -78,6 +83,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 swal("Por favor", "Escribe tu correo electrónico.", "error");
                 return false;
             } else {
+                //muestra el loading en el logeo
+                divLoading.style.display = "flex";
+
                 //Verificar en qué navegador estamos
                 var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 //Definir ruta del controlador
@@ -121,6 +129,9 @@ document.addEventListener('DOMContentLoaded', function(){
                         swal("Atención", "Error en el proceso", "error");
                     }
 
+                    //oculta el loading en el logeo
+                    divLoading.style.display = "none";
+
                     return false;
                 }
             }
@@ -157,6 +168,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     swal("Atención", "Las contraseñas no son iguales.", "error");
                     return false;
                 }
+
+                //muestra el loading en el logeo
+                divLoading.style.display = "flex";
 
                 //Verificar en qué navegador estamos
                 var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -196,6 +210,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     } else {
                         swal("Atención","Error en el proceso","error");
                     }
+
+                    //oculta el loading en el logeo
+                    divLoading.style.display = "none";
 
                 }
 

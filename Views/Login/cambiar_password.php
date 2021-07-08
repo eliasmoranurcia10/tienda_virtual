@@ -18,6 +18,28 @@
     <link rel="stylesheet" type="text/css" href="<?=media();?>/css/main.css">
     <link rel="stylesheet" type="text/css" href="<?=media();?>/css/style.css">
 
+    <style>
+
+      #divLoading{
+        position: absolute;
+        top:0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(254, 254, 255, .65);
+        z-index: 1;
+        display: none;
+      }
+
+      #divLoading img {
+        width: 50px;
+        height: 50px;
+      }
+
+    </style>
+
     <title><?php $data['page_tag']; ?></title>
   </head>
   <body>
@@ -32,29 +54,34 @@
         </div>
 
         <div class="login-box flipped">
-            <!--FORMULARIO CAMBIAR DE CONTRASEÑA-->
+          <div id="divLoading">
+            <div>
+              <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
+            </div>
+          </div>
 
-            <form id="formCambiarPass" name="formCambiarPass" class="forget-form" action="">
+          <!--FORMULARIO CAMBIAR DE CONTRASEÑA-->
+          <form id="formCambiarPass" name="formCambiarPass" class="forget-form" action="">
 
-                <input type="hidden" id="idUsuario" name="idUsuario" value="<?= $data['idpersona']; ?>" required >
-                <input type="hidden" id="txtEmail"  name="txtEmail"  value="<?= $data['email']; ?>" required >
-                <input type="hidden" id="txtToken"  name="txtToken"  value="<?= $data['token']; ?>" required >
+            <input type="hidden" id="idUsuario" name="idUsuario" value="<?= $data['idpersona']; ?>" required >
+            <input type="hidden" id="txtEmail"  name="txtEmail"  value="<?= $data['email']; ?>" required >
+            <input type="hidden" id="txtToken"  name="txtToken"  value="<?= $data['token']; ?>" required >
 
-                <h3 class="login-head"><i class="fas fa-key"></i> Cambiar contraseña</h3>
+            <h3 class="login-head"><i class="fas fa-key"></i> Cambiar contraseña</h3>
 
-                <div class="form-group">
-                    <input id="txtPassword" name="txtPassword" class="form-control" type="password" placeholder="Nueva contraseña" required >
-                </div>
+            <div class="form-group">
+              <input id="txtPassword" name="txtPassword" class="form-control" type="password" placeholder="Nueva contraseña" required >
+            </div>
 
-                <div class="form-group">
-                    <input id="txtPasswordConfirm" name="txtPasswordConfirm" class="form-control" type="password" placeholder="Confirmar contraseña" required >
-                </div>
+            <div class="form-group">
+              <input id="txtPasswordConfirm" name="txtPasswordConfirm" class="form-control" type="password" placeholder="Confirmar contraseña" required >
+            </div>
 
-                <div class="form-group btn-container">
-                    <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-unlock fa-lg fa-fw"></i>REINICIAR</button>
-                </div>
+            <div class="form-group btn-container">
+              <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-unlock fa-lg fa-fw"></i>REINICIAR</button>
+            </div>
 
-            </form>
+          </form>
 
 
         </div>
