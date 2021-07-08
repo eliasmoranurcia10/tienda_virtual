@@ -104,6 +104,8 @@
 
                         if( $requestUpdate )
                         {
+                            //HACER CAMBIOS AL LANZAR AL HOSTING - SE ACTIVA LA FUNCION "$sendmail" Y SE ACTIVA EL IFELSE
+                            
                             //Esta función se encuentra en Helpers
                             //$sendmail = sendEmail($dataUsuario, 'email_cambioPassword');
 
@@ -156,7 +158,7 @@
                     $data['token']  = $strToken;
                     $data['idpersona']   = $arrResponse['idpersona'];
 
-                    $data['page_functions_js']  = "functions_login.js";
+                    $data['page_functions_js']  = "functions_cambiar_password.js";
 
                     $this->views->getView($this,"cambiar_password",$data);
                 }
