@@ -1,13 +1,8 @@
-<?php headerAdmin($data); ?>
-    <main class="app-content">
-<?php
-  getModal("modalUsuarios",$data);
-
-  if( empty($_SESSION['permisosMod']['r']) ) {
+<?php 
+    headerAdmin($data); 
+    getModal("modalUsuarios",$data);
 ?>
-  <p>Acceso restringido</p>
-
-<?php } else { ?>
+    <main class="app-content">
 
       <div class="app-title">
         <div>
@@ -53,7 +48,6 @@
             </div>
           </div>
       </div>
-    <?php } ?>
     </main>
 
 <?php footerAdmin($data); ?>

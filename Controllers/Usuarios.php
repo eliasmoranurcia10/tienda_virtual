@@ -12,12 +12,16 @@
                 header('location: ' . base_url().'/login');
             }
 
-            
+            //Llamar a la funcion para asignar los permisos
             getPermisos(2);
         }
 
         public function Usuarios(){
 
+            if( empty($_SESSION['permisosMod']['r']) ) 
+            {
+                header("Location:" .base_url().'/dashboard' );
+            }
             $data['page_tag']    = "Usuarios";
             $data['page_title']  = "USUARIOS <small>Tienda Virtual</small>";
             $data['page_name']   = "usuarios";
