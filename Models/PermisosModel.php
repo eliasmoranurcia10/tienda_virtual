@@ -62,6 +62,36 @@
             return $request_insert;
         }
 
+        public function permisosModulo(int $idrol)
+        {
+            $this->intRolid = $idrol;
+
+            $sql    = "SELECT 
+                        p.rolid,
+                        p.moduloid,
+                        m.titulo AS modulo,
+                        p.r,
+                        p.w,
+                        p.u,
+                        p.d 
+                        FROM permisos p 
+                        INNER JOIN modulo m
+                        ON p.moduloid = m.idmodulo
+                        WHERE p.rolid = $this->intRolid ";
+
+            $request     = $this->select_all($sql);
+
+            $arrPermisos = array();
+            #Colocar el orden de acuerdo al moduloid $arrPermisos[1] = $request[0];
+            //El nuevo array ya no inicia desde 0 sino desde el moduloid dentro de el
+            for ($i=0; $i < count($request) ; $i++) 
+            {
+                $arrPermisos[$request[$i]['moduloid']] = $request[$i];
+            }
+
+            return $arrPermisos;
+        }
+
     }
 
 ?>
