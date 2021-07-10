@@ -13,7 +13,7 @@
                 header('location: ' . base_url().'/login');
             }
 
-            //getPermisos(1);
+            getPermisos(1);
         }
 
         public function dashboard(){
