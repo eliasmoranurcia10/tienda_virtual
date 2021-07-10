@@ -1,21 +1,23 @@
-<?php 
-  headerAdmin($data); 
-  getModal("modalUsuarios",$data);
-?>
-
-
+<?php headerAdmin($data); ?>
     <main class="app-content">
+<?php
+  getModal("modalUsuarios",$data);
 
-      <?php
-        dep($_SESSION['permisos']);
-        dep($_SESSION['permisosMod']);
-      ?>
+  if( empty($_SESSION['permisosMod']['r']) ) {
+?>
+  <p>Acceso restringido</p>
+
+<?php } else { ?>
 
       <div class="app-title">
         <div>
             <h1>
                 <i class="fas fa-user-tag"> </i>  <?= $data['page_title'] ?> 
+
+                <?php if( $_SESSION['permisosMod']['w'] ) { ?>
                 <button class="btn btn-primary" type="button" onclick= "openModal();" ><i class="fas fa-plus-circle"></i> Nuevo</button>
+                <?php } ?>
+
             </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
@@ -51,7 +53,7 @@
             </div>
           </div>
       </div>
-
+    <?php } ?>
     </main>
 
 <?php footerAdmin($data); ?>

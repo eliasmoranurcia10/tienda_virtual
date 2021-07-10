@@ -119,6 +119,11 @@
             //dep($arrData);
             
             for ($i=0; $i < count($arrData); $i++) { 
+
+                $btnView    = '';
+                $btnEdit    = '';
+                $btnDelete  = '';
+
                 if($arrData[$i]['status'] == 1)
                 {
                     $arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
@@ -126,11 +131,22 @@
                     $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
                 }
 
-                $arrData[$i]['options'] = '<div class="text-center">
-                <button class="btn btn-info btn-sm btnViewUsuario" onClick="fntViewUsuario('.$arrData[$i]['idpersona'].')" title="Ver Usuario"><i class="far fa-eye"></i></button>
-                <button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar Usuario"><i class="fas fa-user-edit"></i></i></button>
-				<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar Usuario"><i class="far fa-trash-alt"></i></button>                           
-                </div>';
+                if( $_SESSION['permisosMod']['r'] )
+                {
+                    $btnView    = '<button class="btn btn-info btn-sm btnViewUsuario" onClick="fntViewUsuario('.$arrData[$i]['idpersona'].')" title="Ver Usuario"><i class="far fa-eye"></i></button>';
+                }
+
+                if( $_SESSION['permisosMod']['u'] )
+                {
+                    $btnEdit    = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar Usuario"><i class="fas fa-user-edit"></i></i></button>';
+                }
+
+                if( $_SESSION['permisosMod']['d'] )
+                {
+                    $btnDelete  = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar Usuario"><i class="far fa-trash-alt"></i></button>';
+                }
+
+                $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
             }
 
             echo json_encode($arrData,JSON_UNESCAPED_UNICODE); // Forzarlo a que se convierta e un objeto
