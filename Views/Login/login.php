@@ -41,7 +41,7 @@
 
     </style>
 
-    <title><?php $data['page_tag']; ?></title>
+    <title><?= $data['page_tag']; ?></title>
   </head>
   <body>
     <section class="material-half-bg">

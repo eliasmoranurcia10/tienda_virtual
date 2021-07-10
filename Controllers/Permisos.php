@@ -25,6 +25,7 @@
                 $arrPermisos    = array('r' => 0, 'w' => 0, 'u' => 0, 'd' => 0);
                 $arrPermisoRol  = array('idrol' => $rolid);
 
+                #VALIDAMOS SI EXISTEN PERMISOS PARA ESE ROL
                 if (empty($arrPermisosRol)) 
                 {
                     for ($i=0; $i < count($arrModulos) ; $i++) { 
@@ -35,18 +36,20 @@
                 } else {
                     for ($i=0 ; $i < count($arrModulos) ; $i++ ) 
                     {
-                        $arrPermisos = array(
-                            'r' => $arrPermisosRol[$i]['r'],
-                            'w' => $arrPermisosRol[$i]['w'],
-                            'u' => $arrPermisosRol[$i]['u'],
-                            'd' => $arrPermisosRol[$i]['d']
-                        );
-
-                        if($arrModulos[$i]['idmodulo'] == $arrPermisosRol[$i]['moduloid'])
+                        #Resetea los permisos 
+                        $arrPermisos    = array('r' => 0, 'w' => 0, 'u' => 0, 'd' => 0);
+                        
+                        #Si existe el módulo en la tabla de permisos del módulo
+                        if(isset($arrPermisosRol[$i]))
                         {
-                            $arrModulos[$i]['permisos'] = $arrPermisos;
+                            $arrPermisos = array(
+                                'r' => $arrPermisosRol[$i]['r'],
+                                'w' => $arrPermisosRol[$i]['w'],
+                                'u' => $arrPermisosRol[$i]['u'],
+                                'd' => $arrPermisosRol[$i]['d']
+                            ); 
                         }
-
+                        $arrModulos[$i]['permisos'] = $arrPermisos;
                     }
                 }
 
