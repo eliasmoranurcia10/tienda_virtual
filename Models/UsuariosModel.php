@@ -67,6 +67,7 @@
             //Si no es el super usuario administrador 
             if( $_SESSION['idUser'] != 1 )
             {
+                //Filtrando para que no extraiga al superadministrador
                 $whereAdmin = " AND p.idpersona != 1 ";
             }
 
