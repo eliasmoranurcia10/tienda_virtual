@@ -152,7 +152,7 @@ function fntRolesUsuarios() {
         if(request.readyState == 4 && request.status == 200){
 
             document.querySelector('#listRolid').innerHTML  = request.responseText;
-            document.querySelector('#listRolid').value      = 1;
+            //document.querySelector('#listRolid').value      = 1;
 
             //Actualizar el select para que se muestren los registros
             $('#listRolid').selectpicker('render');

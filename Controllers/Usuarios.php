@@ -12,12 +12,16 @@
                 header('location: ' . base_url().'/login');
             }
 
-            
+            //Llamar a la funcion para asignar los permisos
             getPermisos(2);
         }
 
         public function Usuarios(){
 
+            if( empty($_SESSION['permisosMod']['r']) ) 
+            {
+                header("Location:" .base_url().'/dashboard' );
+            }
             $data['page_tag']    = "Usuarios";
             $data['page_title']  = "USUARIOS <small>Tienda Virtual</small>";
             $data['page_name']   = "usuarios";
@@ -138,12 +142,30 @@
 
                 if( $_SESSION['permisosMod']['u'] )
                 {
-                    $btnEdit    = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar Usuario"><i class="fas fa-user-edit"></i></i></button>';
+                    //ELADMINISTRADOR NORMAL NO PUEDEN MODIFICAR A OTROS ADMINISTRADOR NI MODIFICARSE A SÍ MISMO
+                    if ( ($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) || 
+                        ($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1) ) 
+                    {
+                        $btnEdit    = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar Usuario"><i class="fas fa-user-edit"></i></i></button>';
+                    } else {
+                        $btnEdit    = '<button class="btn btn-secondary btn-sm" disabled><i class="fas fa-user-edit"></i></i></button>';
+                    }
+
+                    
                 }
 
                 if( $_SESSION['permisosMod']['d'] )
                 {
-                    $btnDelete  = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar Usuario"><i class="far fa-trash-alt"></i></button>';
+                    
+                    if ( ($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) || 
+                        ($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1) and 
+                        ($_SESSION['userData']['idpersona'] != $arrData[$i]['idpersona'] ) ) 
+                    {
+                        $btnDelete  = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar Usuario"><i class="far fa-trash-alt"></i></button>';
+                    } else{
+                        $btnDelete  = '<button class="btn btn-secondary btn-sm" disabled><i class="far fa-trash-alt"></i></button>';
+                    }
+                    
                 }
 
                 $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
