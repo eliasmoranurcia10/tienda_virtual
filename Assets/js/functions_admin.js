@@ -100,9 +100,9 @@ function fntValidEmail() {
 
             let inputValue = this.value;
 
-            if(!fntEmailValidate(inputValue)){
+            if(!fntEmailValidate(inputValue) && inputValue!=""){
                 this.classList.add('is-invalid');
-            } else {
+            } else{
                 this.classList.remove('is-invalid');
             }
 

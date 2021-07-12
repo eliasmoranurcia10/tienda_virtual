@@ -18,8 +18,6 @@
 
             <?php 
               dep($_SESSION['userData']); 
-              dep($_SESSION['permisos']);
-              dep($_SESSION['permisosMod']);
             ?>
 
           </div>
