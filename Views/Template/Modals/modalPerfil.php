@@ -18,8 +18,6 @@
 
                 <form id="formPerfil" name="formPerfil" class="form-horizonal">
 
-                    <input type="hidden" id="idUsuario" name="idUsuario" value="" >
-
                     <p class="text-primary">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
                     
                     <div class="form-row">

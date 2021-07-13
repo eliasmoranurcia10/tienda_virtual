@@ -233,6 +233,12 @@
             $this->views->getView($this,"perfil",$data);
         }
 
+        public function putPerfil()
+        {
+            dep($_POST);
+            die();
+        }
+
     }
 
 ?>
