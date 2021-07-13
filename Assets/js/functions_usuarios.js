@@ -224,6 +224,71 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }
 
+    //Actualizar Datos Fiscales
+    if (document.querySelector("#formDataFiscal")) {
+
+        var formDataFiscal = document.querySelector("#formDataFiscal");
+
+        //Indica que le estamos activando ese evento
+        formDataFiscal.onsubmit = function (e) {  
+            //Indica que al momento de darle click al botón "Guardar", evita que se recarge la página
+            e.preventDefault();
+
+            var strNit          = document.querySelector('#txtNit').value;
+            var strNombreFiscal = document.querySelector('#txtNombreFiscal').value;
+            var strDirFiscal    = document.querySelector('#txtDirFiscal').value;
+
+            if (strNit == '' || strNombreFiscal == '' || strDirFiscal == '' ) {
+
+                swal("Atención", "Todos los campos son obligatorios.", "error");
+                return false;
+            }
+
+            var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            var ajaxUrl     = base_url + '/Usuarios/putDFiscal';
+            var formData    = new FormData(formDataFiscal);
+
+            //Abrimos la conexión y enviamos
+            request.open("POST",ajaxUrl,true);
+            request.send(formData);
+            
+            //OBTENER LA RESPUESTA DEL CONTROLADOR
+            request.onreadystatechange  = function(){
+
+                if (request.readyState != 4) return;
+
+                if (request.status == 200) {
+                    
+                    var objData     = JSON.parse(request.responseText);
+
+                    if (objData.status) 
+                    {
+                        $('#modalFormPerfil').modal('hide');
+
+                        swal({
+                            title               : "",
+                            text                : objData.msg,
+                            type                : "success",
+                            confirmButtonText   : "Aceptar",
+                            closeOnConfirm      : false,
+
+                        },function(inConfirm){
+
+                            if(inConfirm){
+                                location.reload();
+                            }
+                        });
+                    
+                    } else {
+                        swal("Error", objData.msg, "error");
+                    }
+
+                }
+
+            }
+        }
+    }
+
 }, false);
 
 

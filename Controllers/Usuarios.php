@@ -280,6 +280,12 @@
             die();
         }
 
+        public function putDFiscal()
+        {
+            dep($_POST);
+            die();
+        }
+
     }
 
 ?>
