@@ -50,8 +50,9 @@
                             $_SESSION['idUser'] = $arrData['idpersona'];
                             $_SESSION['login']  = true;
 
-                            $arrData =  $this->model->sessionLogin($_SESSION['idUser']);
-                            $_SESSION['userData'] = $arrData;
+                            $this->model->sessionLogin($_SESSION['idUser']);
+
+                            sessionUser($_SESSION['idUser']);
 
                             $arrResponse    = array('status' => true , 'msg' => 'ok');
                         } else {

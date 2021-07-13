@@ -40,6 +40,7 @@
 
             $request = $this->select($sql);
 
+            $_SESSION['userData']   = $request;
             return $request;
         }
 
