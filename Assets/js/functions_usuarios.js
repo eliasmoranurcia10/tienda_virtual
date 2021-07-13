@@ -60,71 +60,73 @@ document.addEventListener('DOMContentLoaded', function(){
         "order":[[0,"desc"]]  
     });
 
+    if (document.querySelector("#formUsuario")) {
 
-    var formUsuario = document.querySelector("#formUsuario");
+        var formUsuario = document.querySelector("#formUsuario");
 
-    //Indica que le estamos activando ese evento
-    formUsuario.onsubmit = function (e) {  
-        //Indica que al momento de darle click al botón "Guardar", evita que se recarge la página
-        e.preventDefault();
+        //Indica que le estamos activando ese evento
+        formUsuario.onsubmit = function (e) {  
+            //Indica que al momento de darle click al botón "Guardar", evita que se recarge la página
+            e.preventDefault();
 
-        var strIdentificacion   = document.querySelector('#txtIdentificacion').value;
-        var strNombre           = document.querySelector('#txtNombre').value;
-        var strApellido         = document.querySelector('#txtApellido').value;
-        var strEmail            = document.querySelector('#txtEmail').value;
-        var intTelefono         = document.querySelector('#txtTelefono').value;
-        var intTipousuario      = document.querySelector('#listRolid').value;
-        var strPassword         = document.querySelector('#txtPassword').value;
+            var strIdentificacion   = document.querySelector('#txtIdentificacion').value;
+            var strNombre           = document.querySelector('#txtNombre').value;
+            var strApellido         = document.querySelector('#txtApellido').value;
+            var strEmail            = document.querySelector('#txtEmail').value;
+            var intTelefono         = document.querySelector('#txtTelefono').value;
+            var intTipousuario      = document.querySelector('#listRolid').value;
+            var strPassword         = document.querySelector('#txtPassword').value;
 
-        if (strIdentificacion == '' || strApellido == '' || strNombre == '' || strEmail == '' || intTelefono == '' || intTipousuario == '') {
+            if (strIdentificacion == '' || strApellido == '' || strNombre == '' || strEmail == '' || intTelefono == '' || intTipousuario == '') {
 
-            swal("Atención", "Todos los campos son obligatorios.", "error");
-            return false;
-        }
-
-        //Verifica que todos estos elementos no tengan la clase is-invalid
-        let elementsValid = document.getElementsByClassName("valid");
-        for (let i = 0; i < elementsValid.length; i++){
-
-            if(elementsValid[i].classList.contains('is-invalid')){
-                swal("Atención", "Por favor verifique los campos en rojo.", "error");
+                swal("Atención", "Todos los campos son obligatorios.", "error");
                 return false;
             }
 
-        }
+            //Verifica que todos estos elementos no tengan la clase is-invalid
+            let elementsValid = document.getElementsByClassName("valid");
+            for (let i = 0; i < elementsValid.length; i++){
 
-        var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        var ajaxUrl     = base_url + '/Usuarios/setUsuario';
-        var formData    = new FormData(formUsuario);
-
-        //Abrimos la conexión y enviamos
-        request.open("POST",ajaxUrl,true);
-        request.send(formData);
-
-        //OBTENER LA RESPUESTA DEL CONTROLADOR
-        request.onreadystatechange  = function(){
-
-            if (request.readyState == 4 && request.status == 200) {
-                
-                var objData     = JSON.parse(request.responseText);
-
-                if (objData.status) 
-                {
-                    //Ocultar el modal
-                    $('#modalFormUsuario').modal("hide");
-                    //resetear todos los campos
-                    formUsuario.reset();
-                    //Mostrar la alerta
-                    swal("Usuarios", objData.msg, "success");
-
-                    tableUsuarios.api().ajax.reload();
-                
-                } else {
-                    swal("Error", objData.msg, "error");
+                if(elementsValid[i].classList.contains('is-invalid')){
+                    swal("Atención", "Por favor verifique los campos en rojo.", "error");
+                    return false;
                 }
 
             }
 
+            var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            var ajaxUrl     = base_url + '/Usuarios/setUsuario';
+            var formData    = new FormData(formUsuario);
+
+            //Abrimos la conexión y enviamos
+            request.open("POST",ajaxUrl,true);
+            request.send(formData);
+
+            //OBTENER LA RESPUESTA DEL CONTROLADOR
+            request.onreadystatechange  = function(){
+
+                if (request.readyState == 4 && request.status == 200) {
+                    
+                    var objData     = JSON.parse(request.responseText);
+
+                    if (objData.status) 
+                    {
+                        //Ocultar el modal
+                        $('#modalFormUsuario').modal("hide");
+                        //resetear todos los campos
+                        formUsuario.reset();
+                        //Mostrar la alerta
+                        swal("Usuarios", objData.msg, "success");
+
+                        tableUsuarios.api().ajax.reload();
+                    
+                    } else {
+                        swal("Error", objData.msg, "error");
+                    }
+
+                }
+
+            }
         }
     }
 
@@ -141,24 +143,27 @@ window.addEventListener('load', function() {
 //Carga los roles en el select para ser seleccuonados en el modal
 function fntRolesUsuarios() {
 
-    var ajaxUrl = base_url + '/Roles/getSelectRoles';
-    var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); 
+    if ( document.querySelector('#listRolid') ) {
 
-    request.open("GET",ajaxUrl, true);
-    request.send();
+        var ajaxUrl = base_url + '/Roles/getSelectRoles';
+        var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); 
 
-    request.onreadystatechange = function(){
+        request.open("GET",ajaxUrl, true);
+        request.send();
 
-        if(request.readyState == 4 && request.status == 200){
+        request.onreadystatechange = function(){
 
-            document.querySelector('#listRolid').innerHTML  = request.responseText;
-            //document.querySelector('#listRolid').value      = 1;
+            if(request.readyState == 4 && request.status == 200){
 
-            //Actualizar el select para que se muestren los registros
-            $('#listRolid').selectpicker('render');
-            //$('#listRolid).selectpicker('refresh');
+                document.querySelector('#listRolid').innerHTML  = request.responseText;
+                //document.querySelector('#listRolid').value      = 1;
+
+                //Actualizar el select para que se muestren los registros
+                $('#listRolid').selectpicker('render');
+                //$('#listRolid).selectpicker('refresh');
+            }
+
         }
-
     }
 }
 
@@ -333,4 +338,10 @@ function openModal(){
     //Mostrar el modal
     $('#modalFormUsuario').modal('show');
 }
+
+function openModalPerfil() {
+    
+    $('#modalFormPerfil').modal('show');
+}
+
 
