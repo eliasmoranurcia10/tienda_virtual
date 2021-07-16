@@ -109,6 +109,7 @@
                     }
 
                 }
+                //sleep(5);
                 //Convertir en formato JSON la variable arrResponse para retornar la función
                 echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 
@@ -273,7 +274,7 @@
                     }
                     
                 }
-
+                //sleep(5);
                 echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             }
 
@@ -311,7 +312,7 @@
                         $arrResponse    = array("status" => false, 'msg' => 'No es posible actualizar los datos.');
                     }             
                 }
-
+                //sleep(3);
                 echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             }
             die();

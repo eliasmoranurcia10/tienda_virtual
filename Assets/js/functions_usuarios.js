@@ -1,5 +1,7 @@
 
 var tableUsuarios;
+//Añadimos la variable que contiene un cargador
+var divLoading = document.querySelector("#divLoading");
 
 //Indica que al momento de cargar la vista, va a agregar los elementos que se van a configurar dentro de la función
 document.addEventListener('DOMContentLoaded', function(){
@@ -95,6 +97,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
             }
 
+            //muestra un cargador
+            divLoading.style.display = "flex";
+
             var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             var ajaxUrl     = base_url + '/Usuarios/setUsuario';
             var formData    = new FormData(formUsuario);
@@ -126,6 +131,10 @@ document.addEventListener('DOMContentLoaded', function(){
                     }
 
                 }
+
+                //Oculta el cargador
+                divLoading.style.display = "none";
+                return false;
 
             }
         }
@@ -178,6 +187,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
 
             }
+            //muestra un cargador
+            divLoading.style.display = "flex";
 
             var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             var ajaxUrl     = base_url + '/Usuarios/putPerfil';
@@ -219,6 +230,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     }
 
                 }
+                //Oculta el cargador
+                divLoading.style.display = "none";
+                return false;
 
             }
         }
@@ -243,6 +257,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 swal("Atención", "Todos los campos son obligatorios.", "error");
                 return false;
             }
+            //muestra un cargador
+            divLoading.style.display = "flex";
 
             var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             var ajaxUrl     = base_url + '/Usuarios/putDFiscal';
@@ -284,6 +300,10 @@ document.addEventListener('DOMContentLoaded', function(){
                     }
 
                 }
+
+                //Oculta el cargador
+                divLoading.style.display = "none";
+                return false;
 
             }
         }

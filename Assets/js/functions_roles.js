@@ -1,5 +1,7 @@
 
 var tableRoles;
+//Añadimos la variable que contiene un cargador
+var divLoading = document.querySelector("#divLoading");
 
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -45,6 +47,9 @@ document.addEventListener('DOMContentLoaded', function(){
             return false;
         }
 
+        //muestra un cargador
+        divLoading.style.display = "flex";
+
         //objetos de acuerdo al navegador
         var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); 
 
@@ -74,7 +79,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
             }
 
-            console.log(request);
+            //Oculta el cargador
+            divLoading.style.display = "none";
+            return false;
+            //console.log(request);
         }
 
     }

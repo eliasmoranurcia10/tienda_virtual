@@ -153,6 +153,8 @@
             } else {
                 $arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos');
             }
+
+            //sleep(5);
             //Retornar el array en formato json
             echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
             //detener el proceso
