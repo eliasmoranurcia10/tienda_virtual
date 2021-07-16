@@ -147,7 +147,7 @@
                     if ( ($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) || 
                         ($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1) ) 
                     {
-                        $btnEdit    = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar Usuario"><i class="fas fa-user-edit"></i></i></button>';
+                        $btnEdit    = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario(this,'.$arrData[$i]['idpersona'].')" title="Editar Usuario"><i class="fas fa-user-edit"></i></i></button>';
                     } else {
                         $btnEdit    = '<button class="btn btn-secondary btn-sm" disabled><i class="fas fa-user-edit"></i></i></button>';
                     }

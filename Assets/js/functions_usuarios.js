@@ -1,7 +1,8 @@
 
-var tableUsuarios;
+let tableUsuarios;
+let rowTable = "";
 //Añadimos la variable que contiene un cargador
-var divLoading = document.querySelector("#divLoading");
+let divLoading = document.querySelector("#divLoading");
 
 //Indica que al momento de cargar la vista, va a agregar los elementos que se van a configurar dentro de la función
 document.addEventListener('DOMContentLoaded', function(){
@@ -65,20 +66,22 @@ document.addEventListener('DOMContentLoaded', function(){
     //Agregar o Editar usuarios - en el formulario de usuarios
     if (document.querySelector("#formUsuario")) {
 
-        var formUsuario = document.querySelector("#formUsuario");
+        let formUsuario = document.querySelector("#formUsuario");
 
         //Indica que le estamos activando ese evento
         formUsuario.onsubmit = function (e) {  
             //Indica que al momento de darle click al botón "Guardar", evita que se recarge la página
             e.preventDefault();
 
-            var strIdentificacion   = document.querySelector('#txtIdentificacion').value;
-            var strNombre           = document.querySelector('#txtNombre').value;
-            var strApellido         = document.querySelector('#txtApellido').value;
-            var strEmail            = document.querySelector('#txtEmail').value;
-            var intTelefono         = document.querySelector('#txtTelefono').value;
-            var intTipousuario      = document.querySelector('#listRolid').value;
-            var strPassword         = document.querySelector('#txtPassword').value;
+            let strIdentificacion   = document.querySelector('#txtIdentificacion').value;
+            let strNombre           = document.querySelector('#txtNombre').value;
+            let strApellido         = document.querySelector('#txtApellido').value;
+            let strEmail            = document.querySelector('#txtEmail').value;
+            let intTelefono         = document.querySelector('#txtTelefono').value;
+            let intTipousuario      = document.querySelector('#listRolid').value;
+            let strPassword         = document.querySelector('#txtPassword').value;
+
+            let intStatus           = document.querySelector('#listStatus').value;
 
             if (strIdentificacion == '' || strApellido == '' || strNombre == '' || strEmail == '' || intTelefono == '' || intTipousuario == '') {
 
@@ -100,9 +103,9 @@ document.addEventListener('DOMContentLoaded', function(){
             //muestra un cargador
             divLoading.style.display = "flex";
 
-            var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl     = base_url + '/Usuarios/setUsuario';
-            var formData    = new FormData(formUsuario);
+            let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            let ajaxUrl     = base_url + '/Usuarios/setUsuario';
+            let formData    = new FormData(formUsuario);
 
             //Abrimos la conexión y enviamos
             request.open("POST",ajaxUrl,true);
@@ -113,10 +116,26 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 if (request.readyState == 4 && request.status == 200) {
                     
-                    var objData     = JSON.parse(request.responseText);
+                    let objData     = JSON.parse(request.responseText);
 
                     if (objData.status) 
                     {
+                        
+                        if(rowTable == ""){
+                            //Esta acción se realiza si no se está editando y se está creando nuevo usuario: asi que se recarga la página
+                            tableUsuarios.api().ajax.reload();
+                        } else{
+                            //A continuación se actualiza la tabla con el usuario modificado sin recargar la tabla, quedandonos en la misma página :Para Elias del futuro :) 
+                            let htmlStatus  = intStatus == 1? 
+                            '<span class="badge badge-success">Activo</span>':'<span class="badge badge-danger">Inactivo</span>';
+
+                            rowTable.cells[1].textContent   = strNombre;
+                            rowTable.cells[2].textContent   = strApellido;
+                            rowTable.cells[3].textContent   = strEmail;
+                            rowTable.cells[4].textContent   = intTelefono;
+                            rowTable.cells[5].textContent   = document.querySelector('#listRolid').selectedOptions[0].text;
+                            rowTable.cells[6].innerHTML     = htmlStatus; 
+                        }
                         //Ocultar el modal
                         $('#modalFormUsuario').modal("hide");
                         //resetear todos los campos
@@ -124,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         //Mostrar la alerta
                         swal("Usuarios", objData.msg, "success");
 
-                        tableUsuarios.api().ajax.reload();
+                        
                     
                     } else {
                         swal("Error", objData.msg, "error");
@@ -143,19 +162,19 @@ document.addEventListener('DOMContentLoaded', function(){
     //Actualizar Perfil
     if (document.querySelector("#formPerfil")) {
 
-        var formPerfil = document.querySelector("#formPerfil");
+        let formPerfil = document.querySelector("#formPerfil");
 
         //Indica que le estamos activando ese evento
         formPerfil.onsubmit = function (e) {  
             //Indica que al momento de darle click al botón "Guardar", evita que se recarge la página
             e.preventDefault();
 
-            var strIdentificacion   = document.querySelector('#txtIdentificacion').value;
-            var strNombre           = document.querySelector('#txtNombre').value;
-            var strApellido         = document.querySelector('#txtApellido').value;
-            var intTelefono         = document.querySelector('#txtTelefono').value;
-            var strPassword         = document.querySelector('#txtPassword').value;
-            var strPasswordConfirm  = document.querySelector('#txtPasswordConfirm').value;
+            let strIdentificacion   = document.querySelector('#txtIdentificacion').value;
+            let strNombre           = document.querySelector('#txtNombre').value;
+            let strApellido         = document.querySelector('#txtApellido').value;
+            let intTelefono         = document.querySelector('#txtTelefono').value;
+            let strPassword         = document.querySelector('#txtPassword').value;
+            let strPasswordConfirm  = document.querySelector('#txtPasswordConfirm').value;
 
             if (strIdentificacion == '' || strApellido == '' || strNombre == '' || intTelefono == '' ) {
 
@@ -190,9 +209,9 @@ document.addEventListener('DOMContentLoaded', function(){
             //muestra un cargador
             divLoading.style.display = "flex";
 
-            var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl     = base_url + '/Usuarios/putPerfil';
-            var formData    = new FormData(formPerfil);
+            let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            let ajaxUrl     = base_url + '/Usuarios/putPerfil';
+            let formData    = new FormData(formPerfil);
 
             //Abrimos la conexión y enviamos
             request.open("POST",ajaxUrl,true);
@@ -205,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 if (request.status == 200) {
                     
-                    var objData     = JSON.parse(request.responseText);
+                    let objData     = JSON.parse(request.responseText);
 
                     if (objData.status) 
                     {
@@ -241,16 +260,16 @@ document.addEventListener('DOMContentLoaded', function(){
     //Actualizar Datos Fiscales
     if (document.querySelector("#formDataFiscal")) {
 
-        var formDataFiscal = document.querySelector("#formDataFiscal");
+        let formDataFiscal = document.querySelector("#formDataFiscal");
 
         //Indica que le estamos activando ese evento
         formDataFiscal.onsubmit = function (e) {  
             //Indica que al momento de darle click al botón "Guardar", evita que se recarge la página
             e.preventDefault();
 
-            var strNit          = document.querySelector('#txtNit').value;
-            var strNombreFiscal = document.querySelector('#txtNombreFiscal').value;
-            var strDirFiscal    = document.querySelector('#txtDirFiscal').value;
+            let strNit          = document.querySelector('#txtNit').value;
+            let strNombreFiscal = document.querySelector('#txtNombreFiscal').value;
+            let strDirFiscal    = document.querySelector('#txtDirFiscal').value;
 
             if (strNit == '' || strNombreFiscal == '' || strDirFiscal == '' ) {
 
@@ -260,9 +279,9 @@ document.addEventListener('DOMContentLoaded', function(){
             //muestra un cargador
             divLoading.style.display = "flex";
 
-            var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            var ajaxUrl     = base_url + '/Usuarios/putDFiscal';
-            var formData    = new FormData(formDataFiscal);
+            let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            let ajaxUrl     = base_url + '/Usuarios/putDFiscal';
+            let formData    = new FormData(formDataFiscal);
 
             //Abrimos la conexión y enviamos
             request.open("POST",ajaxUrl,true);
@@ -275,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 if (request.status == 200) {
                     
-                    var objData     = JSON.parse(request.responseText);
+                    let objData     = JSON.parse(request.responseText);
 
                     if (objData.status) 
                     {
@@ -324,8 +343,8 @@ function fntRolesUsuarios() {
 
     if ( document.querySelector('#listRolid') ) {
 
-        var ajaxUrl = base_url + '/Roles/getSelectRoles';
-        var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); 
+        let ajaxUrl = base_url + '/Roles/getSelectRoles';
+        let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); 
 
         request.open("GET",ajaxUrl, true);
         request.send();
@@ -349,11 +368,8 @@ function fntRolesUsuarios() {
 //FUNCIÓN PARA VISUALIZAR A LOS USUARIOS
 function fntViewUsuario(idpersona){
 
-
-    var idpersona = idpersona;
-
-    var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl     = base_url + '/Usuarios/getUsuario/'+idpersona;
+    let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl     = base_url + '/Usuarios/getUsuario/'+idpersona;
 
     request.open("GET",ajaxUrl,true);
     request.send();
@@ -363,11 +379,11 @@ function fntViewUsuario(idpersona){
         //Verifica si se ha devuelto la información
         if(request.readyState==4 && request.status == 200){
             //Convertir el formato JSON en un objeto todo lo que viene en request
-            var objData = JSON.parse(request.responseText);
+            let objData = JSON.parse(request.responseText);
 
             if(objData.status){
 
-                var estadoUsuario   = objData.data.status == 1 ? '<span class="badge badge-success">Activo</span>':'<span class="badge badge-danger">Inactivo</span>';
+                let estadoUsuario   = objData.data.status == 1 ? '<span class="badge badge-success">Activo</span>':'<span class="badge badge-danger">Inactivo</span>';
 
                 document.querySelector("#celIdentificacion").innerHTML  = objData.data.identificacion;
                 document.querySelector("#celNombre").innerHTML          = objData.data.nombres;
@@ -390,19 +406,22 @@ function fntViewUsuario(idpersona){
 }
 
 //FUNCIÓN PARA EDITAR LOS USUARIOS
-function fntEditUsuario(idpersona){
+function fntEditUsuario(element,idpersona){
+    //Se visualiza los elementos padre del usuario elegido en la tabla
+    rowTable    = element.parentNode.parentNode.parentNode;
 
+    //rowTable.cells[1].textContent = "Julio";
+    //console.log(rowTable);
 
     document.querySelector('#titleModal').innerHTML     = "Actualizar Usuario";
     document.querySelector('.modal-header').classList.replace("headerRegister","headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
     document.querySelector('#btnText').innerHTML        = "Actualizar";
 
-    var idpersona = idpersona;
 
     //Verificación del navegador 
-    var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl     = base_url + '/Usuarios/getUsuario/'+idpersona;
+    let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl     = base_url + '/Usuarios/getUsuario/'+idpersona;
 
     //Abriendo la conexión mediante la petición GET
     request.open("GET",ajaxUrl,true);
@@ -412,7 +431,7 @@ function fntEditUsuario(idpersona){
 
         if(request.readyState==4 && request.status == 200){
 
-            var objData = JSON.parse(request.responseText);
+            let objData = JSON.parse(request.responseText);
 
             if(objData.status){
 
@@ -447,7 +466,6 @@ function fntEditUsuario(idpersona){
 //FUNCION PARA ELIMINAR USUARIO
 function fntDelUsuario(idpersona) {
 
-    var idUsuario = idpersona;
 
     swal(
         {
@@ -464,10 +482,10 @@ function fntDelUsuario(idpersona) {
 
             if(isConfirm){
                 //Validamos el navegador - si es firefox o chrome se crea XMLHttpRequest - si es edge o iternet explorer se crea Microsoft.XMLHTTP 
-                var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 //Ruta por la cual Llamamos al controlador y a su método delRol
-                var ajaxUrl  = base_url+'/Usuarios/delUsuario/';
-                var strData     = "idUsuario="+idUsuario;
+                let ajaxUrl  = base_url+'/Usuarios/delUsuario/';
+                let strData     = "idUsuario="+idpersona;
 
                 //Abrimos la conexión
                 request.open("POST",ajaxUrl, true);
@@ -481,7 +499,7 @@ function fntDelUsuario(idpersona) {
                     //Validamos si la operació fué exitosa
                     if(request.readyState == 4 && request.status == 200)
                     {
-                        var objData = JSON.parse(request.responseText);
+                        let objData = JSON.parse(request.responseText);
 
                         if(objData.status)
                         {
@@ -505,7 +523,9 @@ function fntDelUsuario(idpersona) {
 }
 
 function openModal(){
-    
+    //Se resetea el rowTable cada vez que se dea click en el nuevo usuario para que no guarde la tabla del usuario elegido
+    rowTable = "";
+
     document.querySelector('#idUsuario').value      = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate","headerRegister");
     document.querySelector('#btnActionForm').classList.replace("btn-info","btn-primary");

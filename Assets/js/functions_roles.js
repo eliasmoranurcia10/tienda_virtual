@@ -1,7 +1,8 @@
 
-var tableRoles;
+let tableRoles;
+let rowTable = "";
 //Añadimos la variable que contiene un cargador
-var divLoading = document.querySelector("#divLoading");
+let divLoading = document.querySelector("#divLoading");
 
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -25,20 +26,20 @@ document.addEventListener('DOMContentLoaded', function(){
         ],
         "resonsieve":"true",
         "bDestroy": true,
-        "iDisplayLength": 10,
+        "iDisplayLength": 3,
         "order":[[0,"desc"]]  
     });
 
     //NUEVO ROL
-    var formRol = document.querySelector("#formRol");
+    let formRol = document.querySelector("#formRol");
 
     formRol.onsubmit = function(e){         //al momento de que se envíe la información, lo que hace es que se ejecuta la función
         e.preventDefault();                 //prevenir a que se recarge la página
 
-        var intIdRol        = document.querySelector('#idRol').value;
-        var strNombre       = document.querySelector('#txtNombre').value;
-        var strDescripcion  = document.querySelector('#txtDescripcion').value;
-        var intStatus       = document.querySelector('#listStatus').value;
+        let intIdRol        = document.querySelector('#idRol').value;
+        let strNombre       = document.querySelector('#txtNombre').value;
+        let strDescripcion  = document.querySelector('#txtDescripcion').value;
+        let intStatus       = document.querySelector('#listStatus').value;
 
         //Verifica si los labels no están vacíos
         if(strNombre=='' || strDescripcion=='' || intStatus=='')
@@ -51,10 +52,10 @@ document.addEventListener('DOMContentLoaded', function(){
         divLoading.style.display = "flex";
 
         //objetos de acuerdo al navegador
-        var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); 
+        let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); 
 
-        var ajaxUrl     = base_url +'/Roles/setRol';
-        var formData    = new FormData(formRol);
+        let ajaxUrl     = base_url +'/Roles/setRol';
+        let formData    = new FormData(formRol);
 
         //abrir por el metodo post para enviar la información
         request.open("POST",ajaxUrl,true);
@@ -64,15 +65,26 @@ document.addEventListener('DOMContentLoaded', function(){
             
             if(request.readyState == 4 && request.status == 200){
                 
-                var objData = JSON.parse(request.responseText);
+                let objData = JSON.parse(request.responseText);
 
                 if(objData.status) {
+
+                    if (rowTable == "") {
+                        tableRoles.api().ajax.reload();
+                    } else {
+                        let htmlStatus  = intStatus == 1? 
+                        '<span class="badge badge-success">Activo</span>':'<span class="badge badge-danger">Inactivo</span>';
+
+                        rowTable.cells[1].textContent   = strNombre;
+                        rowTable.cells[2].textContent   = strDescripcion;
+                        rowTable.cells[3].innerHTML     = htmlStatus; 
+                    }
 
                     $('#modalFormRol').modal("hide");
                     //Resetear o limpiar campos
                     formRol.reset();
                     swal("Roles de usuario", objData.msg,"success");
-                    tableRoles.api().ajax.reload();
+                    
 
                 } else {
                     swal("Error", objData.msg, "error");
@@ -92,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function(){
 $('#tableRoles').DataTable();
 
 function openModal(){
+    rowTable = "";
 
     document.querySelector('#idRol').value          = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate","headerRegister");
@@ -112,7 +125,11 @@ window.addEventListener('load', function() {
 }, false);
 
 //EDITAR ROL PARA CADA UNO CUANDO SE HAGA CLICK
-function fntEditRol(idrol){
+function fntEditRol(element ,idrol){
+
+    //Se visualiza los elementos padre del rol elegido en la tabla
+    rowTable    = element.parentNode.parentNode.parentNode;
+    console.log(rowTable);
 
     //Cambiar texto de las etiquetas
     document.querySelector('#titleModal').innerHTML = "Actualizar Rol";
@@ -120,11 +137,9 @@ function fntEditRol(idrol){
     document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
     document.querySelector('#btnText').innerHTML = "Actualizar";
 
-    //Busca el identificador
-    var idrol      = idrol;
     //Validamos si estamos en un navegador
-    var request    = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = base_url + '/Roles/getRol/' + idrol; 
+    let request    = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl = base_url + '/Roles/getRol/' + idrol; 
 
     request.open("GET",ajaxUrl,true);
     //Envío de la solicitud
@@ -136,7 +151,8 @@ function fntEditRol(idrol){
         if(request.readyState==4 && request.status== 200){
             // '''console.log(request.responseText);''' Se utiliza para comprobar los datos en la consola
 
-            var objData = JSON.parse(request.responseText);
+            let objData = JSON.parse(request.responseText);
+            let optionSelect = "";
 
             if(objData.status)
             {
@@ -145,12 +161,12 @@ function fntEditRol(idrol){
                 document.querySelector("#txtDescripcion").value = objData.data.descripcion;
 
                 if(objData.data.status == 1){
-                    var optionSelect = '<option value="1" selected style="display:none;">Activo</option>' ;
+                    optionSelect = '<option value="1" selected style="display:none;">Activo</option>' ;
                 } else {
-                    var optionSelect = '<option value="2" selected style="display:none;">Inactivo</option>';
+                    optionSelect = '<option value="2" selected style="display:none;">Inactivo</option>';
                 }
 
-                var htmlSelect = `${optionSelect}
+                let htmlSelect = `${optionSelect}
                                     <option value="1">Activo</option>
                                     <option value="2">Inactivo</option>
                                 `;
@@ -168,8 +184,6 @@ function fntEditRol(idrol){
 
 //FUNCION PARA ELIMINAR ROL
 function fntDelRol(idrol) {
-    
-    var idrol = idrol;
 
     swal(
         {
@@ -186,10 +200,10 @@ function fntDelRol(idrol) {
 
             if(isConfirm){
                 //Validamos el navegador - si es firefox o chrome se crea XMLHttpRequest - si es edge o iternet explorer se crea Microsoft.XMLHTTP 
-                var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 //Ruta por la cual Llamamos al controlador y a su método delRol
-                var ajaxUrl  = base_url+'/Roles/delRol';
-                var strData     = "idrol="+idrol;
+                let ajaxUrl  = base_url+'/Roles/delRol';
+                let strData     = "idrol="+idrol;
 
                 //Abrimos la conexión
                 request.open("POST",ajaxUrl, true);
@@ -203,7 +217,7 @@ function fntDelRol(idrol) {
                     //Validamos si la operació fué exitosa
                     if(request.readyState == 4 && request.status == 200)
                     {
-                        var objData = JSON.parse(request.responseText);
+                        let objData = JSON.parse(request.responseText);
 
                         if(objData.status)
                         {
@@ -228,9 +242,8 @@ function fntDelRol(idrol) {
 //FUNCIÓN PARA LOS PERMISOS DE LOS ROLES DE USUARIO
 function fntPermisos(idrol) {
 
-    var idrol       = idrol;
-    var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl    = base_url + '/Permisos/getPermisosRol/' + idrol;
+    let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl    = base_url + '/Permisos/getPermisosRol/' + idrol;
 
     request.open("GET", ajaxUrl, true);
     request.send();
@@ -256,11 +269,11 @@ function fntSavePermisos(evnet) {
     //Evita que se recargue la página al presionar Guardar
     evnet.preventDefault();
     //validar el navegador
-    var request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl     = base_url+'/Permisos/setPermisos';
+    let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl     = base_url+'/Permisos/setPermisos';
     //Seleccionamos los elementos del formulario #formPermisos
-    var formElement = document.querySelector("#formPermisos");
-    var formData    = new FormData(formElement);
+    let formElement = document.querySelector("#formPermisos");
+    let formData    = new FormData(formElement);
     //Abriendo la conexión
     request.open("POST", ajaxUrl, true);
     request.send(formData);
@@ -270,7 +283,7 @@ function fntSavePermisos(evnet) {
         //quiere decir que si se hizo la petición y si está devolviendo datos
         if(request.readyState == 4 && request.status == 200){
 
-            var objData = JSON.parse(request.responseText);
+            let objData = JSON.parse(request.responseText);
 
             if (objData.status) {
                 swal("Permisos de usuario", objData.msg, "success")
