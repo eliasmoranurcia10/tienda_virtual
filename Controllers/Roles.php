@@ -6,13 +6,13 @@
             parent::__construct();
 
             session_start();
+            //Hacemos que el id de sesion anterior se elimine
+            session_regenerate_id(true);
             // Si la session esta vacía o muestra false entonces nos redirecciona a login
             if( empty($_SESSION['login']) )
             {
                 header('location: ' . base_url().'/login');
             }
-
-            
 
             //Llamar a la funcion para asignar los permisos
             getPermisos(2);
