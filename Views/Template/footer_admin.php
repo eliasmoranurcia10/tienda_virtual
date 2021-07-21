@@ -32,7 +32,7 @@
     <script type="text/javascript" src="<?= media(); ?>/js/functions_admin.js?v1"></script>
 
     <!-- Carga los funciones scripts de cada controlador -->
-    <script src="<?= media(); ?>/js/<?= $data['page_functions_js']; ?>?v1"></script>
+    <script src="<?= media(); ?>/js/<?= $data['page_functions_js']; ?>?v2"></script>
     
   </body>
 </html>

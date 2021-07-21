@@ -51,6 +51,8 @@
                     $intTipoId          = intval(strClean($_POST['listRolid']));
                     $intStatus          = intval(strClean($_POST['listStatus']));
 
+                    $request_user       = "";
+
                     if($idUsuario == 0)
                     {
                         $option     = 1;
@@ -58,16 +60,20 @@
                         //hash tiene la función de encriptar la contraseña
                         $strPassword        = empty( $_POST['txtPassword'] ) ? hash("SHA256", passGenerator() ) : hash("SHA256", $_POST['txtPassword']);
 
-                        $request_user       = $this->model->insertUsuario(
-                            $strIdentificacion,
-                            $strNombre,
-                            $strApellido,
-                            $intTelefono,
-                            $strEmail,
-                            $strPassword,
-                            $intTipoId,
-                            $intStatus
-                        );
+                        if( $_SESSION['permisosMod']['w'] ){
+
+                            $request_user       = $this->model->insertUsuario(
+                                $strIdentificacion,
+                                $strNombre,
+                                $strApellido,
+                                $intTelefono,
+                                $strEmail,
+                                $strPassword,
+                                $intTipoId,
+                                $intStatus
+                            );
+
+                        }
 
                     } else {
 
@@ -75,17 +81,21 @@
 
                         $strPassword        = empty( $_POST['txtPassword'] ) ? "" : hash("SHA256", $_POST['txtPassword']);
 
-                        $request_user       = $this->model->updateUsuario(
-                            $idUsuario,
-                            $strIdentificacion,
-                            $strNombre,
-                            $strApellido,
-                            $intTelefono,
-                            $strEmail,
-                            $strPassword,
-                            $intTipoId,
-                            $intStatus
-                        );
+                        if( $_SESSION['permisosMod']['u'] ){
+                            
+                            $request_user       = $this->model->updateUsuario(
+                                $idUsuario,
+                                $strIdentificacion,
+                                $strNombre,
+                                $strApellido,
+                                $intTelefono,
+                                $strEmail,
+                                $strPassword,
+                                $intTipoId,
+                                $intStatus
+                            );
+
+                        }
 
                     }
 
@@ -119,85 +129,94 @@
 
         public function getUsuarios()
         {
-            $arrData    = $this->model->selectUsuarios();
 
-            //dep($arrData);
-            
-            for ($i=0; $i < count($arrData); $i++) { 
+            if( $_SESSION['permisosMod']['r'] ){
 
-                $btnView    = '';
-                $btnEdit    = '';
-                $btnDelete  = '';
+                $arrData    = $this->model->selectUsuarios();
 
-                if($arrData[$i]['status'] == 1)
-                {
-                    $arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
-                } else {
-                    $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
-                }
+                //dep($arrData);
+                
+                for ($i=0; $i < count($arrData); $i++) { 
 
-                if( $_SESSION['permisosMod']['r'] )
-                {
-                    $btnView    = '<button class="btn btn-info btn-sm btnViewUsuario" onClick="fntViewUsuario('.$arrData[$i]['idpersona'].')" title="Ver Usuario"><i class="far fa-eye"></i></button>';
-                }
+                    $btnView    = '';
+                    $btnEdit    = '';
+                    $btnDelete  = '';
 
-                if( $_SESSION['permisosMod']['u'] )
-                {
-                    //ELADMINISTRADOR NORMAL NO PUEDEN MODIFICAR A OTROS ADMINISTRADOR NI MODIFICARSE A SÍ MISMO
-                    if ( ($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) || 
-                        ($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1) ) 
+                    if($arrData[$i]['status'] == 1)
                     {
-                        $btnEdit    = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario(this,'.$arrData[$i]['idpersona'].')" title="Editar Usuario"><i class="fas fa-user-edit"></i></i></button>';
+                        $arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
                     } else {
-                        $btnEdit    = '<button class="btn btn-secondary btn-sm" disabled><i class="fas fa-user-edit"></i></i></button>';
+                        $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
                     }
 
-                    
-                }
-
-                if( $_SESSION['permisosMod']['d'] )
-                {
-                    
-                    if ( ($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) || 
-                        ($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1) and 
-                        ($_SESSION['userData']['idpersona'] != $arrData[$i]['idpersona'] ) ) 
+                    if( $_SESSION['permisosMod']['r'] )
                     {
-                        $btnDelete  = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar Usuario"><i class="far fa-trash-alt"></i></button>';
-                    } else{
-                        $btnDelete  = '<button class="btn btn-secondary btn-sm" disabled><i class="far fa-trash-alt"></i></button>';
+                        $btnView    = '<button class="btn btn-info btn-sm btnViewUsuario" onClick="fntViewUsuario('.$arrData[$i]['idpersona'].')" title="Ver Usuario"><i class="far fa-eye"></i></button>';
                     }
-                    
+
+                    if( $_SESSION['permisosMod']['u'] )
+                    {
+                        //ELADMINISTRADOR NORMAL NO PUEDEN MODIFICAR A OTROS ADMINISTRADOR NI MODIFICARSE A SÍ MISMO
+                        if ( ($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) || 
+                            ($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1) ) 
+                        {
+                            $btnEdit    = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario(this,'.$arrData[$i]['idpersona'].')" title="Editar Usuario"><i class="fas fa-user-edit"></i></i></button>';
+                        } else {
+                            $btnEdit    = '<button class="btn btn-secondary btn-sm" disabled><i class="fas fa-user-edit"></i></i></button>';
+                        }
+
+                        
+                    }
+
+                    if( $_SESSION['permisosMod']['d'] )
+                    {
+                        
+                        if ( ($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) || 
+                            ($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1) and 
+                            ($_SESSION['userData']['idpersona'] != $arrData[$i]['idpersona'] ) ) 
+                        {
+                            $btnDelete  = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar Usuario"><i class="far fa-trash-alt"></i></button>';
+                        } else{
+                            $btnDelete  = '<button class="btn btn-secondary btn-sm" disabled><i class="far fa-trash-alt"></i></button>';
+                        }
+                        
+                    }
+
+                    $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
                 }
 
-                $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
+                echo json_encode($arrData,JSON_UNESCAPED_UNICODE); // Forzarlo a que se convierta e un objeto
+
             }
 
-            echo json_encode($arrData,JSON_UNESCAPED_UNICODE); // Forzarlo a que se convierta e un objeto
-            
             die(); //Finalizar el proceso
         }
 
-        public function getUsuario(int $idpersona)
+        public function getUsuario($idpersona)
         {
             # echo $idpersona;
+
+            if( $_SESSION['permisosMod']['r'] ){
             
-            $idusuario = intval($idpersona);
+                $idusuario = intval($idpersona);
 
-            if($idusuario > 0){
+                if($idusuario > 0){
 
-                $arrData    = $this->model->selectUsuario($idusuario);
+                    $arrData    = $this->model->selectUsuario($idusuario);
 
-                if(empty($arrData))
-                {
-                    $arrResponse    = array('status' => false, 'msg' => 'Datos no encontrados.');
-                
-                } else
-                {
-                    $arrResponse    = array('status' => true  , 'data' => $arrData);
+                    if(empty($arrData))
+                    {
+                        $arrResponse    = array('status' => false, 'msg' => 'Datos no encontrados.');
+                    
+                    } else
+                    {
+                        $arrResponse    = array('status' => true  , 'data' => $arrData);
+                    }
+
+                    //Convertir en formato json el array
+                    echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
                 }
 
-                //Convertir en formato json el array
-                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             }
             die();
 
@@ -207,19 +226,22 @@
         {
             if( $_POST )
             {
-                $intIdpersona   = intval($_POST['idUsuario']);
-                $requestDelete  = $this->model->deleteUsuario($intIdpersona);
+                if( $_SESSION['permisosMod']['d'] ){
 
-                if( $requestDelete ){
+                    $intIdpersona   = intval($_POST['idUsuario']);
+                    $requestDelete  = $this->model->deleteUsuario($intIdpersona);
 
-                    $arrResponse    = array('status' => true , 'msg' => 'Se ha eliminado el usuario.');
+                    if( $requestDelete ){
 
-                } else {
+                        $arrResponse    = array('status' => true , 'msg' => 'Se ha eliminado el usuario.');
 
-                    $arrResponse    = array('status' => false, 'msg' => 'Error al eliminar el usuario.');
+                    } else {
+
+                        $arrResponse    = array('status' => false, 'msg' => 'Error al eliminar el usuario.');
+                    }
+
+                    echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
                 }
-
-                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             }
             die();
         }
