@@ -20,71 +20,72 @@
 
                     <input type="hidden" id="idUsuario" name="idUsuario" value="" >
 
-                    <p class="text-primary"> Todos los campos son obligatorios. </p>
-                    
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
-                            <label for="txtIdentificacion">Identificación</label>
-                            <input type="text" class="form-control" id="txtIdentificacion" name="txtIdentificacion" required="">
-                        </div>
-                    </div>
+                    <p class="text-primary"> Los campos con asterisco (<span class="required" >*</span>) son obligatorios. </p>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+
+                        <div class="form-group col-md-4">
                             <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
-                            <label for="txtNombre">Nombres</label>
+                            <label for="txtIdentificacion">Identificación <span class="required" >*</span> </label>
+                            <input type="text" class="form-control" id="txtIdentificacion" name="txtIdentificacion" required="">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
+                            <label for="txtNombre">Nombres <span class="required" >*</span> </label>
                             <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" required="">
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
-                            <label for="txtApellido">Apellidos</label>
+                            <label for="txtApellido">Apellidos <span class="required" >*</span> </label>
                             <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" required="">
                         </div>
 
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
-                            <label for="txtTelefono">Teléfono</label>
+                            <label for="txtTelefono">Teléfono <span class="required" >*</span> </label>
                             <input type="text" class="form-control valid validNumber" id="txtTelefono" name="txtTelefono" required="" onkeypress="return controlTag(event);">
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
-                            <label for="txtEmail">Email</label>
+                            <label for="txtEmail">Email <span class="required" >*</span> </label>
                             <input type="email" class="form-control valid validEmail" id="txtEmail" name="txtEmail" required="">
                         </div>
 
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
-                            <label for="listRolid">Tipo usuario</label>
-                            <select class="form-control" data-live-search="true" id="listRolid" name="listRolid" required >
-                            </select>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
-                            <label for="listStatus">Status</label>
-                            <select class="form-control selectpicker" id="listStatus" name="listStatus" required >
-                                <option value="1">Activo</option>
-                                <option value="2">Inactivo</option>
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <!-- 'for' nos permite que cuando demos click al label se redirigirá a la caja de texto-->
                             <label for="txtPassword">Password</label>
                             <input type="password" class="form-control" id="txtPassword" name="txtPassword">
                         </div>
+
+                    </div>
+
+                    <hr>
+
+                    <p class="text-primary">Datos Fiscales</p>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6">
+                            <label>Identificación Tributario <span class="required" >*</span> </label>
+                            <input class="form-control" type="text" id="txtNit" name="txtNit" required="" >
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Nombre Fiscal <span class="required" >*</span> </label>
+                            <input class="form-control" type="text" id="txtNombreFiscal" name="txtNombreFiscal" required=""  >
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label>Dirección fiscal <span class="required" >*</span> </label>
+                            <input class="form-control" type="text" id="txtDirFiscal" name="txtDirFiscal" required="" >
+                        </div>
+
                     </div>
 
                     <div class="tile-footer">
