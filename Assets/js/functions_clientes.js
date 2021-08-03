@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         //Mostrar la alerta
                         swal("Usuarios", objData.msg, "success");
 
-                        tableUsuarios.api().ajax.reload();
+                        //tableUsuarios.api().ajax.reload();
                     
                     } else {
                         swal("Error", objData.msg, "error");
