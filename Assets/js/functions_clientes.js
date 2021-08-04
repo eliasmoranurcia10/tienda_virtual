@@ -1,6 +1,65 @@
 
+let tableClientes;
+//Añadimos la variable que contiene un cargador
+let divLoading = document.querySelector("#divLoading");
+
+
 //Indica que al momento de cargar la vista, va a agregar los elementos que se van a configurar dentro de la función
 document.addEventListener('DOMContentLoaded', function(){
+
+    tableClientes = $('#tableClientes').dataTable( {
+		"aProcessing":true,
+		"aServerSide":true,
+        "language": {
+        	"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+        },
+        "ajax":{
+            "url": " "+base_url+"/Clientes/getClientes",
+            "dataSrc":""
+        },
+        "columns":[
+            {"data":"idpersona"},
+            {"data":"identificacion"},
+            {"data":"nombres"},
+            {"data":"apellidos"},
+            {"data":"email_user"},
+            {"data":"telefono"},
+            {"data":"options"},
+        ],
+
+        'dom': 'lBfrtip',
+        'buttons': [
+            {
+                "extend": "copyHtml5",
+                "text": "<i class='far fa-copy'></i> Copiar",
+                "titleAttr": "Copiar",
+                "className": "btn btn-secondary"
+            },
+            {
+                "extend": "excelHtml5",
+                "text": "<i class='fas fa-file-excel'></i> Excel",
+                "titleAttr": "Exportar a Excel",
+                "className": "btn btn-success"
+            },
+            {
+                "extend": "pdfHtml5",
+                "text": "<i class='fas fa-file-pdf'></i> PDF",
+                "titleAttr": "Exportar a PDF",
+                "className": "btn btn-danger"
+            },
+            {
+                "extend": "csvHtml5",
+                "text": "<i class='fas fa-file-csv'></i> csv",
+                "titleAttr": "Exportar a CSV",
+                "className": "btn btn-info"
+            }
+        ],
+
+        "resonsieve":"true",
+        "bDestroy": true,
+        "iDisplayLength": 10,
+        "order":[[0,"desc"]]  
+    });
 
     //Agregar o Editar clientes - en el formulario de clientes
     if (document.querySelector("#formCliente")) {
@@ -67,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         //Mostrar la alerta
                         swal("Usuarios", objData.msg, "success");
 
-                        //tableUsuarios.api().ajax.reload();
+                        tableClientes.api().ajax.reload();
                     
                     } else {
                         swal("Error", objData.msg, "error");

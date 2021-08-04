@@ -133,6 +133,49 @@
         }
 
 
+        public function getClientes()
+        {
+
+            if( $_SESSION['permisosMod']['r'] ){
+
+                $arrData    = $this->model->selectClientes();
+                
+                for ($i=0; $i < count($arrData); $i++) { 
+
+                    $btnView    = '';
+                    $btnEdit    = '';
+                    $btnDelete  = '';
+
+                    if( $_SESSION['permisosMod']['r'] )
+                    {
+                        $btnView    = '<button class="btn btn-info btn-sm" onClick="fntViewInfo('.$arrData[$i]['idpersona'].')" title="Ver Cliente"><i class="far fa-eye"></i></button>';
+                    }
+
+                    if( $_SESSION['permisosMod']['u'] )
+                    { 
+                       
+                        $btnEdit    = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo(this,'.$arrData[$i]['idpersona'].')" title="Editar Cliente"><i class="fas fa-user-edit"></i></i></button>';
+                        
+                    }
+
+                    if( $_SESSION['permisosMod']['d'] )
+                    {
+
+                        $btnDelete  = '<button class="btn btn-danger btn-sm" onClick="fntDelInfo('.$arrData[$i]['idpersona'].')" title="Eliminar Cliente"><i class="far fa-trash-alt"></i></button>';
+                        
+                    }
+
+                    $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
+                }
+
+                echo json_encode($arrData,JSON_UNESCAPED_UNICODE); // Forzarlo a que se convierta e un objeto
+
+            }
+
+            die(); //Finalizar el proceso
+        }
+
+
     }
 
 ?>

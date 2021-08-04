@@ -70,5 +70,19 @@
             }
             return $return;
         }
+
+        public function selectClientes()
+        {
+
+            $sql    =  "SELECT idpersona, identificacion, nombres, apellidos, telefono, email_user, status 
+                        FROM persona
+                        WHERE rolid = 23 AND status != 0 ";
+
+            $request    = $this->select_all($sql);
+
+            return $request;
+            
+        }
+
     }
 ?>
