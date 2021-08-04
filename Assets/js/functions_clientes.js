@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function(){
             let strApellido         = document.querySelector('#txtApellido').value;
             let intTelefono         = document.querySelector('#txtTelefono').value;
             let strEmail            = document.querySelector('#txtEmail').value;
-            let strPassword         = document.querySelector('#txtPassword').value;
+            //let strPassword         = document.querySelector('#txtPassword').value;
 
             let strNit              = document.querySelector('#txtNit').value;
             let strNomFiscal        = document.querySelector('#txtNombreFiscal').value;
@@ -144,10 +144,49 @@ document.addEventListener('DOMContentLoaded', function(){
 
 }, false);
 
+//FUNCIÓN PARA VISUALIZAR A LOS USUARIOS
+function fntViewInfo(idpersona){
+
+    let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl     = base_url + '/Clientes/getCliente/'+idpersona;
+
+    request.open("GET",ajaxUrl,true);
+    request.send();
+
+    request.onreadystatechange  = function(){
+
+        //Verifica si se ha devuelto la información
+        if(request.readyState==4 && request.status == 200){
+            //Convertir el formato JSON en un objeto todo lo que viene en request
+            let objData = JSON.parse(request.responseText);
+
+            if(objData.status){
+
+                document.querySelector("#celIdentificacion").innerHTML  = objData.data.identificacion;
+                document.querySelector("#celNombre").innerHTML          = objData.data.nombres;
+                document.querySelector("#celApellido").innerHTML        = objData.data.apellidos;
+                document.querySelector("#celTelefono").innerHTML        = objData.data.telefono;
+                document.querySelector("#celEmail").innerHTML           = objData.data.email_user;
+                document.querySelector("#celIde").innerHTML             = objData.data.nit;
+                document.querySelector("#celNomFiscal").innerHTML       = objData.data.nombrefiscal;
+                document.querySelector("#celDirFiscal").innerHTML       = objData.data.direccionfiscal;
+                document.querySelector("#celFechaRegistro").innerHTML   = objData.data.fechaRegistro;
+
+                $('#modalViewCliente').modal('show');
+
+            } else {
+                swal("Error", objData.msg, "error");
+            }
+
+        }
+
+    }
+
+}
 
 function openModal(){
     //Se resetea el rowTable cada vez que se dea click en el nuevo usuario para que no guarde la tabla del usuario elegido
-    rowTable = "";
+    //rowTable = "";
 
     document.querySelector('#idUsuario').value      = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate","headerRegister");

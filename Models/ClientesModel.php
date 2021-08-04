@@ -2,16 +2,16 @@
 
     class ClientesModel extends Mysql{
 
-        private $intIdUsuario;
+        //private $intIdUsuario;
         private $strIdentificacion;
         private $strNombre;
         private $strApellido;
         private $intTelefono;
         private $strEmail;
         private $strPassword;
-        private $strToken;
+        //private $strToken;
         private $intTipoId;
-        private $intStatus;
+        //private $intStatus;
 
         private $strNit;
         private $strNomFiscal;
@@ -82,6 +82,19 @@
 
             return $request;
             
+        }
+
+        public function selectCliente(int $idpersona)
+        {
+            $this->intIdUsuario = $idpersona;
+
+            $sql    = "SELECT idpersona, identificacion, nombres, apellidos, telefono, email_user, nit, nombrefiscal, direccionfiscal, status, DATE_FORMAT(datecreated, '%d-%m-%Y' ) as fechaRegistro
+            FROM persona
+            WHERE idpersona = $this->intIdUsuario AND rolid = 23";
+
+            $request = $this->select($sql);
+            
+            return $request;
         }
 
     }

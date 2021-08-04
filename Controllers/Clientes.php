@@ -176,6 +176,34 @@
         }
 
 
+        public function getCliente($idpersona)
+        {
+            
+            $idusuario = intval($idpersona);
+
+            if($idusuario > 0){
+
+                $arrData    = $this->model->selectCliente($idusuario);
+
+                if(empty($arrData))
+                {
+                    $arrResponse    = array('status' => false, 'msg' => 'Datos no encontrados.');
+                
+                } else
+                {
+                    $arrResponse    = array('status' => true  , 'data' => $arrData);
+                }
+
+                //Convertir en formato json el array
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            }
+
+            die();
+
+        }
+
+
+
     }
 
 ?>

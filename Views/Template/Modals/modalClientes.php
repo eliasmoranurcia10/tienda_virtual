@@ -105,7 +105,7 @@
 
 
 <!-- Modal para visualizar a cada usuario-->
-<div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalViewCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog" >
         <div class="modal-content">
 
@@ -143,12 +143,16 @@
                             <td id="celEmail">yoexer@gmail.com</td>
                         </tr>
                         <tr>
-                            <td>Tipo Usuario:</td>
-                            <td id="celTipoUsuario">Jefe</td>
+                            <td>Identificación Tributaria:</td>
+                            <td id="celIde">yxr</td>
                         </tr>
                         <tr>
-                            <td>Estado:</td>
-                            <td id="celEstado">Activo</td>
+                            <td>Nombre Fiscal:</td>
+                            <td id="celNomFiscal">elias</td>
+                        </tr>
+                        <tr>
+                            <td>Dirección Fiscal:</td>
+                            <td id="celDirFiscal">Santa Rosa</td>
                         </tr>
                         <tr>
                             <td>Fecha de Registro:</td>

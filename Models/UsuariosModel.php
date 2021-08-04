@@ -9,7 +9,7 @@
         private $intTelefono;
         private $strEmail;
         private $strPassword;
-        private $strToken;
+        //private $strToken;
         private $intTipoId;
         private $intStatus;
 
