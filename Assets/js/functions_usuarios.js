@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function(){
         "order":[[0,"desc"]]  
     });
 
-    //Agregar o Editar usuarios - en el formulario de usuarios
+    //Agregar usuarios - en el formulario de usuarios
     if (document.querySelector("#formUsuario")) {
 
         let formUsuario = document.querySelector("#formUsuario");
@@ -484,7 +484,7 @@ function fntDelUsuario(idpersona) {
                 //Validamos el navegador - si es firefox o chrome se crea XMLHttpRequest - si es edge o iternet explorer se crea Microsoft.XMLHTTP 
                 let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                 //Ruta por la cual Llamamos al controlador y a su método delRol
-                let ajaxUrl  = base_url+'/Usuarios/delUsuario/';
+                let ajaxUrl  = base_url+'/Usuarios/delUsuario';
                 let strData     = "idUsuario="+idpersona;
 
                 //Abrimos la conexión
