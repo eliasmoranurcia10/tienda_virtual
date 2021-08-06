@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function(){
             let strEmail            = document.querySelector('#txtEmail').value;
             let intTelefono         = document.querySelector('#txtTelefono').value;
             let intTipousuario      = document.querySelector('#listRolid').value;
-            let strPassword         = document.querySelector('#txtPassword').value;
+            //let strPassword         = document.querySelector('#txtPassword').value;
 
             let intStatus           = document.querySelector('#listStatus').value;
 

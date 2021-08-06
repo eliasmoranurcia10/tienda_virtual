@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 22-06-2021 a las 02:51:24
+-- Tiempo de generación: 05-08-2021 a las 21:27:25
 -- Versión del servidor: 8.0.21
 -- Versión de PHP: 7.3.21
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `modulo` (
   `descripcion` text COLLATE utf8mb4_swedish_ci NOT NULL,
   `status` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`idmodulo`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `modulo`
@@ -96,7 +96,8 @@ INSERT INTO `modulo` (`idmodulo`, `titulo`, `descripcion`, `status`) VALUES
 (2, 'Usuarios', 'Usuarios del Sistema', 1),
 (3, 'Clientes', 'Clientes de la tienda', 1),
 (4, 'Productos', 'Todos los productos', 1),
-(5, 'Pedidos', 'Pedidos', 1);
+(5, 'Pedidos', 'Pedidos', 1),
+(6, 'Categorías', 'Cateforías Productos', 1);
 
 -- --------------------------------------------------------
 
@@ -134,63 +135,31 @@ CREATE TABLE IF NOT EXISTS `permisos` (
   PRIMARY KEY (`idpermiso`),
   KEY `rolid` (`rolid`),
   KEY `moduloid` (`moduloid`)
-) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=522 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `permisos`
 --
 
 INSERT INTO `permisos` (`idpermiso`, `rolid`, `moduloid`, `r`, `w`, `u`, `d`) VALUES
-(46, 16, 1, 1, 1, 0, 0),
-(47, 16, 2, 1, 1, 0, 0),
-(48, 16, 3, 1, 1, 0, 0),
-(49, 16, 4, 1, 1, 0, 0),
-(50, 16, 5, 1, 1, 0, 0),
-(81, 14, 1, 1, 1, 1, 1),
-(82, 14, 2, 1, 1, 1, 1),
-(83, 14, 3, 1, 1, 1, 1),
-(84, 14, 4, 1, 1, 1, 1),
-(85, 14, 5, 1, 1, 1, 1),
-(86, 15, 1, 1, 0, 0, 0),
-(87, 15, 2, 0, 0, 0, 0),
-(88, 15, 3, 1, 1, 0, 0),
-(89, 15, 4, 1, 1, 1, 1),
-(90, 15, 5, 1, 0, 1, 0),
-(106, 23, 1, 1, 1, 1, 1),
-(107, 23, 2, 0, 0, 0, 0),
-(108, 23, 3, 0, 0, 0, 0),
-(109, 23, 4, 1, 0, 0, 0),
-(110, 23, 5, 0, 0, 0, 0),
-(116, 20, 1, 0, 0, 0, 0),
-(117, 20, 2, 0, 0, 0, 0),
-(118, 20, 3, 1, 1, 1, 1),
-(119, 20, 4, 1, 0, 1, 1),
-(120, 20, 5, 1, 1, 1, 1),
-(126, 17, 1, 1, 1, 0, 0),
-(127, 17, 2, 1, 1, 0, 0),
-(128, 17, 3, 1, 1, 1, 1),
-(129, 17, 4, 1, 1, 1, 1),
-(130, 17, 5, 1, 1, 1, 0),
-(131, 26, 1, 1, 1, 1, 1),
-(132, 26, 2, 1, 1, 1, 1),
-(133, 26, 3, 1, 1, 1, 1),
-(134, 26, 4, 1, 1, 1, 1),
-(135, 26, 5, 1, 1, 1, 1),
-(136, 22, 1, 1, 1, 1, 1),
-(137, 22, 2, 0, 0, 0, 0),
-(138, 22, 3, 0, 0, 0, 0),
-(139, 22, 4, 0, 0, 0, 0),
-(140, 22, 5, 0, 0, 0, 0),
-(156, 27, 1, 1, 1, 1, 1),
-(157, 27, 2, 1, 0, 0, 0),
-(158, 27, 3, 1, 0, 0, 0),
-(159, 27, 4, 1, 0, 0, 0),
-(160, 27, 5, 1, 0, 0, 0),
-(161, 25, 1, 1, 0, 0, 0),
-(162, 25, 2, 0, 1, 1, 0),
-(163, 25, 3, 0, 0, 0, 0),
-(164, 25, 4, 0, 0, 0, 1),
-(165, 25, 5, 0, 0, 0, 1);
+(384, 14, 1, 1, 0, 0, 0),
+(385, 14, 2, 0, 0, 0, 0),
+(386, 14, 3, 0, 0, 0, 0),
+(387, 14, 4, 0, 0, 0, 0),
+(388, 14, 5, 0, 0, 0, 0),
+(389, 14, 6, 0, 0, 0, 0),
+(510, 1, 1, 1, 0, 0, 0),
+(511, 1, 2, 1, 1, 1, 1),
+(512, 1, 3, 1, 1, 1, 1),
+(513, 1, 4, 1, 0, 0, 0),
+(514, 1, 5, 1, 0, 0, 0),
+(515, 1, 6, 1, 0, 0, 0),
+(516, 16, 1, 1, 0, 0, 0),
+(517, 16, 2, 1, 0, 0, 0),
+(518, 16, 3, 1, 1, 1, 1),
+(519, 16, 4, 0, 0, 0, 0),
+(520, 16, 5, 0, 0, 0, 0),
+(521, 16, 6, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -210,24 +179,24 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `nit` varchar(20) COLLATE utf8mb4_swedish_ci NOT NULL,
   `nombrefiscal` varchar(80) COLLATE utf8mb4_swedish_ci NOT NULL,
   `direccionfiscal` varchar(100) COLLATE utf8mb4_swedish_ci NOT NULL,
-  `token` varchar(80) COLLATE utf8mb4_swedish_ci NOT NULL,
+  `token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   `rolid` bigint NOT NULL,
   `datecreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`idpersona`),
   KEY `rolid` (`rolid`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `persona`
 --
 
 INSERT INTO `persona` (`idpersona`, `identificacion`, `nombres`, `apellidos`, `telefono`, `email_user`, `password`, `nit`, `nombrefiscal`, `direccionfiscal`, `token`, `rolid`, `datecreated`, `status`) VALUES
-(1, '75492652', 'Yoexer Elias', 'Moran Urcia', 933212236, 'yoexer@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '', '', '', '', 26, '2021-06-16 00:32:17', 1),
-(2, '75928485', 'Daniel', 'Moran Urcia', 944738984, 'daniel@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '', '', '', '', 25, '2021-06-16 00:37:03', 1),
-(3, '83647584', 'Angie', 'Moran', 644838383, 'angie@gmail.com', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '', '', '', '', 16, '2021-06-17 13:14:34', 2),
-(4, '75649273', 'Kiara', 'Moran', 944373845, 'kiara@gmail.com', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '', '', '', '', 17, '2021-06-17 13:18:59', 2),
-(5, '8756567', 'Danilo', 'Moran', 954678076, 'danilo@info.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '', '', '', '', 14, '2021-06-18 13:36:04', 2),
+(1, '75492652', 'Yoexer Elias', 'Moran Urcia', 933212236, 'yoexer@gmail.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '24252622', 'Elias', 'Santa Rosa', '', 1, '2021-06-16 00:32:17', 1),
+(2, '54678678', 'Daniel Abraham', 'Moran Urcia', 655678435, 'daniel@gmail.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '', '', '', '', 15, '2021-06-16 00:37:03', 2),
+(3, '71676543', 'Angie Danitza', 'Moran Urcia', 644838383, 'angie@gmail.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '345434', 'Angie M', 'Santa Rosa', '', 16, '2021-06-17 13:14:34', 1),
+(4, '75649273', 'Kiara', 'Moran', 944373845, 'kiara@gmail.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '3534554643', 'Kiara Moran Urcia', 'Santa Rosa', '', 1, '2021-06-17 13:18:59', 1),
+(5, '8756567', 'Cristobal Daniel', 'Moran Sanchez', 954678076, 'danilo@info.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '35345', 'Danilo', 'Santa Rosa', '8185cc618b9583dd1172-8bcc98f43471ffcbd91f-4778d05953132fc90db0-b32189c05362fde594b3', 1, '2021-06-18 13:36:04', 1),
 (6, '7563892', 'Maria', 'Urcia', 736273849, 'maria@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '', '', '', '', 14, '2021-06-18 21:01:48', 0),
 (7, '42433456', 'Maria', 'Urcia', 544678467, 'mariau@gmail.com', 'b31a2a679a901270d2090b7e7732ce8828a770213a113978a125511f237a2b0f', '', '', '', '', 14, '2021-06-19 02:32:58', 0),
 (8, '87327382', 'Alex', 'Custodio', 399484958, 'alex@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '', '', '', '', 23, '2021-06-19 21:02:29', 0),
@@ -238,7 +207,12 @@ INSERT INTO `persona` (`idpersona`, `identificacion`, `nombres`, `apellidos`, `t
 (13, '83738374', 'Asael', 'Bernal', 544567543, 'asael@gmail.com', '6f2fbeed0ab6fed112df71b65aded248cb86cd9b20de840b5bffe44812a1056f', '', '', '', '', 27, '2021-06-19 22:50:30', 0),
 (14, '345766787', 'Abel', 'OS', 966356365, 'ab@info', 'eb49c49cfa5f0177a139147a3c3ea0b7e2cc05bc6d36c4ac39e944cd55ed1e4f', '', '', '', '', 14, '2021-06-21 14:21:56', 0),
 (15, '76908378', 'Judas', 'Betarzo', 944594485, 'judas@inf.com', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '', '', '', '', 15, '2021-06-21 14:30:44', 0),
-(16, '899329328', 'Kevin', 'Arana', 34323234324, 'kevin@gmail.com', 'bfa951ec0419f8ac675f9cd80ed30fc647327c670adca6c6c62f135e6abab5fb', '', '', '', '', 14, '2021-06-21 14:33:44', 0);
+(16, '899329328', 'Kevin', 'Arana', 34323234324, 'kevin@gmail.com', 'bfa951ec0419f8ac675f9cd80ed30fc647327c670adca6c6c62f135e6abab5fb', '', '', '', '', 14, '2021-06-21 14:33:44', 0),
+(17, '24323423', 'Francisco', 'Jimenez', 354567895, 'francisco@gmail.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '', '', '', '', 25, '2021-07-16 01:46:41', 1),
+(18, '45355443', 'Alan', 'Estrada', 933456435, 'sdsd@gmail.com', 'b99b08fadf78ea9276a9ab14e5a388825b2161677f97950d40dfd541cedeb213', '', '', '', '', 16, '2021-07-20 20:26:45', 1),
+(19, '455344554', 'Alan', 'Arenales', 34567567, 'alan@info.com', '3ecc87460a20bcaf0f7a0393b3e14f8689d95f52d36063bc861e64a5f613da79', 'cf', 'Alan', 'JLO', '', 23, '2021-08-03 13:51:42', 1),
+(20, '44567853', 'Carlos', 'Hernandez', 966785675, 'carlos@gmail.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'cg', 'Carlos', 'Chiclayo', '', 23, '2021-08-03 16:58:59', 1),
+(21, '4323536776', 'Pablo', 'Herrera', 877658987, 'pablo@gmail.com', '9d140953351a9b7d282721369d323e818e27a938b3a9cdd3e65516813bef67a9', '4354', 'Pablo', 'Chiclayo', '', 23, '2021-08-04 11:12:29', 1);
 
 -- --------------------------------------------------------
 
@@ -275,14 +249,14 @@ CREATE TABLE IF NOT EXISTS `rol` (
   `descripcion` text COLLATE utf8mb4_swedish_ci NOT NULL,
   `status` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`idrol`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
 INSERT INTO `rol` (`idrol`, `nombrerol`, `descripcion`, `status`) VALUES
-(1, 'Encargados', 'Encargados', 0),
+(1, 'Administrador', 'Acceso a todo el sistema', 1),
 (2, 'Supervisores', 'Supervisores', 0),
 (4, 'Vendedores', 'Vendedores', 0),
 (5, 'ejemplo 1', 'descripcion ejemplo 1', 0),
@@ -294,20 +268,23 @@ INSERT INTO `rol` (`idrol`, `nombrerol`, `descripcion`, `status`) VALUES
 (11, 'Cajero 03', 'este es el reemplazo del cajero 02', 0),
 (12, 'Supervisores 02', 'los reemplazos de los Supervisores', 0),
 (13, 'Reportería', 'Este es un reporttero 2', 0),
-(14, 'Jefe', 'Es el dueño de la tienda virtual', 1),
+(14, 'Jefe', 'Es el dueño de la tienda virtual en la empresa', 1),
 (15, 'Supervisor', 'Vigila todas las acciones de la empresa y de la tienda', 1),
 (16, 'Vendedor 1', 'Se encarga de vender productos de la tienda en el sistema', 1),
-(17, 'Vendedor 2', 'Es el reemplazante del primer vendedor 1', 2),
+(17, 'Vendedor 2', 'Es el reemplazante del primer vendedor 2', 1),
 (18, 'rol para eliminar', 'este es un rol que va a ser eliminado', 0),
 (19, 'usuario a eliminad', 'vwvevew', 0),
 (20, 'Corregidor', 'Actualiza las ventas y atiende las quejas del cliente de venta', 1),
 (21, 'Coordinador', 'Coordinador', 0),
 (22, 'Vendedor 3', 'Vendedor para conseguir', 2),
-(23, 'Clientes', 'Consumidores fieles a la tienda', 2),
+(23, 'Clientes', 'Consumidores fieles a la tienda', 1),
 (24, 'Consulta ventas', 'Consulta ventas', 0),
-(25, 'Administrador', 'Administrador', 1),
+(25, 'Consultor', 'Consultor', 1),
 (26, 'Programador', 'Programador', 1),
-(27, 'Visitantes', 'Visitantes de la empresa', 1);
+(27, 'Visitantes', 'Visitantes de la empresa', 1),
+(28, 'Operador', 'Operador', 1),
+(29, 'Terminal 2', 'Terminal 2', 1),
+(30, 'Participante', 'Participante', 1);
 
 --
 -- Restricciones para tablas volcadas

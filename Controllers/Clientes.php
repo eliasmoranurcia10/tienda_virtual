@@ -45,6 +45,7 @@
                 } else {
 
                     $idUsuario          = intval($_POST['idUsuario']);
+
                     $strIdentificacion  = strClean($_POST['txtIdentificacion']);
                     $strNombre          = ucwords( strClean($_POST['txtNombre']) );
                     $strApellido        = ucwords( strClean($_POST['txtApellido']) );
@@ -84,23 +85,26 @@
 
                     } else {
 
-                        /*$option     = 2;
+                        $option     = 2;
 
                         $strPassword        = empty( $_POST['txtPassword'] ) ? "" : hash("SHA256", $_POST['txtPassword']);
 
                         if( $_SESSION['permisosMod']['u'] ){
                             
-                            $request_user       = $this->model->updateUsuario(
+                            $request_user       = $this->model->updateCliente(
                                 $idUsuario,
                                 $strIdentificacion,
                                 $strNombre,
                                 $strApellido,
                                 $intTelefono,
                                 $strEmail,
-                                $strPassword
+                                $strPassword,
+                                $strNit,
+                                $strNomFiscal,
+                                $strDirFiscal
                             );
 
-                        }*/
+                        }
 
                     }
 
@@ -154,7 +158,7 @@
                     if( $_SESSION['permisosMod']['u'] )
                     { 
                        
-                        $btnEdit    = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo(this,'.$arrData[$i]['idpersona'].')" title="Editar Cliente"><i class="fas fa-user-edit"></i></i></button>';
+                        $btnEdit    = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo('.$arrData[$i]['idpersona'].')" title="Editar Cliente"><i class="fas fa-user-edit"></i></i></button>';
                         
                     }
 

@@ -70,7 +70,7 @@
     function getPermisos(int $idmodulo)
     {
         # code...
-        require_once("Models\PermisosModel.php");
+        require_once("Models/PermisosModel.php");
         $objPermisos    = new PermisosModel();
         $idrol          = $_SESSION['userData']['idrol'];
         $arrPermisos    = $objPermisos->permisosModulo($idrol);

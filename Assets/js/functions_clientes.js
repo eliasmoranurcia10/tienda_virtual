@@ -144,6 +144,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 }, false);
 
+
+
 //FUNCIÓN PARA VISUALIZAR A LOS USUARIOS
 function fntViewInfo(idpersona){
 
@@ -179,6 +181,52 @@ function fntViewInfo(idpersona){
             }
 
         }
+
+    }
+
+}
+
+//FUNCIÓN PARA EDITAR LOS USUARIOS
+function fntEditInfo(idpersona){
+
+    document.querySelector('#titleModal').innerHTML     = "Actualizar Cliente";
+    document.querySelector('.modal-header').classList.replace("headerRegister","headerUpdate");
+    document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
+    document.querySelector('#btnText').innerHTML        = "Actualizar";
+
+
+    //Verificación del navegador 
+    let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl     = base_url + '/Clientes/getCliente/'+idpersona;
+
+    //Abriendo la conexión mediante la petición GET
+    request.open("GET",ajaxUrl,true);
+    request.send();
+
+    request.onreadystatechange  = function(){
+
+        if(request.readyState==4 && request.status == 200){
+
+            let objData = JSON.parse(request.responseText);
+
+            if(objData.status){
+
+                document.querySelector('#idUsuario').value          = objData.data.idpersona;
+                document.querySelector('#txtIdentificacion').value  = objData.data.identificacion;
+                document.querySelector('#txtNombre').value          = objData.data.nombres;
+                document.querySelector('#txtApellido').value        = objData.data.apellidos;
+                document.querySelector('#txtTelefono').value        = objData.data.telefono;
+                document.querySelector('#txtEmail').value           = objData.data.email_user;
+                
+                document.querySelector('#txtNit').value             = objData.data.nit;
+                document.querySelector('#txtNombreFiscal').value    = objData.data.nombrefiscal;
+                document.querySelector('#txtDirFiscal').value       = objData.data.direccionfiscal;
+
+            }
+
+        }
+
+        $('#modalFormCliente').modal('show');
 
     }
 
