@@ -197,23 +197,26 @@
         public function getCliente($idpersona)
         {
             
-            $idusuario = intval($idpersona);
+            if( $_SESSION['permisosMod']['r'] ){
 
-            if($idusuario > 0){
+                $idusuario = intval($idpersona);
 
-                $arrData    = $this->model->selectCliente($idusuario);
+                if($idusuario > 0){
 
-                if(empty($arrData))
-                {
-                    $arrResponse    = array('status' => false, 'msg' => 'Datos no encontrados.');
-                
-                } else
-                {
-                    $arrResponse    = array('status' => true  , 'data' => $arrData);
+                    $arrData    = $this->model->selectCliente($idusuario);
+
+                    if(empty($arrData))
+                    {
+                        $arrResponse    = array('status' => false, 'msg' => 'Datos no encontrados.');
+                    
+                    } else
+                    {
+                        $arrResponse    = array('status' => true  , 'data' => $arrData);
+                    }
+
+                    //Convertir en formato json el array
+                    echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
                 }
-
-                //Convertir en formato json el array
-                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             }
 
             die();
@@ -224,20 +227,22 @@
         {
             if( $_POST )
             {
+                if( $_SESSION['permisosMod']['d'] ){
 
-                $intIdpersona   = intval($_POST['idUsuario']);
-                $requestDelete  = $this->model->deleteCliente($intIdpersona);
+                    $intIdpersona   = intval($_POST['idUsuario']);
+                    $requestDelete  = $this->model->deleteCliente($intIdpersona);
 
-                if( $requestDelete ){
+                    if( $requestDelete ){
 
-                    $arrResponse    = array('status' => true , 'msg' => 'Se ha eliminado el cliente.');
+                        $arrResponse    = array('status' => true , 'msg' => 'Se ha eliminado el cliente.');
 
-                } else {
+                    } else {
 
-                    $arrResponse    = array('status' => false, 'msg' => 'Error al eliminar el cliente.');
+                        $arrResponse    = array('status' => false, 'msg' => 'Error al eliminar el cliente.');
+                    }
+
+                    echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
                 }
-
-                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             }
             die();
         }
