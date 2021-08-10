@@ -64,7 +64,9 @@
                         $option     = 1;
 
                         //hash tiene la función de encriptar la contraseña
-                        $strPassword        = empty( $_POST['txtPassword'] ) ? hash("SHA256", passGenerator() ) : hash("SHA256", $_POST['txtPassword']);
+                        $strPassword        = empty( $_POST['txtPassword'] ) ? passGenerator() : $_POST['txtPassword'];
+
+                        $strPasswordEncript = hash("SHA256", $strPassword);
 
                         if( $_SESSION['permisosMod']['w'] ){
 
@@ -74,7 +76,7 @@
                                 $strApellido,
                                 $intTelefono,
                                 $strEmail,
-                                $strPassword,
+                                $strPasswordEncript,
                                 $intTipoId,
                                 $strNit,
                                 $strNomFiscal,
@@ -114,6 +116,18 @@
                     {
                         if($option == 1 ){
                             $arrResponse    = array('status' => true , 'msg' => 'Datos guardados correctamente.');
+
+                            $nombreUsuario  = $strNombre.' '.$strApellido;
+
+                            $dataUsuario    = array(
+                                'nombreUsuario' => $nombreUsuario,
+                                'email'         => $strEmail,
+                                'password'      => $strPassword,
+                                'Asunto'        => 'Bienvenido a tu tienda en línea'
+                            );
+
+                            //sendEmail($dataUsuario, 'email_bienvenida');
+
                         } else {
                             $arrResponse    = array('status' => true , 'msg' => 'Datos Actualizados correctamente.');
                         }
@@ -158,7 +172,7 @@
                     if( $_SESSION['permisosMod']['u'] )
                     { 
                        
-                        $btnEdit    = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo('.$arrData[$i]['idpersona'].')" title="Editar Cliente"><i class="fas fa-user-edit"></i></i></button>';
+                        $btnEdit    = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo(this, '.$arrData[$i]['idpersona'].')" title="Editar Cliente"><i class="fas fa-user-edit"></i></i></button>';
                         
                     }
 

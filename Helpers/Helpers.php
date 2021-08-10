@@ -42,7 +42,7 @@
     }
 
     //Envía en email para la recuperación de la contraseña
-    function sendEmail($data, $template)
+    function sendEmail($data,string $template)
     {
         $asunto         = $data['asunto'];
         $emailDestino   = $data['email'];
@@ -59,7 +59,7 @@
 
         //Cargar en memoria o en buffer un archivo
         ob_start();
-        require_once("Views/Template/Email/".$template.".php");
+        require_once("Views/Template/Email/{$template}.php");
         //devuelve el archivo que se ha cargado
         $mensaje    = ob_get_clean();
         //Función que hace el envío de correos

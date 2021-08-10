@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 05-08-2021 a las 21:27:25
+-- Tiempo de generación: 07-08-2021 a las 05:24:01
 -- Versión del servidor: 8.0.21
 -- Versión de PHP: 7.3.21
 
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `permisos` (
   PRIMARY KEY (`idpermiso`),
   KEY `rolid` (`rolid`),
   KEY `moduloid` (`moduloid`)
-) ENGINE=InnoDB AUTO_INCREMENT=522 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=552 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `permisos`
@@ -148,18 +148,18 @@ INSERT INTO `permisos` (`idpermiso`, `rolid`, `moduloid`, `r`, `w`, `u`, `d`) VA
 (387, 14, 4, 0, 0, 0, 0),
 (388, 14, 5, 0, 0, 0, 0),
 (389, 14, 6, 0, 0, 0, 0),
-(510, 1, 1, 1, 0, 0, 0),
-(511, 1, 2, 1, 1, 1, 1),
-(512, 1, 3, 1, 1, 1, 1),
-(513, 1, 4, 1, 0, 0, 0),
-(514, 1, 5, 1, 0, 0, 0),
-(515, 1, 6, 1, 0, 0, 0),
 (516, 16, 1, 1, 0, 0, 0),
 (517, 16, 2, 1, 0, 0, 0),
 (518, 16, 3, 1, 1, 1, 1),
 (519, 16, 4, 0, 0, 0, 0),
 (520, 16, 5, 0, 0, 0, 0),
-(521, 16, 6, 0, 0, 0, 0);
+(521, 16, 6, 0, 0, 0, 0),
+(546, 1, 1, 1, 0, 0, 0),
+(547, 1, 2, 1, 1, 1, 1),
+(548, 1, 3, 1, 1, 1, 1),
+(549, 1, 4, 1, 0, 0, 0),
+(550, 1, 5, 1, 0, 0, 0),
+(551, 1, 6, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -210,8 +210,8 @@ INSERT INTO `persona` (`idpersona`, `identificacion`, `nombres`, `apellidos`, `t
 (16, '899329328', 'Kevin', 'Arana', 34323234324, 'kevin@gmail.com', 'bfa951ec0419f8ac675f9cd80ed30fc647327c670adca6c6c62f135e6abab5fb', '', '', '', '', 14, '2021-06-21 14:33:44', 0),
 (17, '24323423', 'Francisco', 'Jimenez', 354567895, 'francisco@gmail.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '', '', '', '', 25, '2021-07-16 01:46:41', 1),
 (18, '45355443', 'Alan', 'Estrada', 933456435, 'sdsd@gmail.com', 'b99b08fadf78ea9276a9ab14e5a388825b2161677f97950d40dfd541cedeb213', '', '', '', '', 16, '2021-07-20 20:26:45', 1),
-(19, '455344554', 'Alan', 'Arenales', 34567567, 'alan@info.com', '3ecc87460a20bcaf0f7a0393b3e14f8689d95f52d36063bc861e64a5f613da79', 'cf', 'Alan', 'JLO', '', 23, '2021-08-03 13:51:42', 1),
-(20, '44567853', 'Carlos', 'Hernandez', 966785675, 'carlos@gmail.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'cg', 'Carlos', 'Chiclayo', '', 23, '2021-08-03 16:58:59', 1),
+(19, '455344554', 'Alan', 'Arenales', 34567567, 'alan@info.com', '3ecc87460a20bcaf0f7a0393b3e14f8689d95f52d36063bc861e64a5f613da79', 'cf', 'Alan', 'JLO', '', 23, '2021-08-03 13:51:42', 0),
+(20, '12121212', 'Carlos Daniel', 'Cabrera', 966785675, 'carlos@info.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'car', 'Carlos s', 'Cix', '', 23, '2021-08-03 16:58:59', 1),
 (21, '4323536776', 'Pablo', 'Herrera', 877658987, 'pablo@gmail.com', '9d140953351a9b7d282721369d323e818e27a938b3a9cdd3e65516813bef67a9', '4354', 'Pablo', 'Chiclayo', '', 23, '2021-08-04 11:12:29', 1);
 
 -- --------------------------------------------------------

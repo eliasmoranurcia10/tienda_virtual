@@ -1,5 +1,7 @@
 
 let tableClientes;
+
+let rowTable    = "";
 //Añadimos la variable que contiene un cargador
 let divLoading = document.querySelector("#divLoading");
 
@@ -119,6 +121,18 @@ document.addEventListener('DOMContentLoaded', function(){
 
                     if (objData.status) 
                     {
+                        if (rowTable == "") {
+                            tableClientes.api().ajax.reload();
+                        } else {
+                            //ACTUALIZAR LAS TABLAS EN LA MISMA PÁGINA SIN RECARGARLA
+                            rowTable.cells[1].textContent   = strIdentificacion;
+                            rowTable.cells[2].textContent   = strNombre;
+                            rowTable.cells[3].textContent   = strApellido;
+                            rowTable.cells[4].textContent   = strEmail;
+                            rowTable.cells[5].textContent   = intTelefono;
+                            rowTable = "";
+                        }
+
                         //Ocultar el modal
                         $('#modalFormCliente').modal("hide");
                         //resetear todos los campos
@@ -126,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         //Mostrar la alerta
                         swal("Usuarios", objData.msg, "success");
 
-                        tableClientes.api().ajax.reload();
+                        
                     
                     } else {
                         swal("Error", objData.msg, "error");
@@ -187,7 +201,11 @@ function fntViewInfo(idpersona){
 }
 
 //FUNCIÓN PARA EDITAR LOS USUARIOS
-function fntEditInfo(idpersona){
+function fntEditInfo(element, idpersona){
+
+    //Asigna como valor al padre del padre del padre del botón- va a obtener como elemnto padre a toda la fila
+    rowTable    = element.parentNode.parentNode.parentNode;
+    //console.log(rowTable);
 
     document.querySelector('#titleModal').innerHTML     = "Actualizar Cliente";
     document.querySelector('.modal-header').classList.replace("headerRegister","headerUpdate");
@@ -292,7 +310,7 @@ function fntDelInfo(idpersona) {
 
 function openModal(){
     //Se resetea el rowTable cada vez que se dea click en el nuevo usuario para que no guarde la tabla del usuario elegido
-    //rowTable = "";
+    rowTable = "";
 
     document.querySelector('#idUsuario').value      = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate","headerRegister");
