@@ -29,7 +29,7 @@
                     
                             <div class="form-group">
                                 <label class="control-label">Nombre <span class="required" >*</span> </label>
-                                <input class="form-control" id="txtNombre" name="txtNombre" type="text" placeholder="Nombre del rol" required="" >
+                                <input class="form-control" id="txtNombre" name="txtNombre" type="text" placeholder="Nombre Categoría" required="" >
                             </div>
 
                             <div class="form-group">
@@ -49,7 +49,23 @@
 
 
                         <div class="col-md-6">
-                            
+                            <div class="photo">
+                                <label for="foto">Foto (570x380)</label>
+
+                                <div class="prevPhoto">
+                                    <span class="delPhoto notBlock">X</span>
+                                    <label for="foto"></label>
+                                    <div>
+                                        <img id="img" src="<?= media(); ?>/images/portada_categoria.png">
+                                    </div>
+                                </div>
+
+                                <div class="upimg">
+                                    <input type="file" name="foto" id="foto">
+                                </div>
+                                
+                                <div id="form_alert"></div>
+                            </div>
                         </div>
                     </div>
 

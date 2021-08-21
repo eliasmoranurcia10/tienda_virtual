@@ -16,7 +16,7 @@
 
     <link rel="stylesheet" type="text/css" href="<?=media();?>/css/bootstrap-select.min.css">
 
-    <link rel="stylesheet" type="text/css" href="<?=media();?>/css/style.css?v2">
+    <link rel="stylesheet" type="text/css" href="<?=media();?>/css/style.css?v4">
 
     <title> <?= $data['page_tag'] ?> </title>
 
