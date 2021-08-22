@@ -44,6 +44,67 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }
 
+    //Envío de datos por medio de AJAX
+    //NUEVA CATEGORÍA
+    let formCategoria = document.querySelector("#formCategoria");
+
+    formCategoria.onsubmit = function(e){         //al momento de que se envíe la información, lo que hace es que se ejecuta la función
+        e.preventDefault();                 //prevenir a que se recarge la página
+
+        let intIdCategoria  = document.querySelector('#idCategoria').value;
+        let strNombre       = document.querySelector('#txtNombre').value;
+        let strDescripcion  = document.querySelector('#txtDescripcion').value;
+        let intStatus       = document.querySelector('#listStatus').value;
+
+        //Verifica si los labels no están vacíos
+        if(strNombre=='' || strDescripcion=='' || intStatus=='')
+        {
+            swal("Atención","Todos los campos son obligatorios.","error");
+            return false;
+        }
+
+        //muestra un cargador
+        divLoading.style.display = "flex";
+
+        //objetos de acuerdo al navegador
+        let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); 
+
+        let ajaxUrl     = base_url +'/Categorias/setCategoria';
+        let formData    = new FormData(formCategoria);
+
+        //abrir por el metodo post para enviar la información
+        request.open("POST",ajaxUrl,true);
+        request.send(formData);
+        //Se va a obtener la información
+        request.onreadystatechange = function(){
+            
+            if(request.readyState == 4 && request.status == 200){
+                
+                let objData = JSON.parse(request.responseText);
+
+                if(objData.status) {
+
+                    $('#modalFormCategorias').modal("hide");
+                    //Resetear o limpiar campos
+                    formCategoria.reset();
+                    swal("Roles de usuario", objData.msg,"success");
+                    //tableRoles.api().ajax.reload();
+                    
+
+                } else {
+                    swal("Error", objData.msg, "error");
+                }
+            }
+
+            //Oculta el cargador
+            divLoading.style.display = "none";
+            return false;
+            //console.log(request);
+        }
+
+    }
+
+
 },false);
 
 function removePhoto(){
