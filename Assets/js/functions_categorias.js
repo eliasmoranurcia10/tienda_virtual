@@ -87,7 +87,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     $('#modalFormCategorias').modal("hide");
                     //Resetear o limpiar campos
                     formCategoria.reset();
-                    swal("Roles de usuario", objData.msg,"success");
+                    swal("Categorías", objData.msg,"success");
+
+                    removePhoto();
                     //tableRoles.api().ajax.reload();
                     
 
@@ -108,9 +110,14 @@ document.addEventListener('DOMContentLoaded', function(){
 },false);
 
 function removePhoto(){
+    
     document.querySelector('#foto').value ="";
     document.querySelector('.delPhoto').classList.add("notBlock");
-    document.querySelector('#img').remove();
+
+    if( document.querySelector('#img').parentElement != "null"){
+        document.querySelector('#img').remove();
+    }
+    
 }
 
 function openModal(){

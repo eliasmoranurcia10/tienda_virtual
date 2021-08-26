@@ -34,7 +34,7 @@
 
                             <div class="form-group">
                                 <label class="control-label">Descripción <span class="required" >*</span> </label>
-                                <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" rows="2" placeholder="Descripción del rol" required=""></textarea>
+                                <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" rows="2" placeholder="Descripción de la categoría" required=""></textarea>
                             </div>
 
                             <div class="form-group">
@@ -63,7 +63,7 @@
                                 <div class="upimg">
                                     <input type="file" name="foto" id="foto">
                                 </div>
-                                
+
                                 <div id="form_alert"></div>
                             </div>
                         </div>
