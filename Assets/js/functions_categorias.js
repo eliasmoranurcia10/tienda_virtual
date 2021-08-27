@@ -163,6 +163,44 @@ document.addEventListener('DOMContentLoaded', function(){
 
 },false);
 
+function fntViewInfo(idcategoria){
+
+    let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl     = base_url + '/Categorias/getCategoria/'+idcategoria;
+
+    request.open("GET",ajaxUrl,true);
+    request.send();
+
+    request.onreadystatechange  = function(){
+
+        //Verifica si se ha devuelto la información
+        if(request.readyState==4 && request.status == 200){
+            //Convertir el formato JSON en un objeto todo lo que viene en request
+            let objData = JSON.parse(request.responseText);
+
+            if(objData.status){
+
+                var estado = objData.data.status == 1 ? '<span class="badge badge-success">Activo</span>': '<span class="badge badge-danger">Inactivo</span>';
+
+
+                document.querySelector("#celId").innerHTML          = objData.data.idcategoria;
+                document.querySelector("#celNombre").innerHTML      = objData.data.nombre;
+                document.querySelector("#celDescripcion").innerHTML = objData.data.descripcion;
+                document.querySelector("#celEstado").innerHTML      = estado;
+                document.querySelector("#imgCategoria").innerHTML   = '<img src="'+ objData.data.url_portada +'"></img>';
+
+                $('#modalViewCategoria').modal('show');
+
+            } else {
+                swal("Error", objData.msg, "error");
+            }
+
+        }
+
+    }
+
+}
+
 function removePhoto(){
     
     document.querySelector('#foto').value ="";

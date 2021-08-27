@@ -56,7 +56,7 @@
     border: 1px solid #CCC;
     position: relative;
     cursor: pointer;
-    background: url(../images/portada_categoria.png);
+    background: url(../images/uploads/portada_categoria.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -109,4 +109,13 @@
 }
 .imgProductoDelete{
 	width: 175px;
+}
+
+#imgCaegoria{
+	text-align: center;
+}
+
+#imgCategoria img{
+	width: 200px;
+	margin: auto;
 }

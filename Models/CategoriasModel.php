@@ -56,6 +56,14 @@
             
         }
 
+        public function selectCategoria(int $idcategoria)
+        {
+            $this->intIdcategoria = $idcategoria;
+            $sql = "SELECT * FROM categoria WHERE idcategoria = $this->intIdcategoria";
+            $request = $this->select($sql);
+            return $request;
+        }
+
     }
 
 ?>

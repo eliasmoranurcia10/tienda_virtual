@@ -56,7 +56,7 @@
                                     <span class="delPhoto notBlock">X</span>
                                     <label for="foto"></label>
                                     <div>
-                                        <img id="img" src="<?= media(); ?>/images/portada_categoria.png">
+                                        <img id="img" src="<?= media(); ?>/images/uploads/portada_categoria.png">
                                     </div>
                                 </div>
 
@@ -86,13 +86,13 @@
 
 
 <!-- Modal para visualizar a cada usuario-->
-<div class="modal fade" id="modalViewCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalViewCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog" >
         <div class="modal-content">
 
 
             <div class="modal-header header-primary">
-                <h5 class="modal-title" id="titleModal">Datos del Usuario</h5>
+                <h5 class="modal-title" id="titleModal">Datos de la categoría</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -104,40 +104,24 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td>Identificación:</td>
-                            <td id="celIdentificacion">75492652</td>
+                            <td>ID:</td>
+                            <td id="celId"></td>
                         </tr>
                         <tr>
                             <td>Nombres:</td>
-                            <td id="celNombre">Elias</td>
+                            <td id="celNombre"></td>
                         </tr>
                         <tr>
-                            <td>Apellidos:</td>
-                            <td id="celApellido">Moran</td>
+                            <td>Descripción:</td>
+                            <td id="celDescripcion"></td>
                         </tr>
                         <tr>
-                            <td>Teléfono:</td>
-                            <td id="celTelefono">933212236</td>
+                            <td>Estado:</td>
+                            <td id="celEstado"></td>
                         </tr>
                         <tr>
-                            <td>Email (Usuario):</td>
-                            <td id="celEmail">yoexer@gmail.com</td>
-                        </tr>
-                        <tr>
-                            <td>Identificación Tributaria:</td>
-                            <td id="celIde">yxr</td>
-                        </tr>
-                        <tr>
-                            <td>Nombre Fiscal:</td>
-                            <td id="celNomFiscal">elias</td>
-                        </tr>
-                        <tr>
-                            <td>Dirección Fiscal:</td>
-                            <td id="celDirFiscal">Santa Rosa</td>
-                        </tr>
-                        <tr>
-                            <td>Fecha de Registro:</td>
-                            <td id="celFechaRegistro">10/08/1998</td>
+                            <td>Foto:</td>
+                            <td id="imgCategoria"></td>
                         </tr>
                     </tbody>
                 </table>

@@ -147,6 +147,33 @@
 
             die(); //Finalizar el proceso
         }
+
+
+        public function getCategoria(int $idcategoria)
+        {
+
+            # intval convierte el string en entero, con strClean protege de alguna inyeccióon sql
+            $intIdcategoria = intval($idcategoria);
+
+            if($intIdcategoria > 0)
+            {
+                $arrData = $this->model->selectCategoria($intIdcategoria);
+
+                if(empty($arrData))
+                {
+                    $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados');
+
+                } else {
+                    
+                    $arrData['url_portada'] = media().'/images/uploads/'.$arrData['portada'];
+                    $arrResponse = array('status' => true, 'data' => $arrData);
+                }
+                #Convertir en un formato json, obtenemos la respuesta en javaScript
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            }
+
+            die();
+        }
     }
 
 ?>
