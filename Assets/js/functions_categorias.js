@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function(){
     if(document.querySelector(".delPhoto")){
         var delPhoto = document.querySelector(".delPhoto");
         delPhoto.onclick = function(e) {
+            document.querySelector("#foto_remove").value = 1;
             removePhoto();
         }
     }
@@ -201,12 +202,78 @@ function fntViewInfo(idcategoria){
 
 }
 
+
+function fntEditInfo(idcategoria){
+
+    document.querySelector('#titleModal').innerHTML     = "Actualizar Categoría";
+    document.querySelector('.modal-header').classList.replace("headerRegister","headerUpdate");
+    document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
+    document.querySelector('#btnText').innerHTML        = "Actualizar";
+
+    let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl     = base_url + '/Categorias/getCategoria/'+idcategoria;
+
+    request.open("GET",ajaxUrl,true);
+    request.send();
+
+    request.onreadystatechange  = function(){
+
+        //Verifica si se ha devuelto la información
+        if(request.readyState==4 && request.status == 200){
+            //Convertir el formato JSON en un objeto todo lo que viene en request
+            let objData = JSON.parse(request.responseText);
+
+            if(objData.status){
+
+                document.querySelector("#idCategoria").value    = objData.data.idcategoria;
+                document.querySelector("#txtNombre").value      = objData.data.nombre;
+                document.querySelector("#txtDescripcion").value = objData.data.descripcion;
+                document.querySelector("#foto_actual").value    = objData.data.portada;
+                
+                if (objData.data.status == 1) {
+                    
+                    document.querySelector("#listStatus").value  = 1;
+                } else {
+                    document.querySelector("#listStatus").value  = 2;
+                }
+                //Para que refresque y muestre la opción
+                $("#listStatus").selectpicker('render');
+
+                //Colocar la imagen
+                if (document.querySelector('#img')) {
+                    document.querySelector('#img').src  = objData.data.url_portada;
+                } else {
+                    document.querySelector('.prevPhoto div').innerHTML  = "<img id='img' src="+objData.data.url_portada+" >";
+                }
+
+                //Mostrar la X para eliminar la foto en caso de que exista
+                if (objData.data.portada == 'portada_categoria.png') {
+                    document.querySelector('.delPhoto').classList.add("notBlock");
+                } else {
+                    document.querySelector('.delPhoto').classList.remove("notBlock");
+                }
+
+                //Mostrar el modal
+                $("#modalFormCategorias").modal('show');
+            } else {
+                swal("Error", objData.msg, "error");
+            }
+
+        }
+
+    }
+
+}
+
 function removePhoto(){
     
     document.querySelector('#foto').value ="";
     document.querySelector('.delPhoto').classList.add("notBlock");
 
     if( document.querySelector('#img').parentElement != "null"){
+        document.querySelector('#img').remove();
+    }
+    if( document.querySelector('#img')){
         document.querySelector('#img').remove();
     }
     
@@ -226,4 +293,6 @@ function openModal(){
 
     //Mostrar el modal
     $('#modalFormCategorias').modal('show');
+
+    removePhoto();
 }

@@ -26,6 +26,8 @@
                         <div class="col-md-6">
 
                             <input type="hidden" id="idCategoria" name="idCategoria" value="" >
+                            <input type="hidden" id="foto_actual" name="foto_actual" value="" >
+                            <input type="hidden" id="foto_remove" name="foto_remove" value="0" >
                     
                             <div class="form-group">
                                 <label class="control-label">Nombre <span class="required" >*</span> </label>
@@ -39,7 +41,7 @@
 
                             <div class="form-group">
                                 <label for="exampleSelect1">Estado <span class="required" >*</span> </label>
-                                <select class="form-control" id="listStatus" name="listStatus" required="">
+                                <select class="form-control selectpicker" id="listStatus" name="listStatus" required="">
                                 <option value="1">Activo</option>
                                 <option value="2">Inactivo</option>
                                 </select>
