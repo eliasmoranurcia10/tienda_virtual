@@ -68,7 +68,16 @@
         
                     } else {
                         //Actualizar
-                        $request_categoria = $this->model->updateCategoria($intIdcategoria, $strCategoria, $strDescripcion, $imgPortada , $intStatus);
+
+                        if ($nombre_foto == '') {
+
+                            if ( $_POST['foto_actual'] != 'portada_categoria.png' && $_POST['foto_remove'] == 0 ) {
+                                $imgPortada = $_POST['foto_actual'];
+                            }
+
+                        }
+
+                        $request_categoria = $this->model->updateCategoria($intIdcategoria, $strCategoria, $strDescripcion, $imgPortada ,$intStatus);
                         $option = 2;
                     }
 
@@ -85,6 +94,16 @@
 
                         } else{
                             $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
+
+                            if ($nombre_foto != '') {
+
+                                uploadImage($foto,$imgPortada);
+                            }
+                            // No estamos enviando imagen y eliminando imagen O Si enviamos una foto y cambiamos de imagen
+                            if ( ( $nombre_foto == '' && $_POST['foto_remove'] == 1 && $_POST['foto_actual'] != 'portada_categoria.png') || ( $nombre_foto != '' && $_POST['foto_actual'] != 'portada_categoria-png' ) ) {
+
+                                deleteFile($_POST['foto_actual']);
+                            }
                         }
 
                     } else if($request_categoria == 'exist'){

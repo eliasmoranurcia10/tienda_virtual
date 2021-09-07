@@ -106,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function(){
     formCategoria.onsubmit = function(e){         //al momento de que se envíe la información, lo que hace es que se ejecuta la función
         e.preventDefault();                 //prevenir a que se recarge la página
 
-        let intIdCategoria  = document.querySelector('#idCategoria').value;
         let strNombre       = document.querySelector('#txtNombre').value;
         let strDescripcion  = document.querySelector('#txtDescripcion').value;
         let intStatus       = document.querySelector('#listStatus').value;
@@ -145,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     swal("Categorías", objData.msg,"success");
 
                     removePhoto();
-                    //tableRoles.api().ajax.reload();
+                    tableCategorias.api().ajax.reload();
                     
 
                 } else {
@@ -229,6 +228,7 @@ function fntEditInfo(idcategoria){
                 document.querySelector("#txtNombre").value      = objData.data.nombre;
                 document.querySelector("#txtDescripcion").value = objData.data.descripcion;
                 document.querySelector("#foto_actual").value    = objData.data.portada;
+                document.querySelector("#foto_remove").value    = 0;
                 
                 if (objData.data.status == 1) {
                     
@@ -270,9 +270,9 @@ function removePhoto(){
     document.querySelector('#foto').value ="";
     document.querySelector('.delPhoto').classList.add("notBlock");
 
-    if( document.querySelector('#img').parentElement != "null"){
+    /*if( document.querySelector('#img').parentElement != "null"){
         document.querySelector('#img').remove();
-    }
+    }*/
     if( document.querySelector('#img')){
         document.querySelector('#img').remove();
     }

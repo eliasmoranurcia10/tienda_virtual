@@ -108,6 +108,9 @@
         return $move;
     }
 
+    function deleteFile(string $name){
+        unlink('Assets/images/uploads/' .$name);
+    }
 
     //Elimina exceso de espacios entre palabras 
     function strClean($strCadena){
