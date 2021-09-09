@@ -1,5 +1,6 @@
 
 let tableCategorias;
+let rowTable = "";
 
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -52,19 +53,19 @@ document.addEventListener('DOMContentLoaded', function(){
         "resonsieve":"true",
         "bDestroy": true,
         "iDisplayLength": 10,
-        "order":[[0,"desc"]]  
+        "order":[[0,"asc"]]  
     });
 
     if(document.querySelector("#foto")){
-        var foto = document.querySelector("#foto");
+        let foto = document.querySelector("#foto");
         foto.onchange = function(e) {
-            var uploadFoto = document.querySelector("#foto").value;
-            var fileimg = document.querySelector("#foto").files;
-            var nav = window.URL || window.webkitURL;
-            var contactAlert = document.querySelector('#form_alert');
+            let uploadFoto = document.querySelector("#foto").value;
+            let fileimg = document.querySelector("#foto").files;
+            let nav = window.URL || window.webkitURL;
+            let contactAlert = document.querySelector('#form_alert');
             if(uploadFoto !=''){
-                var type = fileimg[0].type;
-                var name = fileimg[0].name;
+                let type = fileimg[0].type;
+                let name = fileimg[0].name;
                 if(type != 'image/jpeg' && type != 'image/jpg' && type != 'image/png'){
                     contactAlert.innerHTML = '<p class="errorArchivo">El archivo no es válido.</p>';
                     if(document.querySelector('#img')){
@@ -79,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function(){
                             document.querySelector('#img').remove();
                         }
                         document.querySelector('.delPhoto').classList.remove("notBlock");
-                        var objeto_url = nav.createObjectURL(this.files[0]);
+                        let objeto_url = nav.createObjectURL(this.files[0]);
                         document.querySelector('.prevPhoto div').innerHTML = "<img id='img' src="+objeto_url+">";
                     }
             }else{
@@ -92,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     
     if(document.querySelector(".delPhoto")){
-        var delPhoto = document.querySelector(".delPhoto");
+        let delPhoto = document.querySelector(".delPhoto");
         delPhoto.onclick = function(e) {
             document.querySelector("#foto_remove").value = 1;
             removePhoto();
@@ -138,13 +139,26 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 if(objData.status) {
 
+                    if (rowTable == "") {
+                        tableCategorias.api().ajax.reload();
+                    } else{
+
+                        let htmlStatus = intStatus == 1 ? '<span class="badge badge-success" >Activo</span>':'<span class="badge badge-danger">Inactivo</span>';
+
+                        rowTable.cells[1].textContent   = strNombre;
+                        rowTable.cells[2].textContent   = strDescripcion;
+                        rowTable.cells[3].innerHTML     = htmlStatus;
+
+                        rowTable = "";
+                    }
+                    //Ocultar el modal
                     $('#modalFormCategorias').modal("hide");
                     //Resetear o limpiar campos
                     formCategoria.reset();
                     swal("Categorías", objData.msg,"success");
 
                     removePhoto();
-                    tableCategorias.api().ajax.reload();
+                    
                     
 
                 } else {
@@ -180,7 +194,7 @@ function fntViewInfo(idcategoria){
 
             if(objData.status){
 
-                var estado = objData.data.status == 1 ? '<span class="badge badge-success">Activo</span>': '<span class="badge badge-danger">Inactivo</span>';
+                let estado = objData.data.status == 1 ? '<span class="badge badge-success">Activo</span>': '<span class="badge badge-danger">Inactivo</span>';
 
 
                 document.querySelector("#celId").innerHTML          = objData.data.idcategoria;
@@ -202,7 +216,10 @@ function fntViewInfo(idcategoria){
 }
 
 
-function fntEditInfo(idcategoria){
+function fntEditInfo(element ,idcategoria){
+
+    //Asigna como valor al padre del padre del padre del botón- va a obtener como elemnto padre a toda la fila
+    rowTable    = element.parentNode.parentNode.parentNode;
 
     document.querySelector('#titleModal').innerHTML     = "Actualizar Categoría";
     document.querySelector('.modal-header').classList.replace("headerRegister","headerUpdate");
@@ -339,7 +356,7 @@ function removePhoto(){
 
 function openModal(){
     //Se resetea el rowTable cada vez que se dea click en el nuevo usuario para que no guarde la tabla del usuario elegido
-    //rowTable = "";
+    rowTable = "";
 
     document.querySelector('#idCategoria').value      = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate","headerRegister");
