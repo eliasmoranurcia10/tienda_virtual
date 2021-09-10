@@ -1,13 +1,13 @@
 <?php 
   headerAdmin($data); 
-  getModal("modalCategorias",$data);
+  getModal("modalProductos",$data);
 ?>
 
     <main class="app-content">
       <div class="app-title">
         <div>
             <h1>
-                <i class="fas fa-boxes"> </i>  <?= $data['page_title'] ?> 
+                <i class="fas fa-box-open"></i>    <?= $data['page_title'] ?> 
 
                 <?php if( $_SESSION['permisosMod']['w'] ) { ?>
                 <button class="btn btn-primary" type="button" onclick= "openModal();" ><i class="fas fa-plus-circle"></i> Nuevo</button>
@@ -17,7 +17,7 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="<?= base_url(); ?>/categorias"> <?= $data['page_title'] ?> </a></li>
+          <li class="breadcrumb-item"><a href="<?= base_url(); ?>/productos"> <?= $data['page_title'] ?> </a></li>
         </ul>
       </div>
 
@@ -26,13 +26,15 @@
             <div class="tile">
               <div class="tile-body">
                 <div class="table-responsive">
-                  <table class="table table-hover table-bordered" id="tableCategorias">
+                  <table class="table table-hover table-bordered" id="tableProductos">
                     <thead>
                       <tr>
                         <th>ID</th>
+                        <th>Codigo</th>
                         <th>Nombre</th>
-                        <th>Descripcion</th>
-                        <th>Status</th>
+                        <th>Stock</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                       </tr>
                     </thead>
