@@ -16,6 +16,9 @@
     <!-- Page specific javascripts-->
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/sweetalert.min.js"></script>
 
+    <!-- Librería para utlizar un editor de texto-->
+    <script type="text/javascript" src="<?= media(); ?>/js/tinymce/tinymce.min.js"></script>
+
     <!-- Data table plugin-->
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/dataTables.bootstrap.min.js"></script>
