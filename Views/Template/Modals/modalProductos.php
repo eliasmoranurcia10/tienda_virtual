@@ -43,6 +43,16 @@
                                 <label class="control-label">Código <span class="required" >*</span> </label>
                                 <input class="form-control" id="txtCodigo" name="txtCodigo" type="text" placeholder="Código de barra" required="" >
                                 <br>
+                                <div id="divBarCode" class="notBlock textcenter">
+                                    <div id="printCode">
+                                        <svg id="barcode"></svg>
+                                    </div>
+
+                                    <button class="btn btn-success btn-sm" type="button" onclick="fntPrintBarcode('#printCode')" >
+                                        <i class="fas fa-print"></i> Imprimir
+                                    </button>
+                                </div>
+
                             </div>
 
                             <div class="row">

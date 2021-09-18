@@ -1,9 +1,25 @@
+
+document.write(`<script src="${base_url}/Assets/js/plugins/JsBarcode.all.min.js"></script>`);
+
 //Superponer el editor para que los controles funcionen correctamente
 $(document).on('focusin', function(e) {
     if ($(e.target).closest(".tox-dialog").length) {
         e.stopImmediatePropagation();
     }
 });
+
+if(document.querySelector("#txtCodigo")){
+    let inputCodigo = document.querySelector("#txtCodigo");
+    //evento es cuando presionamos la tecla y presionamos
+    inputCodigo.onkeyup = function () {  
+        if(inputCodigo.value.length >= 5){
+            document.querySelector('#divBarCode').classList.remove("notBlock");
+            fntBarcode();
+        } else {
+            document.querySelector('#divBarCode').classList.add("notBlock");
+        }
+    }
+}
 
 tinymce.init({
 	selector: '#txtDescripcion',
@@ -17,6 +33,24 @@ tinymce.init({
     ],
     toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
 });
+
+
+function fntBarcode() {  
+
+    let codigo = document.querySelector("#txtCodigo").value;
+    JsBarcode("#barcode",codigo);
+}
+
+function fntPrintBarcode(area) {
+    let elementArea = document.querySelector(area);
+    //abrir una nueva ventana
+    let vprint      = window.open(' ', 'popimpr', 'height=400,width=600');
+
+    vprint.document.write(elementArea.innerHTML);
+    vprint.document.close();
+    vprint.print();
+    vprint.close();
+}
 
 function openModal(){
     //Se resetea el rowTable cada vez que se dea click en el nuevo usuario para que no guarde la tabla del usuario elegido

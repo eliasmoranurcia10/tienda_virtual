@@ -18,6 +18,7 @@
 
     <!-- Librería para utlizar un editor de texto-->
     <script type="text/javascript" src="<?= media(); ?>/js/tinymce/tinymce.min.js"></script>
+    <!-- Libreria para ccodigo de barras <script type="text/javascript" src="<?= media(); ?>/js/plugins/JsBarcode.all.min.js"></script>-->
 
     <!-- Data table plugin-->
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/jquery.dataTables.min.js"></script>
