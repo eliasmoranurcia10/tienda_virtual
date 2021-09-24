@@ -18,6 +18,10 @@
 	text-align: center;
 }
 
+.bootstrap-select>.dropdown-toggle{
+	border: 1px solid #CCC;
+}
+
 
 /*Estilos login*/
 #divLoading{

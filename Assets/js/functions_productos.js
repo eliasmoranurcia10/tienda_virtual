@@ -8,6 +8,11 @@ $(document).on('focusin', function(e) {
     }
 });
 
+//Codigo a ejecutarse a momento de cargar el documento
+window.addEventListener('load', function() {
+    fntCategorias();  
+}, false);
+
 if(document.querySelector("#txtCodigo")){
     let inputCodigo = document.querySelector("#txtCodigo");
     //evento es cuando presionamos la tecla y presionamos
@@ -33,6 +38,28 @@ tinymce.init({
     ],
     toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
 });
+
+function fntCategorias() {
+    if( document.querySelector('#listCategoria') ){
+
+        let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        let ajaxUrl     = base_url + '/Categorias/getSelectCategorias';
+        
+        request.open("GET",ajaxUrl,true);
+        request.send();
+
+        request.onreadystatechange  = function(){
+
+            //Verifica si se ha devuelto la información
+            if(request.readyState==4 && request.status == 200){
+                //Se está devolviendo html como tal, es por eso que no se utiliza Json
+                document.querySelector('#listCategoria').innerHTML  = request.responseText;
+
+                $('#listCategoria').selectpicker('render');
+            }
+        }
+    }
+}
 
 
 function fntBarcode() {  
