@@ -1,6 +1,8 @@
 
 document.write(`<script src="${base_url}/Assets/js/plugins/JsBarcode.all.min.js"></script>`);
 
+let tableProductos;
+
 //Superponer el editor para que los controles funcionen correctamente
 $(document).on('focusin', function(e) {
     if ($(e.target).closest(".tox-dialog").length) {
@@ -10,6 +12,62 @@ $(document).on('focusin', function(e) {
 
 //Codigo a ejecutarse a momento de cargar el documento
 window.addEventListener('load', function() {
+
+    tableProductos = $('#tableProductos').dataTable( {
+		"aProcessing":true,
+		"aServerSide":true,
+        "language": {
+        	"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+        },
+        "ajax":{
+            "url": " "+base_url+"/Productos/getProductos",
+            "dataSrc":""
+        },
+        "columns":[
+            {"data":"idproducto"},
+            {"data":"codigo"},
+            {"data":"nombre"},
+            {"data":"stock"},
+            {"data":"precio"},
+            {"data":"categoria"},
+            {"data":"status"},
+            {"data":"options"}
+        ],
+
+        'dom': 'lBfrtip',
+        'buttons': [
+            {
+                "extend": "copyHtml5",
+                "text": "<i class='far fa-copy'></i> Copiar",
+                "titleAttr": "Copiar",
+                "className": "btn btn-secondary"
+            },
+            {
+                "extend": "excelHtml5",
+                "text": "<i class='fas fa-file-excel'></i> Excel",
+                "titleAttr": "Exportar a Excel",
+                "className": "btn btn-success"
+            },
+            {
+                "extend": "pdfHtml5",
+                "text": "<i class='fas fa-file-pdf'></i> PDF",
+                "titleAttr": "Exportar a PDF",
+                "className": "btn btn-danger"
+            },
+            {
+                "extend": "csvHtml5",
+                "text": "<i class='fas fa-file-csv'></i> csv",
+                "titleAttr": "Exportar a CSV",
+                "className": "btn btn-info"
+            }
+        ],
+
+        "resonsieve":"true",
+        "bDestroy": true,
+        "iDisplayLength": 10,
+        "order":[[0,"asc"]]  
+    });
+
     fntCategorias();  
 }, false);
 

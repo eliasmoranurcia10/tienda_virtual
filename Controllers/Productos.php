@@ -30,5 +30,52 @@
             $this->views->getView($this,"productos",$data);
 
         }
+
+        public function getProductos()
+        {
+            if($_SESSION['permisosMod']['r'])
+            {
+                $arrData    = $this->model->selectProductos();
+                
+                for ($i=0; $i < count($arrData); $i++) { 
+
+                    $btnView    = '';
+                    $btnEdit    = '';
+                    $btnDelete  = '';
+
+                    if($arrData[$i]['status'] == 1)
+                    {
+                        $arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
+                    } else {
+                        $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
+                    }
+
+                    if( $_SESSION['permisosMod']['r'] )
+                    {
+                        $btnView    = '<button class="btn btn-info btn-sm" onClick="fntViewInfo('.$arrData[$i]['idproducto'].')" title="Ver Producto"><i class="far fa-eye"></i></button>';
+                    }
+
+                    if( $_SESSION['permisosMod']['u'] )
+                    { 
+                        
+                        $btnEdit    = '<button class="btn btn-primary btn-sm" onClick="fntEditInfo('.$arrData[$i]['idproducto'].')" title="Editar Producto"><i class="fas fa-edit"></i></button>';
+                        
+                    }
+
+                    if( $_SESSION['permisosMod']['d'] )
+                    {
+
+                        $btnDelete  = '<button class="btn btn-danger btn-sm" onClick="fntDelInfo('.$arrData[$i]['idproducto'].')" title="Eliminar Producto"><i class="far fa-trash-alt"></i></button>';
+                        
+                    }
+
+                    $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
+                }
+
+                echo json_encode($arrData,JSON_UNESCAPED_UNICODE); // Forzarlo a que se convierta e un objeto
+            }
+
+            die(); //Finalizar el proceso
+        }
     }
 ?>
