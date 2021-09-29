@@ -84,6 +84,59 @@ window.addEventListener('load', function() {
         "order":[[0,"asc"]]  
     });
 
+    //VALIDACIÓN PARA VERIFICAR SI EXISTE EL FORMULARIO
+    if( document.querySelector("#formProductos") ){
+
+        let formProductos = document.querySelector("#formProductos");
+
+        formProductos.onsubmit  = function (e) {  
+
+            e.preventDefault();                 //prevenir a que se recarge la página
+
+            let strNombre   = document.querySelector('#txtNombre').value;
+            let intCodigo   = document.querySelector('#txtCodigo').value;
+            let strPrecio   = document.querySelector('#txtPrecio').value;
+            let intStock    = document.querySelector('#txtStock').value;
+
+            if( strNombre=='' || intCodigo=='' || strPrecio=='' || intStock=='' ){
+                swal("Atención","Todos los campos son obligatorios","error");
+                return false;
+            }
+
+            if (intCodigo.length < 5) {
+                swal("Atención","El código debe ser mayor que 5 dígitos","error");
+                return false;
+            }
+
+            //muestra un cargador
+            divLoading.style.display = "flex";
+            //Pasa todo lo que tiene el editor al textArea, para pasarlo al Ajax
+            tinyMCE.triggerSave();
+
+            //objetos de acuerdo al navegador
+            let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            let ajaxUrl     = base_url +'/Productos/setProducto';
+            let formData    = new FormData(formProductos);
+
+            request.open("POST",ajaxUrl,true);
+            request.send(formData);
+
+            //Se va a obtener la información
+            request.onreadystatechange = function(){
+
+                if(request.readyState == 4 && request.status == 200){
+
+                    console.log(request.responseText);
+
+                }
+                //Oculta el cargador
+                divLoading.style.display = "none";
+            }
+
+        }
+
+    }
+
     fntCategorias();  
 }, false);
 
