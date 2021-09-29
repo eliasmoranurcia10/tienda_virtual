@@ -50,6 +50,8 @@
                         $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
                     }
 
+                    $arrData[$i]['precio']  = SMONEY.' '.formatMoney($arrData[$i]['precio']);
+
                     if( $_SESSION['permisosMod']['r'] )
                     {
                         $btnView    = '<button class="btn btn-info btn-sm" onClick="fntViewInfo('.$arrData[$i]['idproducto'].')" title="Ver Producto"><i class="far fa-eye"></i></button>';
