@@ -138,5 +138,14 @@
             die();
 
         }
+
+        public function setImage()
+        {
+
+            $arrResponse = array('status'=> true, 'imgname' =>  "img_2334432.jpg");
+
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            die();
+        }
     }
 ?>
