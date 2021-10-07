@@ -139,6 +139,35 @@
 
         }
 
+        public function getProducto($idproducto)
+        {
+            $idproducto = intval($idproducto);
+
+            if ( $idproducto > 0 ) {
+                $arrData    = $this->model->selectProducto($idproducto);
+
+                if ( empty( $arrData ) ) {
+                    $arrResponse    = array('status' => false, 'msg' => 'Datos no encontrados.');
+
+                } else {
+                    $arrImg         = $this->model->selectImages($idproducto);
+
+                    if ( count($arrImg) > 0 ) {
+
+                        for ($i=0; $i < count($arrImg); $i++) { 
+                            $arrImg[$i]['url_image']    = media().'/images/uploads/'.$arrImg[$i]['img'];
+                        }
+                    }
+
+                    $arrData['images']  = $arrImg;
+                    $arrResponse        = array('status' => true, 'data' => $arrData); 
+                }
+                
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+                die();
+            }
+        }
+
         public function setImage()
         {
             if ( $_POST ) {
