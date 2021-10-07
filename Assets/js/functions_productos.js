@@ -145,12 +145,12 @@ window.addEventListener('load', function() {
         }
 
     }
-
+    //BOTÓN PARA AGREGAR IMÁGENES
     if ( document.querySelector(".btnAddImage") ) {
         let btnAddImage = document.querySelector(".btnAddImage");
 
         btnAddImage.onclick = function (e) {
-            
+            //identificador único según la fecha
             let key = Date.now();
             let newElement  = document.createElement("div");
             newElement.id   = "div"+key;
@@ -161,8 +161,9 @@ window.addEventListener('load', function() {
                 <label for="img${key}" class="btnUploadfile"><i class="fas fa-upload"></i></label>
                 <button class="btnDeleteImage" type="button" onclick="fntDelItem('#div${key}')" ><i class="fas fa-trash-alt"></i></button>
             `;
-
+            //Agregar el contenido (el nuevo elemento que se creó) a containerImages
             document.querySelector("#containerImages").appendChild(newElement);
+            //Click automático para añadir un nuevo archivo (en este caso una imagen)
             document.querySelector("#div"+key+" .btnUploadfile").click();
             fntInputFile();
         }
@@ -199,6 +200,7 @@ tinymce.init({
 });
 
 function fntInputFile() {  
+    //Todos los objetos que tienen como clase inputUploadfile añadirlos en una variable
     let inputUploadfile = document.querySelectorAll(".inputUploadfile");
     inputUploadfile.forEach(function(inputUploadfile){
 
@@ -222,6 +224,7 @@ function fntInputFile() {
                     return false;
                 } else {
                     let objeto_url      = nav.createObjectURL(this.files[0]);
+                    //muestra el cargador mientras se carga la imagen
                     prevImg.innerHTML   = `<img class="loading" src="${base_url}/Assets/images/loading.svg" >`;
 
                     let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -241,8 +244,11 @@ function fntInputFile() {
 
                             if ( objData.status) {
                                 prevImg.innerHTML = `<img src="${objeto_url}">`;
+                                //Cambia un atributo del boton para eliminar con identificador por nombre
                                 document.querySelector("#"+parentId+" .btnDeleteImage").setAttribute("imgname", objData.imgname);
+                                //Oculta el botón upload
                                 document.querySelector("#"+parentId+" .btnUploadfile").classList.add("notBlock");
+                                //Muestra el botón btnDeleteImage
                                 document.querySelector("#"+parentId+" .btnDeleteImage").classList.remove("notBlock");
 
                             } else {

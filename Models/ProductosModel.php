@@ -11,6 +11,8 @@
         private $intStock;
         private $intStatus;
 
+        private $strImagen;
+
         public function __construct(){
 
             parent::__construct();
@@ -76,6 +78,21 @@
             }
 
             return $return;
+        }
+
+        public function insertImage(int $idproducto, string $imagen)
+        {
+            $this->intIdProducto    = $idproducto;
+            $this->strImagen        = $imagen;
+
+            $query_insert   = "INSERT INTO imagen(productoid,img) VALUES (?,?)";
+            $arrData        = array(
+                $this->intIdProducto,
+                $this->strImagen
+            );
+
+            $request_insert = $this->insert($query_insert,$arrData);
+            return $request_insert;
         }
 
     }

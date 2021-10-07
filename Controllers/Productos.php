@@ -141,10 +141,28 @@
 
         public function setImage()
         {
+            if ( $_POST ) {
 
-            $arrResponse = array('status'=> true, 'imgname' =>  "img_2334432.jpg");
+                if ( empty($_POST['idproducto']) ) {
 
-            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+                    $arrResponse    = array('status' => false, 'msg' => 'Error de dato');
+
+                } else{
+
+                    $idProducto     = intval($_POST['idproducto']);
+                    $foto           = $_FILES['foto'];
+                    $imgNombre      = 'pro_' . md5(date('d-m-Y H:m:s')) . '.jpg';
+                    $request_image  = $this->model->insertImage($idProducto,$imgNombre);
+
+                    if ($request_image) {
+                        $uploadImage    = uploadImage($foto,$imgNombre);
+                        $arrResponse    = array('status' => true , 'imgname' => $imgNombre, 'msg' => 'Archivo cargado.');
+                    } else {
+                        $arrResponse    = array('status' => false, 'msg' => 'Error de carga');
+                    }
+                }
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            }
             die();
         }
     }
