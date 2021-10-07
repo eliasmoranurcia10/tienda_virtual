@@ -114,6 +114,16 @@
 
                     } else {
                         $option = 2;
+                        $request_producto   = $this->model->updateProducto(
+                            $idProducto,
+                            $strNombre,
+                            $strDescripcion,
+                            $strCodigo,
+                            $intCategoriaId,
+                            $strPrecio,
+                            $intStock,
+                            $intStatus
+                        );
                     }
 
                     if( $request_producto > 0 ){
@@ -121,7 +131,7 @@
                         if ( $option == 1 ) {
                             $arrResponse    = array('status' => true, 'idproducto' => $request_producto, 'msg' => 'Datos guardados correctamente');
                         } else {
-
+                            $arrResponse    = array('status' => true, 'idproducto' => $idProducto, 'msg' => 'Datos Actualizados correctamente');
                         }
 
                     } else if ( $request_producto == 'exist' ) {

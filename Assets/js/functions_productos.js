@@ -336,8 +336,6 @@ function fntEditInfo(idProducto) {
                 let htmlImage   = "";
                 let objProducto = objData.data;
 
-                console.log(objProducto);
-
                 document.querySelector("#idProducto").value     = objProducto.idproducto;
                 document.querySelector("#txtNombre").value      = objProducto.nombre;
                 document.querySelector("#txtDescripcion").value = objProducto.descripcion;
