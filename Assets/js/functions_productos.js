@@ -307,12 +307,83 @@ function fntViewInfo(idproducto) {
                 }
                 document.querySelector("#celFotos").innerHTML       = htmlImage;
                 $('#modalViewProducto').modal('show');
-                
+
             } else {
                 swal("Error", objData.msg, "error");
             }
         }
     }
+    
+}
+
+function fntEditInfo(idProducto) {
+    document.querySelector('#titleModal').innerHTML     = "Actualizar Producto";
+    document.querySelector('.modal-header').classList.replace("headerRegister","headerUpdate");
+    document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
+    document.querySelector('#btnText').innerHTML        = "Actualizar";
+
+    let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl    = base_url + '/Productos/getProducto/' + idProducto;
+
+    request.open("GET", ajaxUrl, true);
+    request.send();
+
+    request.onreadystatechange = function() {
+        if ( request.readyState == 4 && request.status == 200 ) {
+            let objData = JSON.parse(request.responseText);
+
+            if ( objData.status ) {
+                let htmlImage   = "";
+                let objProducto = objData.data;
+
+                console.log(objProducto);
+
+                document.querySelector("#idProducto").value     = objProducto.idproducto;
+                document.querySelector("#txtNombre").value      = objProducto.nombre;
+                document.querySelector("#txtDescripcion").value = objProducto.descripcion;
+                document.querySelector("#txtCodigo").value      = objProducto.codigo;
+                document.querySelector("#txtPrecio").value      = objProducto.precio;
+                document.querySelector("#txtStock").value       = objProducto.stock;
+                document.querySelector("#listCategoria").value  = objProducto.categoriaid;
+                document.querySelector("#listStatus").value     = objProducto.status;
+
+                //hacer que se muestre el contenido de la descripción en ele txtarea
+                tinymce.activeEditor.setContent(objProducto.descripcion);
+                //Renderizar los list
+                $('#listCategoria').selectpicker('render');
+                $('#listSatus').selectpicker('render');
+
+                fntBarcode();
+                //dejar de ocultar el codigo
+                document.querySelector("#divBarCode").classList.remove("notBlock");
+
+                if ( objProducto.images.length > 0 ) {
+                    let objProductos    = objProducto.images;
+
+                    for (let p = 0; p < objProductos.length ; p++) {
+
+                        let key = Date.now()+p;
+                        htmlImage += `
+                        <div id="div${key}">
+                            <div class="prevImage">
+                                <img src="${objProductos[p].url_image}" ></img>
+                            </div>
+                            <button  type="button" class="btnDeleteImage" onclick="fntDelItem('#div${key}')" imgname="${objProductos[p].img}" ><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                        `;
+                        
+                    }
+                }
+
+                document.querySelector("#containerImages").innerHTML  = htmlImage;
+                $('#modalFormProductos').modal('show');
+
+            } else {
+                swal("Error", objData.msg, "error");
+            }
+        }
+    }
+
     
 }
 
