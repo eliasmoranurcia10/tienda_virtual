@@ -137,13 +137,13 @@
 
 
 <!-- Modal para visualizar a cada usuario-->
-<div class="modal fade" id="modalViewCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog" >
+<div class="modal fade" id="modalViewProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl" >
         <div class="modal-content">
 
 
             <div class="modal-header header-primary">
-                <h5 class="modal-title" id="titleModal">Datos de la categoría</h5>
+                <h5 class="modal-title" id="titleModal">Datos del Producto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -155,24 +155,36 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td>ID:</td>
-                            <td id="celId"></td>
+                            <td>Código:</td>
+                            <td id="celCodigo"></td>
                         </tr>
                         <tr>
                             <td>Nombres:</td>
                             <td id="celNombre"></td>
                         </tr>
                         <tr>
+                            <td>Precio:</td>
+                            <td id="celPrecio"></td>
+                        </tr>
+                        <tr>
+                            <td>Stock:</td>
+                            <td id="celStock"></td>
+                        </tr>
+                        <tr>
+                            <td>Categoría:</td>
+                            <td id="celCategoria"></td>
+                        </tr>
+                        <tr>
+                            <td>Status:</td>
+                            <td id="celStatus"></td>
+                        </tr>
+                        <tr>
                             <td>Descripción:</td>
                             <td id="celDescripcion"></td>
                         </tr>
                         <tr>
-                            <td>Estado:</td>
-                            <td id="celEstado"></td>
-                        </tr>
-                        <tr>
-                            <td>Foto:</td>
-                            <td id="imgCategoria"></td>
+                            <td>Fotos de referencia:</td>
+                            <td id="celFotos"></td>
                         </tr>
                     </tbody>
                 </table>
