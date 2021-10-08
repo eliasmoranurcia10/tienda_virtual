@@ -290,6 +290,37 @@ function fntInputFile() {
     });
 }
 
+function fntDelItem(element) {
+
+    let idProducto  = document.querySelector("#idProducto").value;
+    let nameImg     = document.querySelector(element+' .btnDeleteImage').getAttribute("imgname");
+    let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl     = base_url +'/Productos/delFile';
+    //Crear un formulario para enviar la data
+    let formData    = new FormData();
+    formData.append('idproducto',idProducto);
+    formData.append("file",nameImg);
+    
+    request.open("POST",ajaxUrl,true);
+    request.send(formData);
+
+    request.onreadystatechange = function() {
+        
+        if(request.readyState != 4) return;
+        if ( request.status == 200 ) {
+            let objData = JSON.parse(request.responseText);
+
+            if(objData.status){
+                let itemRemove  = document.querySelector(element);
+                itemRemove.parentNode.removeChild(itemRemove);
+            } else{
+                swal("",objData.msg, "error");
+            }
+        }
+    }
+
+}
+
 function fntViewInfo(idproducto) {
     let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     let ajaxUrl    = base_url + '/Productos/getProducto/' + idproducto;

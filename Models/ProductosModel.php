@@ -181,6 +181,20 @@
             return $request;
         }
 
+        public function deleteImage(int $idproducto, string $imagen)
+        {
+            $this->intIdProducto    = $idproducto;
+            $this->strImagen        = $imagen;
+
+            $query  =  "DELETE FROM imagen 
+                        WHERE productoid = $this->intIdProducto
+                        AND img = '{$this->strImagen}'";
+
+            $request_delete = $this->delete($query);
+
+            return $request_delete;
+        }
+
     }
 
 ?>
