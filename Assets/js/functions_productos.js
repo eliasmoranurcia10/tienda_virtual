@@ -2,6 +2,7 @@
 document.write(`<script src="${base_url}/Assets/js/plugins/JsBarcode.all.min.js"></script>`);
 
 let tableProductos;
+let rowTable = "";
 
 //Superponer el editor para que los controles funcionen correctamente
 $(document).on('focusin', function(e) {
@@ -97,6 +98,7 @@ window.addEventListener('load', function() {
             let intCodigo   = document.querySelector('#txtCodigo').value;
             let strPrecio   = document.querySelector('#txtPrecio').value;
             let intStock    = document.querySelector('#txtStock').value;
+            let intStatus   = document.querySelector('#listStatus').value;
 
             if( strNombre=='' || intCodigo=='' || strPrecio=='' || intStock=='' ){
                 swal("Atención","Todos los campos son obligatorios","error");
@@ -117,6 +119,7 @@ window.addEventListener('load', function() {
             let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             let ajaxUrl     = base_url +'/Productos/setProducto';
             let formData    = new FormData(formProductos);
+            let htmlStatus  = "";
 
             request.open("POST",ajaxUrl,true);
             request.send(formData);
@@ -130,8 +133,27 @@ window.addEventListener('load', function() {
 
                     if ( objData.status ) {
                         swal("", objData.msg, "success");
+                        //Colocación del id para que se permita guardar imágenes posteriormente
                         document.querySelector("#idProducto").value  = objData.idproducto;
-                        tableProductos.api().ajax.reload();
+
+                        if ( rowTable == "") {
+                            tableProductos.api().ajax.reload();
+                        } else {
+                            htmlStatus = intStatus == 1 ?
+                            '<span class="badge badge-success">Activo</span>':
+                            '<span class="badge badge-danger">Inactivo</span>';
+
+                            rowTable.cells[1].textContent   = intCodigo;
+                            rowTable.cells[2].textContent   = strNombre;
+                            rowTable.cells[3].textContent   = intStock;
+                            rowTable.cells[4].textContent   = smony+' '+strPrecio;
+                            rowTable.cells[5].innerHTML     = htmlStatus;
+
+                            rowTable = "";
+
+                        }
+
+                        
                     } else {
                         swal("Error", objData.msg, "error");
                     }
@@ -316,7 +338,10 @@ function fntViewInfo(idproducto) {
     
 }
 
-function fntEditInfo(idProducto) {
+function fntEditInfo(element,idProducto) {
+
+    rowTable    = element.parentNode.parentNode.parentNode;
+
     document.querySelector('#titleModal').innerHTML     = "Actualizar Producto";
     document.querySelector('.modal-header').classList.replace("headerRegister","headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary","btn-info");
@@ -427,7 +452,7 @@ function fntPrintBarcode(area) {
 
 function openModal(){
     //Se resetea el rowTable cada vez que se dea click en el nuevo usuario para que no guarde la tabla del usuario elegido
-    //rowTable = "";
+    rowTable = "";
 
     document.querySelector('#idProducto').value      = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate","headerRegister");
