@@ -441,6 +441,63 @@ function fntEditInfo(element,idProducto) {
     
 }
 
+function fntDelInfo(idProducto) {
+    
+    swal(
+        {
+            title: "Eliminar Producto",
+            text: "¿Realmente quiere eliminar el Producto?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, eliminar!",
+            cancelButtonText: "No, cancelar!",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        }, function(isConfirm)
+        {
+
+            if(isConfirm){
+                //Validamos el navegador - si es firefox o chrome se crea XMLHttpRequest - si es edge o iternet explorer se crea Microsoft.XMLHTTP 
+                let request     = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                //Ruta por la cual Llamamos al controlador y a su método delRol
+                let ajaxUrl  = base_url+'/Productos/delProducto';
+                let strData     = "idProducto="+idProducto;
+
+                //Abrimos la conexión
+                request.open("POST",ajaxUrl, true);
+                //La forma cómo se van a enviar los datos
+                request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                //Enviamos la solicitud con el parámetro
+                request.send(strData);
+
+                //Recibimos la respuesta
+                request.onreadystatechange = function(){
+                    //Validamos si la operació fué exitosa
+                    if(request.readyState == 4 && request.status == 200)
+                    {
+                        let objData = JSON.parse(request.responseText);
+
+                        if(objData.status)
+                        {
+                            //Emitir la alerta
+                            swal("Eliminar!", objData.msg, "success");
+                            //Actualizamos para que se recargue la tabla y sus funciones
+                            tableProductos.api().ajax.reload();
+
+                        } else {
+                            swal("Atención!", objData.msg , "error");
+                        }
+                    }
+
+                }
+            }
+            
+        }
+
+    );
+
+}
+
 function fntCategorias() {
     if( document.querySelector('#listCategoria') ){
 

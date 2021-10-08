@@ -195,6 +195,15 @@
             return $request_delete;
         }
 
+        public function deleteProducto(int $idproducto)
+        {
+            $this->intIdProducto    = $idproducto;
+            $sql        = "UPDATE producto SET status = ? WHERE idproducto = $this->intIdProducto";
+            $arrData    = array(0);
+            $request    = $this->update($sql, $arrData);
+            return $request;
+        }
+
     }
 
 ?>
