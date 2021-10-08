@@ -100,30 +100,37 @@
                     $intStock       = intval($_POST['txtStock']);
                     $intStatus      = intval($_POST['listStatus']);
 
+
+                    $request_producto   = "";
+
                     if ( $idProducto == 0 ) {
                         $option = 1;
-                        $request_producto   = $this->model->insertProducto(
-                            $strNombre,
-                            $strDescripcion,
-                            $strCodigo,
-                            $intCategoriaId,
-                            $strPrecio,
-                            $intStock,
-                            $intStatus
-                        );
+                        if($_SESSION['permisosMod']['w']){
+                            $request_producto   = $this->model->insertProducto(
+                                $strNombre,
+                                $strDescripcion,
+                                $strCodigo,
+                                $intCategoriaId,
+                                $strPrecio,
+                                $intStock,
+                                $intStatus
+                            );
+                        }
 
                     } else {
                         $option = 2;
-                        $request_producto   = $this->model->updateProducto(
-                            $idProducto,
-                            $strNombre,
-                            $strDescripcion,
-                            $strCodigo,
-                            $intCategoriaId,
-                            $strPrecio,
-                            $intStock,
-                            $intStatus
-                        );
+                        if($_SESSION['permisosMod']['u']){
+                            $request_producto   = $this->model->updateProducto(
+                                $idProducto,
+                                $strNombre,
+                                $strDescripcion,
+                                $strCodigo,
+                                $intCategoriaId,
+                                $strPrecio,
+                                $intStock,
+                                $intStatus
+                            );
+                        }
                     }
 
                     if( $request_producto > 0 ){
@@ -151,31 +158,35 @@
 
         public function getProducto($idproducto)
         {
-            $idproducto = intval($idproducto);
 
-            if ( $idproducto > 0 ) {
-                $arrData    = $this->model->selectProducto($idproducto);
+            if($_SESSION['permisosMod']['r']){
 
-                if ( empty( $arrData ) ) {
-                    $arrResponse    = array('status' => false, 'msg' => 'Datos no encontrados.');
+            
+                $idproducto = intval($idproducto);
 
-                } else {
-                    $arrImg         = $this->model->selectImages($idproducto);
+                if ( $idproducto > 0 ) {
+                    $arrData    = $this->model->selectProducto($idproducto);
 
-                    if ( count($arrImg) > 0 ) {
+                    if ( empty( $arrData ) ) {
+                        $arrResponse    = array('status' => false, 'msg' => 'Datos no encontrados.');
 
-                        for ($i=0; $i < count($arrImg); $i++) { 
-                            $arrImg[$i]['url_image']    = media().'/images/uploads/'.$arrImg[$i]['img'];
+                    } else {
+                        $arrImg         = $this->model->selectImages($idproducto);
+
+                        if ( count($arrImg) > 0 ) {
+
+                            for ($i=0; $i < count($arrImg); $i++) { 
+                                $arrImg[$i]['url_image']    = media().'/images/uploads/'.$arrImg[$i]['img'];
+                            }
                         }
-                    }
 
-                    $arrData['images']  = $arrImg;
-                    $arrResponse        = array('status' => true, 'data' => $arrData); 
+                        $arrData['images']  = $arrImg;
+                        $arrResponse        = array('status' => true, 'data' => $arrData); 
+                    }
+                    echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
                 }
-                
-                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-                die();
             }
+            die();
         }
 
         public function setImage()
@@ -233,17 +244,20 @@
 
         public function delProducto()
         {
+            
             if ( $_POST ) {
-                $intIdproducto  = intval($_POST['idProducto']);
-                $requestDelete  = $this->model->deleteProducto($intIdproducto);
+                if($_SESSION['permisosMod']['d']){
+                    $intIdproducto  = intval($_POST['idProducto']);
+                    $requestDelete  = $this->model->deleteProducto($intIdproducto);
 
-                if ( $requestDelete ) {
-                    $arrResponse    = array('status' => true , 'msg' => 'Se ha eliminado el producto');
-                } else {
-                    $arrResponse    = array('status' => false, 'msg' => 'Error al eliminar el producto');
+                    if ( $requestDelete ) {
+                        $arrResponse    = array('status' => true , 'msg' => 'Se ha eliminado el producto');
+                    } else {
+                        $arrResponse    = array('status' => false, 'msg' => 'Error al eliminar el producto');
+                    }
+
+                    echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
                 }
-
-                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
                 
             }
             die();

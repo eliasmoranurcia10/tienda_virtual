@@ -1,6 +1,7 @@
 <?php 
   headerAdmin($data); 
   getModal("modalProductos",$data);
+
 ?>
 
     <main class="app-content">
