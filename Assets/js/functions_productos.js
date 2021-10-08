@@ -135,6 +135,8 @@ window.addEventListener('load', function() {
                         swal("", objData.msg, "success");
                         //Colocación del id para que se permita guardar imágenes posteriormente
                         document.querySelector("#idProducto").value  = objData.idproducto;
+                        //Mostrar la sección para agregar imágenes
+                        document.querySelector("#containerGallery").classList.remove("notBlock");
 
                         if ( rowTable == "") {
                             tableProductos.api().ajax.reload();
@@ -181,7 +183,7 @@ window.addEventListener('load', function() {
 
                 <input type="file" name="foto" id="img${key}" class="inputUploadfile">
                 <label for="img${key}" class="btnUploadfile"><i class="fas fa-upload"></i></label>
-                <button class="btnDeleteImage" type="button" onclick="fntDelItem('#div${key}')" ><i class="fas fa-trash-alt"></i></button>
+                <button class="btnDeleteImage notBlock" type="button" onclick="fntDelItem('#div${key}')" ><i class="fas fa-trash-alt"></i></button>
             `;
             //Agregar el contenido (el nuevo elemento que se creó) a containerImages
             document.querySelector("#containerImages").appendChild(newElement);
@@ -195,6 +197,7 @@ window.addEventListener('load', function() {
     fntCategorias();  
 }, false);
 
+//Definir longitud de Barcode y ocultar o mostrar el codigo de barras
 if(document.querySelector("#txtCodigo")){
     let inputCodigo = document.querySelector("#txtCodigo");
     //evento es cuando presionamos la tecla y presionamos
@@ -207,7 +210,7 @@ if(document.querySelector("#txtCodigo")){
         }
     }
 }
-
+//Area de texto
 tinymce.init({
 	selector: '#txtDescripcion',
 	width: "100%",
@@ -549,6 +552,11 @@ function openModal(){
     document.querySelector('#titleModal').innerHTML = "Nuevo Producto";
     //Limpiar todos los campos
     document.querySelector('#formProductos').reset();
+
+    //Ocultar codigo de barras e imágenes 
+    document.querySelector('#divBarCode').classList.add("notBlock");
+    document.querySelector('#containerGallery').classList.add("notBlock");
+    document.querySelector('#containerImages').innerHTML    = "";
 
     //Mostrar el modal
     $('#modalFormProductos').modal('show');
