@@ -85,7 +85,7 @@ window.addEventListener('load', function() {
         "order":[[0,"asc"]]  
     });
 
-    //VALIDACIÓN PARA VERIFICAR SI EXISTE EL FORMULARIO//Crear un producto
+    //VALIDACIÓN PARA VERIFICAR SI EXISTE EL FORMULARIO//Crear un producto, se origia cuando presionamos el boton de guardar productos
     if( document.querySelector("#formProductos") ){
 
         let formProductos = document.querySelector("#formProductos");
@@ -433,6 +433,8 @@ function fntEditInfo(element,idProducto) {
                 }
 
                 document.querySelector("#containerImages").innerHTML  = htmlImage;
+                //Mostrar el botón para agregar imágenes
+                document.querySelector("#containerGallery").classList.remove("notBlock");
                 $('#modalFormProductos').modal('show');
 
             } else {
