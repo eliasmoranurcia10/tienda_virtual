@@ -10,11 +10,9 @@
 
         public function home(){
 
-            $data['page_id']     = 1;
-            $data['page_tag']    = "Home";
-            $data['page_title']  = "Página principal";
-            $data['page_name']   = "home";
-            $data["page_content"]= "Lorem uvisudgiuvgiusdvgvsiusgvdsi v sdiuv vdsvg isdvsi vvs iv vsiuvgusvdiu";
+            $data['page_tag']    = NOMBRE_EMPRESA;
+            $data['page_title']  = NOMBRE_EMPRESA;
+            $data['page_name']   = "tienda_virtual";
             $this->views->getView($this,"home",$data);
 
         }
