@@ -18,7 +18,7 @@
     const SPM = ",";
 
     //Simbolo de moneda
-    const SMONEY = "S/.";
+    const SMONEY = "S/";
 
     //Datos envío de correo
     const NOMBRE_REMITENTE  = "Tienda Virtual";
