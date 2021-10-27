@@ -15,7 +15,7 @@
 
             if (count($request) > 0) {
                 for ($c=0; $c < count($request); $c++) { 
-                    $request[$c]['portada'] = BASE_URL . 'Assets/images/uploads/' . $request[$c]['portada'];
+                    $request[$c]['portada'] = BASE_URL . '/Assets/images/uploads/' . $request[$c]['portada'];
                 }
             }
             return $request;

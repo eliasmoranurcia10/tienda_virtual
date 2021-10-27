@@ -27,7 +27,7 @@
     const WEB_EMPRESA       = "www.edankia.store";
 
     //IDs que se mostrarán en el Slider y banner
-    const CAT_SLIDER = "1,9,25,26,27,28,29";
+    const CAT_SLIDER = "1,25,26,27,28,29";
     const CAT_BANNER = "1,9,25,26,27,28,29";
 
 ?>
