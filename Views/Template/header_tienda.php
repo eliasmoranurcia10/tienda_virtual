@@ -5,7 +5,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="<?= media()?>/images/favicon.ico"/>
+	<!--<link rel="icon" type="image/png" href="<?= media()?>/images/favicon.ico"/>-->	
+	<link rel="shortcut icon" href="<?=media();?>/images/favicon.ico">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="<?= media()?>/tienda/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
