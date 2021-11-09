@@ -408,7 +408,7 @@ function fntEditInfo(element,idProducto) {
                 tinymce.activeEditor.setContent(objProducto.descripcion);
                 //Renderizar los list
                 $('#listCategoria').selectpicker('render');
-                $('#listSatus').selectpicker('render');
+                $('#listStatus').selectpicker('render');
 
                 fntBarcode();
                 //dejar de ocultar el codigo
@@ -546,7 +546,8 @@ function fntPrintBarcode(area) {
 function openModal(){
     //Se resetea el rowTable cada vez que se dea click en el nuevo usuario para que no guarde la tabla del usuario elegido
     rowTable = "";
-
+    
+    //-----------------------------------------------------------
     document.querySelector('#idProducto').value      = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate","headerRegister");
     document.querySelector('#btnActionForm').classList.replace("btn-info","btn-primary");
