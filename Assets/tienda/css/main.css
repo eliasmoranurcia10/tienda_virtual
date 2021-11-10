@@ -1805,9 +1805,9 @@ button.mfp-close {
 }
 
 input.num-product {
-  -moz-appearance: textfield;
-  appearance: none;
-  -webkit-appearance: none;
+  -webkit-appearance: textfield !important;
+  margin: 0;
+  -moz-appearance: textfield !important;
 }
 
 input.num-product::-webkit-outer-spin-button,
