@@ -49,13 +49,16 @@
 
             } else {
 
-                $producto = strClean($params);
+                $producto       = strClean($params);
+                $arrProducto    = $this->getProductoT($producto);
                 
                 $data['page_tag']   = NOMBRE_EMPRESA. " | " .$producto;
                 $data['page_title'] = $producto;
                 $data['page_name']  = "producto";
-                $data['producto']   = "";
-                //$data['productos']  = $this->getProductosCategoriaT($producto);
+                $data['producto']   = $arrProducto;
+                // r -> aleatoria, a -> ascendente, d -> descendente
+                $data['productos']  = $this->getProductosRamdom($arrProducto['categoriaid'],8,"r");
+
                 $this->views->getView($this,"producto",$data);
             }
         }
