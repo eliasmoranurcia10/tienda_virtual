@@ -7,7 +7,7 @@
         {
             $this->con = new Mysql();
 
-            $sql = "SELECT idcategoria, nombre, descripcion, portada 
+            $sql = "SELECT idcategoria, nombre, descripcion, portada, ruta
                     FROM categoria 
                     WHERE status != 0 AND idcategoria IN ($categorias)";
                     

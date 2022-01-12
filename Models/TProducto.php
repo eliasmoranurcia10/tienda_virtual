@@ -22,6 +22,7 @@
                             p.categoriaid,
                             c.nombre as categoria,
                             p.precio,
+                            p.ruta,
                             p.stock
                         FROM producto p
                         INNER JOIN categoria c
