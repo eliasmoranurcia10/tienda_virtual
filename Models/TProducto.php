@@ -155,6 +155,8 @@
                     for ($i=0; $i < count($arrImg) ; $i++) { 
                         $arrImg[$i]['url_image']    = media().'/images/uploads/'. $arrImg[$i]['img'];
                     }
+                } else {
+                    $arrImg[0]['url_image']    = media().'/images/box.png';
                 }
                 $request['images'] = $arrImg;
 
