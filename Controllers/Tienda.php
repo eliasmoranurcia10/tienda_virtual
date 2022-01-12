@@ -52,16 +52,22 @@
                 header("Location: ". base_url());
 
             } else {
-
-                $producto       = strClean($params);
-                $arrProducto    = $this->getProductoT($producto);
                 
-                $data['page_tag']   = NOMBRE_EMPRESA. " | " .$producto;
-                $data['page_title'] = $producto;
+                $arrParams = explode(",", $params);
+                $idproducto    = intval($arrParams[0]);
+                $ruta          = strClean($arrParams[1]);
+                $infoProducto  = $this->getProductoT($idproducto, $ruta);
+
+                if (empty($infoProducto)) {
+                    header("Location: ". base_url());
+                }
+
+                $data['page_tag']   = NOMBRE_EMPRESA. " | " .$infoProducto['nombre'];
+                $data['page_title'] = $infoProducto['nombre'];
                 $data['page_name']  = "producto";
-                $data['producto']   = $arrProducto;
+                $data['producto']   = $infoProducto;
                 // r -> aleatoria, a -> ascendente, d -> descendente
-                $data['productos']  = $this->getProductosRamdom($arrProducto['categoriaid'],8,"r");
+                $data['productos']  = $this->getProductosRamdom($infoProducto['categoriaid'],8,"r");
 
                 $this->views->getView($this,"producto",$data);
             }
