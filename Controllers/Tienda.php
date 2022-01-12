@@ -31,12 +31,16 @@
 
             } else {
 
-                $categoria = strClean($params);
-                
+                $arrParams = explode(",", $params);
+                $idcategoria    = intval($arrParams[0]);
+                $ruta           = strClean($arrParams[1]);
+                $infoCategoria  = $this->getProductosCategoriaT($idcategoria, $ruta);
+
+                $categoria          = strClean($infoCategoria['categoria']);
                 $data['page_tag']   = NOMBRE_EMPRESA. " | " .$categoria;
                 $data['page_title'] = $categoria;
                 $data['page_name']  = "categoria";
-                $data['productos']  = $this->getProductosCategoriaT($categoria);
+                $data['productos']  = $infoCategoria['productos'];
                 $this->views->getView($this,"categoria",$data);
             }
             

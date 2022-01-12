@@ -221,8 +221,10 @@
                     if (!empty($arrProductos)) {
 
                         for ($p=0; $p < count($arrProductos); $p++) { 
+							$ruta		= $arrProductos[$p]['ruta'];
+
                             if (count($arrProductos[$p]['images']) > 0) {
-                                $portada = $arrProductos[$p]['images'][0]['url_image'];
+                                $portada 	= $arrProductos[$p]['images'][0]['url_image'];
                             }else{
                                 $portada = media(). '/images/box.png';
                             } 
@@ -233,14 +235,14 @@
                                 <div class="block2-pic hov-img0">
                                     <img src="<?= $portada ?>" alt="<?= $arrProductos[$p]['nombre']; ?>">
 
-                                    <a href="<?= base_url(). '/tienda/producto/' . $arrProductos[$p]['nombre']; ?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                                    <a href="<?= base_url(). '/tienda/producto/' . $arrProductos[$p]['idproducto'].'/'.$ruta; ?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                         Ver Producto
                                     </a>
                                 </div>
 
                                 <div class="block2-txt flex-w flex-t p-t-14">
                                     <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="<?= base_url(). '/tienda/producto/' . $arrProductos[$p]['nombre']; ?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                        <a href="<?= base_url(). '/tienda/producto/' . $arrProductos[$p]['idproducto'].'/'.$ruta; ?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                             <?= $arrProductos[$p]['nombre']; ?>
                                         </a>
 
@@ -250,7 +252,7 @@
                                     </div>
 
                                     <div class="block2-txt-child2 flex-r p-t-3">
-                                        <a href="<?= base_url(). '/tienda/producto/' . $arrProductos[$p]['nombre']; ?>" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                        <a href="<?= base_url(). '/tienda/producto/' . $arrProductos[$p]['idproducto'].'/'.$ruta; ?>" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
                                             <img class="icon-heart1 dis-block trans-04" src="<?= media() ?>/tienda/images/icons/icon-heart-01.png" alt="ICON">
                                             <img class="icon-heart2 dis-block trans-04 ab-t-l" src="<?= media() ?>/tienda/images/icons/icon-heart-02.png" alt="ICON">
                                         </a>

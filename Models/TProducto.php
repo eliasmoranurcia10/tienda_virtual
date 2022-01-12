@@ -9,6 +9,7 @@
         private $strProducto;
         private $cant;
         private $option;
+        private $strRuta;
 
         public function getProductosT()
         {
@@ -54,17 +55,21 @@
             return $request;
         }
 
-        public function getProductosCategoriaT(string $categoria)
+        public function getProductosCategoriaT(int $idcategoria, string $ruta)
         {
-            $this->strCategoria = $categoria;
+            $this->intIdcategoria = $idcategoria;
+            $this->strRuta        = $ruta;
             $this->con = new Mysql();
 
-            $sqlcat = "SELECT idcategoria FROM categoria WHERE nombre = '{$this->strCategoria}'";
+            $sqlcat = " SELECT idcategoria, nombre 
+                        FROM categoria 
+                        WHERE idcategoria = '{$this->intIdcategoria}' ";
+
             $request = $this->con->select($sqlcat);
 
             if (!empty($request)) {
                 # code...
-                $this->intIdcategoria = $request['idcategoria'];
+                $this->strCategoria = $request['nombre'];
 
                 $sql    =  "SELECT 
                             p.idproducto,
@@ -74,11 +79,12 @@
                             p.categoriaid,
                             c.nombre as categoria,
                             p.precio,
+                            p.ruta,
                             p.stock
                         FROM producto p
                         INNER JOIN categoria c
                         ON p.categoriaid = c.idcategoria
-                        WHERE p.status != 0 AND p.categoriaid = $this->intIdcategoria ";
+                        WHERE p.status != 0 AND p.categoriaid = $this->intIdcategoria AND c.ruta = '{$this->strRuta}' ";
 
                 $request= $this->con->select_all($sql);
 
@@ -100,6 +106,12 @@
                     }
                     
                 }
+
+                $request = array(
+                    'idcategoria' => $this->intIdcategoria,
+                    'categoria'   => $this->strCategoria,
+                    'productos'   => $request
+                );
 
             }
 
