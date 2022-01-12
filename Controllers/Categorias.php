@@ -49,6 +49,9 @@
                     $strDescripcion = strClean($_POST['txtDescripcion']);
                     $intStatus      = intval($_POST['listStatus']);
 
+                    $ruta = strtolower(clear_cadena($strCategoria));
+                    $ruta = str_replace(" ", "-", $ruta);
+
                     $foto               = $_FILES['foto'];
                     $nombre_foto        = $foto['name'];
                     $type               = $foto['type'];
@@ -66,7 +69,7 @@
                         //Crear
                         if($_SESSION['permisosMod']['w'])
                         {
-                            $request_categoria = $this->model->insertCategoria($strCategoria, $strDescripcion, $imgPortada ,$intStatus);
+                            $request_categoria = $this->model->insertCategoria($strCategoria, $strDescripcion, $imgPortada , $ruta,$intStatus);
                             $option = 1;
                         }
         
@@ -82,7 +85,7 @@
 
                             }
 
-                            $request_categoria = $this->model->updateCategoria($intIdcategoria, $strCategoria, $strDescripcion, $imgPortada ,$intStatus);
+                            $request_categoria = $this->model->updateCategoria($intIdcategoria, $strCategoria, $strDescripcion, $imgPortada, $ruta ,$intStatus);
                             $option = 2;
                         }
                     }

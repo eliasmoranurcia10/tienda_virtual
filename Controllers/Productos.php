@@ -99,9 +99,10 @@
                     $strPrecio      = strClean($_POST['txtPrecio']);
                     $intStock       = intval($_POST['txtStock']);
                     $intStatus      = intval($_POST['listStatus']);
-
-
                     $request_producto   = "";
+
+                    $ruta = strtolower(clear_cadena($strNombre));
+                    $ruta = str_replace(" ", "-", $ruta);
 
                     if ( $idProducto == 0 ) {
                         $option = 1;
@@ -113,6 +114,7 @@
                                 $intCategoriaId,
                                 $strPrecio,
                                 $intStock,
+                                $ruta,
                                 $intStatus
                             );
                         }
@@ -128,6 +130,7 @@
                                 $intCategoriaId,
                                 $strPrecio,
                                 $intStock,
+                                $ruta,
                                 $intStatus
                             );
                         }

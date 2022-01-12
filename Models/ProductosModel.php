@@ -10,7 +10,7 @@
         private $strPrecio;
         private $intStock;
         private $intStatus;
-
+        private $strRuta;
         private $strImagen;
 
         public function __construct(){
@@ -41,7 +41,7 @@
             return $request;
         }
 
-        public function insertProducto(string $nombre, string $descripcion, string $codigo, int $categoriaid, string $precio, int $stock, int $status)
+        public function insertProducto(string $nombre, string $descripcion, string $codigo, int $categoriaid, string $precio, int $stock, string $ruta, int $status)
         {
             $this->strNombre        = $nombre;
             $this->strDescripcion   = $descripcion;
@@ -49,6 +49,7 @@
             $this->intCategoriaId   = $categoriaid;
             $this->strPrecio        = $precio;
             $this->intStock         = $stock;
+            $this->strRuta          = $ruta;
             $this->intStatus        = $status;
 
             $return = 0;
@@ -57,8 +58,8 @@
 
             if ( empty($request) ) {
 
-                $query_insert   = "INSERT INTO producto (categoriaid, codigo, nombre, descripcion, precio, stock, status) 
-                                    VALUES (?,?,?,?,?,?,?)";
+                $query_insert   = "INSERT INTO producto (categoriaid, codigo, nombre, descripcion, precio, stock, ruta, status) 
+                                    VALUES (?,?,?,?,?,?,?,?)";
                 
                 $arrData    = array(
                     $this->intCategoriaId,
@@ -67,6 +68,7 @@
                     $this->strDescripcion,
                     $this->strPrecio,
                     $this->intStock,
+                    $this->strRuta,
                     $this->intStatus
                 );
 
@@ -80,7 +82,7 @@
             return $return;
         }
 
-        public function updateProducto(int $idproducto, string $nombre, string $descripcion, string $codigo, int $categoriaid, string $precio, int $stock, int $status)
+        public function updateProducto(int $idproducto, string $nombre, string $descripcion, string $codigo, int $categoriaid, string $precio, int $stock, string $ruta, int $status)
         {
             $this->intIdProducto    = $idproducto;
             $this->strNombre        = $nombre;
@@ -89,6 +91,7 @@
             $this->intCategoriaId   = $categoriaid;
             $this->strPrecio        = $precio;
             $this->intStock         = $stock;
+            $this->strRuta          = $ruta;
             $this->intStatus        = $status;
 
             $return = 0;
@@ -104,6 +107,7 @@
                             descripcion = ?,
                             precio      = ?,
                             stock       = ?,
+                            ruta        = ?,
                             status      = ?
                         WHERE idproducto = $this->intIdProducto";
 
@@ -114,6 +118,7 @@
                     $this->strDescripcion,
                     $this->strPrecio,
                     $this->intStock,
+                    $this->strRuta,
                     $this->intStatus
                 );
 
