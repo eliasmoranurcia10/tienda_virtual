@@ -224,6 +224,52 @@
 
         }
 
+        public function getProductoIDT(int $idproducto)
+        {
+            $this->con = new Mysql();
+            $this->intidProducto = $idproducto;
+
+            $sql    =  "SELECT 
+                            p.idproducto,
+                            p.codigo,
+                            p.nombre,
+                            p.descripcion,
+                            p.categoriaid,
+                            c.nombre as categoria,
+                            p.precio,
+                            p.ruta,
+                            p.stock
+                        FROM producto p
+                        INNER JOIN categoria c
+                        ON p.categoriaid = c.idcategoria
+                        WHERE p.status != 0 AND p.idproducto = '{$this->intidProducto}' ";
+
+            $request= $this->con->select($sql);
+
+            if (!empty($request)) {
+
+                $intIdProducto = $request['idproducto'];
+                $sqlImg = " SELECT img
+                            FROM imagen
+                            WHERE productoid = $intIdProducto";
+
+                $arrImg = $this->con->select_all($sqlImg);
+
+                if (count($arrImg)>0) {
+                    for ($i=0; $i < count($arrImg) ; $i++) { 
+                        $arrImg[$i]['url_image']    = media().'/images/uploads/'. $arrImg[$i]['img'];
+                    }
+                } else {
+                    $arrImg[0]['url_image']    = media().'/images/box.png';
+                }
+                $request['images'] = $arrImg;
+
+                
+            }
+
+            return $request;
+        }
+
     }
 
 ?>
