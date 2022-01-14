@@ -30,4 +30,8 @@
     const CAT_SLIDER = "1,25,26,27,28,29";
     const CAT_BANNER = "1,9,25,26,27,28,29";
 
+    //Datos para Encriptar / Desencriptar
+    const KEY               = "edankia";
+    const METHODENCRIPT     = "AES-128-ECB";
+
 ?>

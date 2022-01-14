@@ -134,7 +134,8 @@
                             c.nombre as categoria,
                             p.precio,
                             p.ruta,
-                            p.stock
+                            p.stock,
+                            c.ruta as rutaCategoria
                         FROM producto p
                         INNER JOIN categoria c
                         ON p.categoriaid = c.idcategoria
