@@ -78,7 +78,7 @@
             if($_POST){
                 //unset($_SESSION['arrCarrito']);exit;
                 $arrCarrito = [];
-
+                $cantCarrito = 0;
                 $idproducto = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
                 $cantidad   = $_POST['cant'];
 
@@ -96,7 +96,7 @@
                             'imagen'     => $arrInfoProducto['images'][0]['url_image']
                         );
                         if (isset($_SESSION['arrCarrito'])) {
-                            # code...
+                            #  Variable de sesion...
                             $on = true;
                             $arrCarrito = $_SESSION['arrCarrito'];
 
@@ -120,8 +120,20 @@
                             array_push($arrCarrito,$arrProducto);
                             $_SESSION['arrCarrito'] = $arrCarrito;
                         }
-                        dep($_SESSION['arrCarrito']); 
-                        exit;  
+
+                        foreach ( $_SESSION['arrCarrito'] as $pro){
+                            
+                            $cantCarrito += $pro['cantidad'];
+                        }
+
+                        $htmlCarrito= getFile('Template/Modals/modalCarrito',$_SESSION['arrCarrito']);
+                        
+                        $arrResponse = array(
+                            "status"        => true,
+                            "msg"           => '¡Se agregó al carrito!',
+                            "cantCarrito"   => $cantCarrito,
+                            "htmlCarrito"   => $htmlCarrito
+                        );
 
                     } else {
                         $arrResponse = array(

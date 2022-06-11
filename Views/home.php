@@ -1,6 +1,6 @@
 <?php
     headerTienda($data);
-	getModal('modalCarrito',$data);
+	//getModal('modalCarrito',$data);
 
 	$arrSlider 		= $data['slider'];
 	$arrBanner 		= $data['banner'];

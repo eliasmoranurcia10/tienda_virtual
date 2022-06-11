@@ -70,12 +70,21 @@ $('.js-addcart-detail').each(function(){
 
         request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {
-                console.log(request.responseText);
+
+                let objData = JSON.parse(request.responseText);
+
+                if (request.status) {
+                    document.querySelector("#productosCarrito").innerHTML = objData.htmlCarrito;
+                    document.querySelector("#cantCarrito").setAttribute("data-notify",objData.cantCarrito);
+                    swal(nameProduct, "¡Se agregó al carrito!", "success");
+                } else{
+                    swal("",objData.msg, "error");
+                }
             }
             return false;
         }
 
-        swal(nameProduct, "is added to cart !", "success");
+        
     });
 });
 

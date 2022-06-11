@@ -53,6 +53,14 @@
         require_once $view_modal;
     }
 
+    function getFile(string $url, $data)
+    {
+        # code...
+        require_once("Views/{$url}.php");
+        $file = ob_get_clean(); //levantar el archivo para tenerlo en buffer
+        return $file;
+    }
+
     //Envía en email para la recuperación de la contraseña
     function sendEmail($data,string $template)
     {
