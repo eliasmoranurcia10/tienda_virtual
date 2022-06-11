@@ -153,6 +153,61 @@
             die();
         }
 
+        public function delCarrito()
+        {
+            # code...
+            if($_POST){
+                $arrCarrito = array();
+                $cantCarrito = 0;
+                $idproducto = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
+                $option   = $_POST['option'];
+
+                if ( is_numeric($idproducto) and ($option==1 or $option==2) ) {
+                    # code...
+                    $arrCarrito = $_SESSION['arrCarrito'];
+
+                    for ($pr=0; $pr < count($arrCarrito) ; $pr++) { 
+                        # code...
+                        if ($arrCarrito[$pr]['idproducto'] == $idproducto) {
+                            # elimicar el producto en la posición $pr
+                            unset($arrCarrito[$pr]);
+                        }
+                    }
+                    #reordena de nuevo el array
+                    sort($arrCarrito);
+                    $_SESSION['arrCarrito'] = $arrCarrito;
+
+                    foreach ( $_SESSION['arrCarrito'] as $pro){
+                            
+                        $cantCarrito += $pro['cantidad'];
+                    }
+
+                    $htmlCarrito = "";
+                    if ($option == 1) {
+                        #Muestra el modal
+                        $htmlCarrito= getFile('Template/Modals/modalCarrito',$_SESSION['arrCarrito']);
+                    }
+
+                    $arrResponse = array(
+                        "status"        => true,
+                        "msg"           => '¡Producto eliminado!',
+                        "cantCarrito"   => $cantCarrito,
+                        "htmlCarrito"   => $htmlCarrito
+                    );
+                    
+                } else {
+                    $arrResponse = array(
+                        "status"    => false,
+                        "msg"       => 'Dato incorrecto'
+                    );
+                }
+                #Devolver en formato JSON
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            }
+            die();
+
+        }
+
     }
 
 ?>
