@@ -19,11 +19,9 @@
                 </div>
 
                 <div class="header-cart-item-txt p-t-8">
-                    <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                        <?= $producto['producto'] ?>
-                    </a>
+                    <p> <?= $producto['producto'] ?> </p>
 
-                    <span class="header-cart-item-info">
+                    <span>
                         <?= $producto['cantidad'] . ' x '. SMONEY.formatMoney($producto['precio']) ?>
                     </span>
                 </div>

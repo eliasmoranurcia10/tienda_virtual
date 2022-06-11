@@ -56,6 +56,7 @@
     function getFile(string $url, $data)
     {
         # code...
+        ob_start();
         require_once("Views/{$url}.php");
         $file = ob_get_clean(); //levantar el archivo para tenerlo en buffer
         return $file;

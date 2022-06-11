@@ -1,3 +1,14 @@
+<?php
+	$cantCarrito = 0;
+	if ( isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) >0 ) {
+		# code...
+		foreach( $_SESSION['arrCarrito'] as $product ){
+			$cantCarrito += $product['cantidad'];
+		}
+	}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,7 +111,7 @@
 							<i class="zmdi zmdi-search"></i>
 						</div>
 
-						<div id="cantCarrito" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="0">
+						<div id="cantCarrito" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="<?php echo $cantCarrito; ?>">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 
@@ -216,7 +227,7 @@
 			
 			<div id="productosCarrito" class="header-cart-content flex-w js-pscroll">
 
-				
+				<?php getModal('modalCarrito',$data); ?>
 			</div>
 		</div>
 	</div>

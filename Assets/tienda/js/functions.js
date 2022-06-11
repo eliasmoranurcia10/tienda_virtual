@@ -69,11 +69,12 @@ $('.js-addcart-detail').each(function(){
         request.send(formData);
 
         request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {
+            if(request.readyState != 4) return;
+            if (request.status == 200) {
 
                 let objData = JSON.parse(request.responseText);
 
-                if (request.status) {
+                if (objData.status) {
                     document.querySelector("#productosCarrito").innerHTML = objData.htmlCarrito;
                     document.querySelector("#cantCarrito").setAttribute("data-notify",objData.cantCarrito);
                     swal(nameProduct, "¡Se agregó al carrito!", "success");

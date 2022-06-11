@@ -77,7 +77,7 @@
         {
             if($_POST){
                 //unset($_SESSION['arrCarrito']);exit;
-                $arrCarrito = [];
+                $arrCarrito = array();
                 $cantCarrito = 0;
                 $idproducto = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
                 $cantidad   = $_POST['cant'];
