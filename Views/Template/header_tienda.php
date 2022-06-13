@@ -96,6 +96,10 @@
 							</li>
 
 							<li>
+								<a href="<?= base_url(); ?>/carrito">Carrito</a>
+							</li>
+
+							<li>
 								<a href="<?= base_url(); ?>/nosotros">Nosotros</a>
 							</li>
 
@@ -111,9 +115,15 @@
 							<i class="zmdi zmdi-search"></i>
 						</div>
 
+						<?php
+							if ($data['page_name'] != "carrito") {
+						?>
 						<div id="cantCarrito" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="<?php echo $cantCarrito; ?>">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
+						<?php 
+							}
+						?>
 
 					</div>
 				</nav>
@@ -133,10 +143,15 @@
 					<i class="zmdi zmdi-search"></i>
 				</div>
 
-				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
+				<?php
+					if ($data['page_name'] != "carrito") {
+				?>
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="<?php echo $cantCarrito; ?>">
 					<i class="zmdi zmdi-shopping-cart"></i>
 				</div>
-
+				<?php 
+					}
+				?>
 			</div>
 
 			<!-- Button show menu -->
@@ -181,6 +196,10 @@
 
 				<li>
 					<a href="<?= base_url(); ?>/tienda">Tienda</a>
+				</li>
+
+				<li>
+					<a href="<?= base_url(); ?>/carrito">Carrito</a>
 				</li>
 
 				<li>
