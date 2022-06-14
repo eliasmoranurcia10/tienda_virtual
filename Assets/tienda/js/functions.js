@@ -176,26 +176,38 @@ function fntdelItem(element) {
 
 
 function fntUpdateCant(pro,cant) {
+
+    if(document.querySelector("#btnComprar")) {
+        if (cant <= 0) {
+            document.querySelector("#btnComprar").classList.add("notBlock");
+        } else {
+            document.querySelector("#btnComprar").classList.remove("notBlock");
     
-    if (cant <= 0) {
-        document.querySelector("#btnComprar").classList.add("notBlock");
-    } else {
-        document.querySelector("#btnComprar").classList.remove("notBlock");
+            let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            let ajaxUrl = base_url+'/Tienda/udpCarrito';
+            let formData = new FormData();
+    
+            formData.append('id',pro);
+            formData.append('cantidad',cant);
+            request.open("POST",ajaxUrl,true);
+            request.send(formData);
+    
+            request.onreadystatechange = function() {
+                if (request.readyState != 4) return;
+                if (request.status == 200) {
+                    let objData = JSON.parse(request.responseText);
 
-        let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        let ajaxUrl = base_url+'/Tienda/udpCarrito';
-        let formData = new FormData();
-
-        formData.append('id',pro);
-        formData.append('cantidad',cant);
-        request.open("POST",ajaxUrl,true);
-        request.send(formData);
-
-        request.onreadystatechange = function() {
-            if (request.readyState != 4) return;
-            if (request.status == 200) {
-                console.log(request.responseText);
-            } 
+                    if (objData.status) {
+                        let colSubtotal = document.getElementsByClassName(pro)[0];
+                        colSubtotal.cells[4].textContent = objData.totalProducto;
+                        document.querySelector("#subTotalCompra").innerHTML = objData.subTotal;
+                        document.querySelector("#totalCompra").innerHTML = objData.total;
+                    } else {
+                        swal("",objData.msg, "error");
+                    }
+                } 
+            }
         }
     }
+    
 }

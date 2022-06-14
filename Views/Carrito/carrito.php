@@ -111,7 +111,7 @@
                                 </div>
 
                                 <div class="size-209">
-                                    <span class="mtext-110 cl2">
+                                    <span id="subTotalCompra" class="mtext-110 cl2">
                                         <?= SMONEY.formatMoney($subtotal)  ?>
                                     </span>
                                 </div>
@@ -137,7 +137,7 @@
                                 </div>
 
                                 <div class="size-209 p-t-1">
-                                    <span class="mtext-110 cl2">
+                                    <span id="totalCompra" class="mtext-110 cl2">
                                         <?= SMONEY.formatMoney($subtotal + COSTOENVIO)  ?>
                                     </span>
                                 </div>
