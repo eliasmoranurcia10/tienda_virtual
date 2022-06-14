@@ -34,4 +34,7 @@
     const KEY               = "edankia";
     const METHODENCRIPT     = "AES-128-ECB";
 
+    //Envío
+    const COSTOENVIO    = 5;
+
 ?>

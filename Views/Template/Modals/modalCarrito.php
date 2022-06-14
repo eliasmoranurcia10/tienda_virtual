@@ -40,11 +40,11 @@
 
             <div class="header-cart-buttons flex-w w-full">
                 <a href="<?= base_url() ?>/carrito" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-                    View Cart
+                    VER CARRITO
                 </a>
 
                 <a href="<?= base_url() ?>/procesarpago" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                    Check Out
+                    PROCESAR PAGO
                 </a>
             </div>
         </div>
