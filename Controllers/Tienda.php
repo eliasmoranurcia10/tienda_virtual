@@ -208,6 +208,16 @@
 
         }
 
+        public function udpCarrito()
+        {
+            if ($_POST) {
+                $idproducto = openssl_decrypt($_POST['id'],METHODENCRIPT,KEY);
+                echo $idproducto;
+
+            }
+            die();
+        }
+
     }
 
 ?>
