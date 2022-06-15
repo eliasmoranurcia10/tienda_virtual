@@ -110,7 +110,10 @@ $('.btn-num-product-down').on('click', function(){
     let idpr = this.getAttribute('idpr');
     if(numProduct > 1) $(this).next().val(numProduct - 1);
     let cant = $(this).next().val();
-    fntUpdateCant(idpr,cant);
+    if(idpr != null){
+        fntUpdateCant(idpr,cant);
+    }
+    
 });
 
 $('.btn-num-product-up').on('click', function(){
@@ -118,7 +121,9 @@ $('.btn-num-product-up').on('click', function(){
     let idpr = this.getAttribute('idpr');
     $(this).prev().val(numProduct + 1);
     let cant = $(this).prev().val();
-    fntUpdateCant(idpr,cant);
+    if(idpr != null){
+        fntUpdateCant(idpr,cant);
+    }
 });
 /*=====================================================================
 [ ACTUALIZAR PRODUCTO] Escribir */
@@ -129,7 +134,9 @@ if (document.querySelector(".num-product")) {
         inputCant.addEventListener('keyup',function() {  
             let idpr = this.getAttribute('idpr');
             let cant = this.value;
-            fntUpdateCant(idpr,cant);
+            if(idpr != null){
+                fntUpdateCant(idpr,cant);
+            }
         });
     });
 
@@ -177,36 +184,35 @@ function fntdelItem(element) {
 
 function fntUpdateCant(pro,cant) {
 
-    if(document.querySelector("#btnComprar")) {
-        if (cant <= 0) {
-            document.querySelector("#btnComprar").classList.add("notBlock");
-        } else {
-            document.querySelector("#btnComprar").classList.remove("notBlock");
-    
-            let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            let ajaxUrl = base_url+'/Tienda/udpCarrito';
-            let formData = new FormData();
-    
-            formData.append('id',pro);
-            formData.append('cantidad',cant);
-            request.open("POST",ajaxUrl,true);
-            request.send(formData);
-    
-            request.onreadystatechange = function() {
-                if (request.readyState != 4) return;
-                if (request.status == 200) {
-                    let objData = JSON.parse(request.responseText);
 
-                    if (objData.status) {
-                        let colSubtotal = document.getElementsByClassName(pro)[0];
-                        colSubtotal.cells[4].textContent = objData.totalProducto;
-                        document.querySelector("#subTotalCompra").innerHTML = objData.subTotal;
-                        document.querySelector("#totalCompra").innerHTML = objData.total;
-                    } else {
-                        swal("",objData.msg, "error");
-                    }
-                } 
-            }
+    if (cant <= 0) {
+        document.querySelector("#btnComprar").classList.add("notBlock");
+    } else {
+        document.querySelector("#btnComprar").classList.remove("notBlock");
+
+        let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        let ajaxUrl = base_url+'/Tienda/udpCarrito';
+        let formData = new FormData();
+
+        formData.append('id',pro);
+        formData.append('cantidad',cant);
+        request.open("POST",ajaxUrl,true);
+        request.send(formData);
+
+        request.onreadystatechange = function() {
+            if (request.readyState != 4) return;
+            if (request.status == 200) {
+                let objData = JSON.parse(request.responseText);
+
+                if (objData.status) {
+                    let colSubtotal = document.getElementsByClassName(pro)[0];
+                    colSubtotal.cells[4].textContent = objData.totalProducto;
+                    document.querySelector("#subTotalCompra").innerHTML = objData.subTotal;
+                    document.querySelector("#totalCompra").innerHTML = objData.total;
+                } else {
+                    swal("",objData.msg, "error");
+                }
+            } 
         }
     }
     
