@@ -76,7 +76,14 @@ $('.js-addcart-detail').each(function(){
 
                 if (objData.status) {
                     document.querySelector("#productosCarrito").innerHTML = objData.htmlCarrito;
-                    document.querySelector("#cantCarrito").setAttribute("data-notify",objData.cantCarrito);
+                    //document.querySelectorAll(".cantCarrito")[0].setAttribute("data-notify",objData.cantCarrito);
+                    //document.querySelectorAll(".cantCarrito")[1].setAttribute("data-notify",objData.cantCarrito);
+
+                    const cants = document.querySelectorAll(".cantCarrito");
+                    cants.forEach(element =>{
+                        element.setAttribute("data-notify",objData.cantCarrito)
+                    });
+
                     swal(nameProduct, "¡Se agregó al carrito!", "success");
                 } else{
                     swal("",objData.msg, "error");
@@ -144,7 +151,7 @@ if (document.querySelector(".num-product")) {
 
 
 function fntdelItem(element) {  
-    console.log(element);
+    //console.log(element);
     //Option 1 = Modal
     //Option 2 = Vista Carrito
     let option = element.getAttribute("op");
@@ -169,8 +176,19 @@ function fntdelItem(element) {
 
                 
                 if (objData.status) {
-                    document.querySelector("#productosCarrito").innerHTML = objData.htmlCarrito;
-                    document.querySelector("#cantCarrito").setAttribute("data-notify",objData.cantCarrito);
+
+                    if (option == 1) {
+                        document.querySelector("#productosCarrito").innerHTML = objData.htmlCarrito;
+                        document.querySelector("#cantCarrito").setAttribute("data-notify",objData.cantCarrito);
+                    } else {
+                        element.parentNode.parentNode.remove();
+                        document.querySelector("#subTotalCompra").innerHTML = objData.subTotal;
+                        document.querySelector("#totalCompra").innerHTML    = objData.total;
+
+                        if ( document.querySelectorAll("#tblCarrito tr").length == 1 ) {
+                            window.location.href = base_url;
+                        }
+                    }
                     
                 } else{
                     swal("",objData.msg, "error");

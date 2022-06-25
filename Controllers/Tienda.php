@@ -159,6 +159,7 @@
             if($_POST){
                 $arrCarrito = array();
                 $cantCarrito = 0;
+                $subtotal = 0;
                 $idproducto = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
                 $option   = $_POST['option'];
 
@@ -180,6 +181,7 @@
                     foreach ( $_SESSION['arrCarrito'] as $pro){
                             
                         $cantCarrito += $pro['cantidad'];
+                        $subtotal += $pro['cantidad']* $pro['precio'];
                     }
 
                     $htmlCarrito = "";
@@ -192,7 +194,9 @@
                         "status"        => true,
                         "msg"           => '¡Producto eliminado!',
                         "cantCarrito"   => $cantCarrito,
-                        "htmlCarrito"   => $htmlCarrito
+                        "htmlCarrito"   => $htmlCarrito,
+                        "subTotal"      => SMONEY.formatMoney($subtotal),
+                        "total"         => SMONEY.formatMoney($subtotal + COSTOENVIO)
                     );
                     
                 } else {

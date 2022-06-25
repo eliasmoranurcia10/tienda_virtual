@@ -32,7 +32,7 @@
                     <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
                         <div class="m-l-25 m-r--38 m-lr-0-xl">
                             <div class="wrap-table-shopping-cart">
-                                <table class="table-shopping-cart">
+                                <table id="tblCarrito" class="table-shopping-cart">
                                     <tr class="table_head">
                                         <th class="column-1">Producto</th>
                                         <th class="column-2"></th>
@@ -52,7 +52,7 @@
 
                                     <tr class="table_row <?= $idProducto ?>">
                                         <td class="column-1">
-                                            <div class="how-itemcart1">
+                                            <div class="how-itemcart1" idpr="<?= $idProducto ?>" op="2" onclick="fntdelItem(this)" >
                                                 <img src="<?= $producto['imagen'] ?>" alt="<?= $producto['producto'] ?>">
                                             </div>
                                         </td>
