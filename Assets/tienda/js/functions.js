@@ -179,7 +179,12 @@ function fntdelItem(element) {
 
                     if (option == 1) {
                         document.querySelector("#productosCarrito").innerHTML = objData.htmlCarrito;
-                        document.querySelector("#cantCarrito").setAttribute("data-notify",objData.cantCarrito);
+                        
+                        const cants = document.querySelectorAll(".cantCarrito");
+                        cants.forEach(element =>{
+                            element.setAttribute("data-notify",objData.cantCarrito)
+                        });
+
                     } else {
                         element.parentNode.parentNode.remove();
                         document.querySelector("#subTotalCompra").innerHTML = objData.subTotal;

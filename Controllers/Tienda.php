@@ -126,7 +126,8 @@
                             $cantCarrito += $pro['cantidad'];
                         }
 
-                        $htmlCarrito= getFile('Template/Modals/modalCarrito',$_SESSION['arrCarrito']);
+                        $htmlCarrito = "";
+                        $htmlCarrito = getFile('Template/Modals/modalCarrito',$_SESSION['arrCarrito']);
                         
                         $arrResponse = array(
                             "status"        => true,
