@@ -2,17 +2,20 @@
 
     require_once('Models/TCategoria.php');
     require_once('Models/TProducto.php');
+    require_once('Models/TCliente.php');
+    require_once('Models/LoginModel.php');
 
     class Tienda extends Controllers{
 
         //Usando Traits "Ver seccion 3 cap 11"
-        use TCategoria, TProducto;
+        use TCategoria, TProducto, TCliente;
+        public $login;
 
         public function __construct(){
 
             parent::__construct();
             session_start();
-
+            $this->login = new LoginModel();
         }
 
         public function tienda(){
@@ -259,6 +262,80 @@
                     );
                 }
                 echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+
+            }
+            die();
+        }
+
+        //Registrar un nuevo cliente desde tienda 
+        public function registro()
+        {
+            error_reporting(0);
+            //Validar si se ha realizado una petición vía POST
+            if($_POST){
+
+                if ( empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono']) || empty($_POST['txtEmailCliente'])  ) {
+
+                    $arrResponse    =  array("status" => false, "msg" => 'Datos incorrectos.');
+
+                } else {
+
+                    $strNombre          = ucwords( strClean($_POST['txtNombre']) );
+                    $strApellido        = ucwords( strClean($_POST['txtApellido']) );
+                    $intTelefono        = intval(strClean($_POST['txtTelefono']));
+                    $strEmail           = strtolower( strClean($_POST['txtEmailCliente']) );
+
+                    $intTipoId          = 23;
+
+                    $request_user       = "";
+
+                    //hash tiene la función de encriptar la contraseña
+                    $strPassword        = passGenerator();
+
+                    $strPasswordEncript = hash("SHA256", $strPassword);
+
+                    $request_user       = $this->insertCliente(
+                        $strNombre,
+                        $strApellido,
+                        $intTelefono,
+                        $strEmail,
+                        $strPasswordEncript,
+                        $intTipoId
+                    );
+
+                    
+
+                    if( $request_user > 0)
+                    {
+                        $arrResponse    = array('status' => true , 'msg' => 'Datos guardados correctamente.');
+                        $nombreUsuario  = $strNombre.' '.$strApellido;
+
+                        $dataUsuario    = array(
+                            'nombreUsuario' => $nombreUsuario,
+                            'email'         => $strEmail,
+                            'password'      => $strPassword,
+                            'Asunto'        => 'Bienvenido a tu tienda en línea'
+                        );
+
+                        $_SESSION['idUser'] = $request_user;
+                        $_SESSION['login']  = true;
+                        $this->login->sessionLogin($request_user);
+                        //ACTIVAR CUANDO SE SUBA A LA WEB
+                        //sendEmail($dataUsuario, 'email_bienvenida');
+                        
+                    } else if( $request_user == 'exist' )
+                    {
+                        $arrResponse    = array('status' => false, 'msg' => '¡Atención! el email ya existe, ingrese otro.');
+
+                    } else 
+                    {
+                        $arrResponse    = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
+                    }
+
+                }
+                //sleep(5);
+                //Convertir en formato JSON la variable arrResponse para retornar la función
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 
             }
             die();
