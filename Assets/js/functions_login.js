@@ -46,7 +46,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
                         if( objData.status )
                         {
-                            window.location = base_url + '/dashboard';
+                            //window.location = base_url + '/dashboard';
+                            //estamos recargando la página 
+                            window.location.reload(false);
                         } else {
                             swal("Atención", objData.msg, "error");
                             document.querySelector("#txtPassword").value = "";

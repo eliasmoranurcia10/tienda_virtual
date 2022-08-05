@@ -49,7 +49,13 @@
 <!--===============================================================================================-->
 </head>
 <body class="animsition">
-	
+
+	<div id="divLoading">
+      <div>
+        <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
+      </div>
+    </div>
+
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->
