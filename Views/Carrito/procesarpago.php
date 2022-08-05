@@ -155,6 +155,38 @@
                             </span>
                         </div>
                     </div>
+                    
+                    <h4 class="mtext-109 cl2 p-b-30">
+                        Método de pago
+                    </h4>
+
+                    <div class="divmetodpago">
+                        <div>
+                            <label for="paypal">
+                                <input type="radio" id="paypal" class="methodpago" name="payment-method" checked="" value="Paypal">
+                                <img src="<?= media() ?>/images/img-paypal.jpg" alt="Icono de Paypal" class="ml-space-sm" width="74" height="20">
+                            </label>
+                        </div>
+                        <div>
+                            <label for="contraentrega">
+                                <input type="radio" id="contraentrega" class="methodpago" name="payment-method" value="CT">
+                                <span>Contra Entrega</span>
+                            </label>
+                        </div>
+                        <div id="divtipopago" class="notBlock">
+                            <label for="listtipopago">Tipo de pago</label>
+                            <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
+                                <select id="listtipopago" class="js-select2" name="time">
+                                </select>
+                                <div class="dropDownSelect2"></div>
+                            </div>
+                        </div>
+                        <div id="msgpaypal">
+                            <p>Para completar la transacción, te enviaremos a los servidores seguros de Paypal</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <br>
 
                     <?php
                         if(isset($_SESSION['login'])){
