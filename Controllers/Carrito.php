@@ -3,11 +3,12 @@
     require_once('Models/TCategoria.php');
     require_once('Models/TProducto.php');
     require_once('Models/TTipoPago.php');
+    require_once('Models/TCliente.php');
 
     class Carrito extends Controllers{
 
         //Usando Traits "Ver seccion 3 cap 11"
-        use TCategoria, TProducto, TTipoPago;
+        use TCategoria, TProducto, TTipoPago, TCliente;
 
         public function __construct(){
 
@@ -33,6 +34,10 @@
                 die();
             }
 
+            if (isset( $_SESSION['login'] )) {
+                $this->setDetalleTemp();
+            }
+
             $data['page_tag']   = NOMBRE_EMPRESA . ' - Procesar Pago';
             $data['page_title'] = 'Procesar Pago';
             $data['page_name']  = "procesarpago";
@@ -40,6 +45,18 @@
 
             $this->views->getView($this,"procesarpago",$data);
 
+        }
+
+        public function setDetalleTemp(){
+            $sid = session_id();
+
+            $arrPedido = array(
+                'idcliente' => $_SESSION['idUser'],
+                'idtransaccion' => $sid,
+                'productos' => $_SESSION['arrCarrito']
+            );
+            
+            $this->insertDetalleTemp($arrPedido);
         }
     }
 
