@@ -155,6 +155,10 @@
                             </span>
                         </div>
                     </div>
+
+                    <?php
+                        if(isset($_SESSION['login'])){
+                    ?>
                     
                     <h4 class="mtext-109 cl2 p-b-30">
                         Método de pago
@@ -177,6 +181,17 @@
                             <label for="listtipopago">Tipo de pago</label>
                             <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
                                 <select id="listtipopago" class="js-select2" name="time">
+                                    <?php
+                                    if(count($data['tipospago']) > 0){
+                                        foreach($data['tipospago'] as $tipopago){
+                                            if($tipopago['idtipopago'] != 1){
+                                    ?>
+                                    <option value="<?= $tipopago['idtipopago'] ?>"><?= $tipopago['tipopago'] ?></option>
+                                    <?php
+                                            }
+                                        }
+                                    }
+                                    ?>
                                 </select>
                                 <div class="dropDownSelect2"></div>
                             </div>
@@ -188,9 +203,7 @@
                     <hr>
                     <br>
 
-                    <?php
-                        if(isset($_SESSION['login'])){
-                    ?>
+                    
                     <button type="submit" id="btnComprar" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                         Pagar
                     </button>
