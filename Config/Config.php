@@ -19,6 +19,10 @@
 
     //Simbolo de moneda
     const SMONEY = "S/";
+    const SDOLAR = "$";
+    const CURRENCY = "USD";
+
+    const CONVERTDOLAR = 0.26;
 
     //Datos envío de correo
     const NOMBRE_REMITENTE  = "Tienda Virtual";

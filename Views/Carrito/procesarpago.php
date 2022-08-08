@@ -8,10 +8,28 @@
     }
     $total = $subtotal + COSTOENVIO;
 ?>
-    <script src="https://www.paypal.com/sdk/js?client-id=AUGQ4oNSCiUc4m_lR-r354eXnJYdqN-LLOo428f21sqGY3H-yS5CAJ1eHuRLZM-OCQZ3Gz33YEL-lEIm"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AUGQ4oNSCiUc4m_lR-r354eXnJYdqN-LLOo428f21sqGY3H-yS5CAJ1eHuRLZM-OCQZ3Gz33YEL-lEIm&currency=<?= CURRENCY ?>"></script>
+
     <script>
-        paypal.Buttons().render('#paypal-btn-container');
-        //This function displays payment buttons on your web page.
+      paypal.Buttons({
+        // Sets up the transaction when a payment button is clicked
+        createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [{
+                amount: {
+                    value: <?= $total * CONVERTDOLAR ?> 
+                },
+                description: 'Compra de productos en la <?= NOMBRE_EMPRESA ?> por <?=  SDOLAR.$total * CONVERTDOLAR ?>.'
+            }]
+          });
+        },
+        // Finalize the transaction after payer approval
+        onApprove: (data, actions) => {
+            return actions.order.capture().then(function(details) {
+            console.log(details);
+          });
+        }
+      }).render('#paypal-btn-container');
     </script>
     <br><br><br>
     <hr>
@@ -156,7 +174,7 @@
 
                         <div class="size-209 p-t-1">
                             <span id="totalCompra" class="mtext-110 cl2">
-                                <?= SMONEY.formatMoney($total)  ?>
+                                <?= SMONEY.formatMoney($total) ?>
                             </span>
                         </div>
                     </div>
@@ -165,7 +183,7 @@
                         if(isset($_SESSION['login'])){
                     ?>
                     <div id="divMetodoPago" class="notBlock" >
-                        
+
                         <h4 class="mtext-109 cl2 p-b-30">
                             Método de pago
                         </h4>
