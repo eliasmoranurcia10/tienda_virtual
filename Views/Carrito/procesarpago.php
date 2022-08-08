@@ -8,6 +8,11 @@
     }
     $total = $subtotal + COSTOENVIO;
 ?>
+    <script src="https://www.paypal.com/sdk/js?client-id=AUGQ4oNSCiUc4m_lR-r354eXnJYdqN-LLOo428f21sqGY3H-yS5CAJ1eHuRLZM-OCQZ3Gz33YEL-lEIm"></script>
+    <script>
+        paypal.Buttons().render('#paypal-btn-container');
+        //This function displays payment buttons on your web page.
+    </script>
     <br><br><br>
     <hr>
 
@@ -199,6 +204,7 @@
                         <div id="msgpaypal">
                             <p>Para completar la transacción, te enviaremos a los servidores seguros de Paypal</p>
                         </div>
+                        <div id="paypal-btn-container"></div>
                     </div>
                     <hr>
                     <br>
