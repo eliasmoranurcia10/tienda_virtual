@@ -343,8 +343,28 @@
 
         public function procesarVenta()
         {
-            dep($_POST);
+
+            if($_POST){
+
+                $idtransaccionpaypal = NULL;
+                $datosaypal = NULL;
+                $personaid = $_SESSION['idUser'];
+                $monto = 0;
+                $tipopagoid = intval($_POST['inttipopago']);
+                $direccionenvio = strClean($_POST['direccion'] .' , '. strClean($_POST['ciudad']));
+                $status = "Pendiente";
+                $subtotal = 0;
+
+                
+
+
+            } else {
+                $arrResponse = array("status" => false, "msg" => 'No es posible procesar el pedido.' );
+            }
+            
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             die();
+
         }
 
     }
