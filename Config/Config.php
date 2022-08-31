@@ -21,8 +21,13 @@
     const SMONEY = "S/";
     const SDOLAR = "$";
     const CURRENCY = "USD";
-
     const CONVERTDOLAR = 0.26;
+
+    //Api Paypal
+    //SANBOX PAYPAL
+    const IDCLIENTE = "AUGQ4oNSCiUc4m_lR-r354eXnJYdqN-LLOo428f21sqGY3H-yS5CAJ1eHuRLZM-OCQZ3Gz33YEL-lEIm";
+    //LIVE PAYPAL
+    //const IDCLIENTE = "ASEU67ep3VL0Mu4r6N1kBD88izG0CFS-Pslt_7b9B7eU_X3ILyA4HrXu2WPqZfaVC-9CBuPGgGDgPqHe";
 
     //Datos envío de correo
     const NOMBRE_REMITENTE  = "Tienda Virtual";

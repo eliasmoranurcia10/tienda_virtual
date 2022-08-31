@@ -8,28 +8,61 @@
     }
     $total = $subtotal + COSTOENVIO;
 ?>
-    <script src="https://www.paypal.com/sdk/js?client-id=AUGQ4oNSCiUc4m_lR-r354eXnJYdqN-LLOo428f21sqGY3H-yS5CAJ1eHuRLZM-OCQZ3Gz33YEL-lEIm&currency=<?= CURRENCY ?>"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=<?= IDCLIENTE ?>&currency=<?= CURRENCY ?>"></script>
 
     <script>
-      paypal.Buttons({
-        // Sets up the transaction when a payment button is clicked
-        createOrder: (data, actions) => {
-          return actions.order.create({
-            purchase_units: [{
-                amount: {
-                    value: <?= $total * CONVERTDOLAR ?> 
-                },
-                description: 'Compra de productos en la <?= NOMBRE_EMPRESA ?> por <?=  SDOLAR.$total * CONVERTDOLAR ?>.'
-            }]
-          });
-        },
-        // Finalize the transaction after payer approval
-        onApprove: (data, actions) => {
-            return actions.order.capture().then(function(details) {
-            console.log(details);
-          });
-        }
-      }).render('#paypal-btn-container');
+        paypal.Buttons({
+            // Sets up the transaction when a payment button is clicked
+            createOrder: (data, actions) => {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: <?= $total * CONVERTDOLAR ?> 
+                    },
+                    description: 'Compra de productos en la <?= NOMBRE_EMPRESA ?> por <?=  SDOLAR.$total * CONVERTDOLAR ?>.'
+                }]
+            });
+            },
+            // Finalize the transaction after payer approval
+            onApprove: (data, actions) => {
+                
+                return actions.order.capture().then(function(details) {
+                
+                    let base_url = "<?= base_url() ?>";
+                    let dir = document.querySelector("#txtDireccion").value;
+                    let ciudad = document.querySelector("#txtCiudad").value;
+                    let inttipopago = 1;
+
+                    let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                    let ajaxUrl = base_url+'/Tienda/procesarVenta';
+
+                    let formData = new FormData();
+                    formData.append('direccion',dir);
+                    formData.append('ciudad',ciudad);
+                    formData.append('inttipopago',inttipopago);
+                    formData.append('datapay',JSON.stringify(details));
+                    request.open("POST",ajaxUrl,true);
+                    request.send(formData);
+
+                    request.onreadystatechange = function () {  
+
+                        if(request.reaadyState != 4) return;
+
+                        if (request.status == 200) {
+                            let objData = JSON.parse(request.responseText);
+
+                            if(objData.status){
+                                window.location = base_url + "/tienda/confirmarpedido/";
+                            } else {
+                                swal("",objData.msg,"error");
+                            }
+                        }
+
+                    }
+                
+                });
+            }
+        }).render('#paypal-btn-container');
     </script>
     <br><br><br>
     <hr>
