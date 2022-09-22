@@ -351,11 +351,65 @@
                 $personaid = $_SESSION['idUser'];
                 $monto = 0;
                 $tipopagoid = intval($_POST['inttipopago']);
-                $direccionenvio = strClean($_POST['direccion'] .' , '. strClean($_POST['ciudad']));
+                $direccionenvio = strClean($_POST['direccion'] .', '. strClean($_POST['ciudad']));
                 $status = "Pendiente";
                 $subtotal = 0;
 
-                
+                if(!empty($_SESSION['arrCarrito'])){
+
+                    foreach( $_SESSION['arrCarrito'] as $pro ){
+                        $subtotal += $pro['cantidad'] * $pro['precio'];
+                    }
+                    $monto = formatMoney($subtotal + COSTOENVIO);
+
+                    //Comprobando el metodo de pago
+                    if(empty($_POST['datapay'])){
+
+                    } else {
+                        $jsonPaypal = $_POST['datapay'];
+                        //Convertir en un objeto
+                        $objPaypal  = json_decode($jsonPaypal);
+                        $status = "Aprobado";
+
+                        //Comprobando que es un objeto
+                        if(is_object($objPaypal)){
+                            $datospaypal = $jsonPaypal;
+                            $idtransaccionpaypal = $objPaypal->purchase_units[0]->payments->captures[0]->id;
+
+                            if($objPaypal->status == "COMPLETED"){
+                                //OBTENER EL MONTO QUE SE ESTA RETORNANDO EN PAYPAL
+                                $totalPaypal = formatMoney($objPaypal->purchase_units[0]->amount->value);
+                                if($monto == $totalPaypal){
+                                    $status = "Completo";
+                                } 
+                                //CREAR EL ARRAY PARA LIMPIAR LOS DATOS
+                                //Crear pedido
+                                $request_pedido = $this->insertPedido(
+                                    $idtransaccionpaypal,
+                                    $datospaypal,
+                                    $personaid,
+                                    $monto,
+                                    $tipopagoid,
+                                    $direccionenvio,
+                                    $status
+                                ); 
+
+                                if($request_pedido > 0){
+
+                                }
+
+                            } else {
+                                $arrResponse = array("status" => false, "msg" => 'Noo es posible completar el pago con Paypal.' );
+                            }
+
+                        } else {
+                            $arrResponse = array("status" => false, "msg" => 'Hubo un error en la transacción.' );
+                        }
+                    }
+
+                } else {
+                    $arrResponse = array("status" => false, "msg" => 'No es posible procesar el pedido.' );
+                }
 
 
             } else {

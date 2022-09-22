@@ -1,5 +1,6 @@
 <?php
     headerTienda($data);
+    dep($_SESSION['arrCarrito']);
 ?>
     <br><br><br>
     <hr>
