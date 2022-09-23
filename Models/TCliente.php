@@ -72,6 +72,21 @@
             return $return;
         }
 
+        public function insertDetalle(int $idpedido, int $productoid, float $precio, int $cantidad)
+        {
+            $this->con = new Mysql();
+            $query_insert  = "INSERT INTO detalle_pedido(pedidoid,productoid,precio,cantidad) VALUES(?,?,?,?)";
+            $arrData = array(
+                $idpedido,
+                $productoid,
+                $precio,
+                $cantidad
+            );
+            $request_insert = $this->con->insert($query_insert,$arrData);
+            $return = $request_insert;
+            return $return;
+        }
+
         public function insertDetalleTemp(array $pedido){
 
             $this->con = new Mysql();
