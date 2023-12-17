@@ -124,7 +124,7 @@
 						</div>
 
 						<?php
-							if ($data['page_name'] != "carrito") {
+							if ($data['page_name'] != "carrito" and $data['page_name'] != "procesarpago" ) {
 						?>
 						<div class="cantCarrito icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="<?php echo $cantCarrito; ?>">
 							<i class="zmdi zmdi-shopping-cart"></i>
@@ -152,7 +152,7 @@
 				</div>
 
 				<?php
-					if ($data['page_name'] != "carrito") {
+					if ($data['page_name'] != "carrito" and $data['page_name'] != "procesarpago" ) {
 				?>
 				<div class="cantCarrito icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="<?php echo $cantCarrito; ?>">
 					<i class="zmdi zmdi-shopping-cart"></i>

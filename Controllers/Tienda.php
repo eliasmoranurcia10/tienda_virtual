@@ -347,13 +347,14 @@
             if($_POST){
 
                 $idtransaccionpaypal = NULL;
-                $datosaypal = NULL;
+                $datospaypal = NULL;
                 $personaid = $_SESSION['idUser'];
                 $monto = 0;
                 $tipopagoid = intval($_POST['inttipopago']);
                 $direccionenvio = strClean($_POST['direccion'] .', '. strClean($_POST['ciudad']));
                 $status = "Pendiente";
                 $subtotal = 0;
+                $costo_envio = COSTOENVIO;
 
                 if(!empty($_SESSION['arrCarrito'])){
 
@@ -365,7 +366,42 @@
                     //Comprobando el metodo de pago
                     if(empty($_POST['datapay'])){
                         #el datapay esta vacio
-                        $arrResponse = array("status" => false, "msg" => 'No es posible procesar el pedido.');
+                        $request_pedido = $this->insertPedido(
+                            $idtransaccionpaypal,
+                            $datospaypal,
+                            $personaid,
+                            $costo_envio,
+                            $monto,
+                            $tipopagoid,
+                            $direccionenvio,
+                            $status
+                        ); 
+
+                        if($request_pedido > 0){
+                            //INSERTAR DETALLE DEL PEDIDO
+                            foreach($_SESSION['arrCarrito'] as $producto){
+                                $productoid = $producto['idproducto'];
+                                $precio     = $producto['precio'];
+                                $cantidad   = $producto['cantidad'];
+                                $this->insertDetalle($request_pedido,$productoid,$precio,$cantidad);
+                            }
+
+                            $orden = openssl_encrypt($request_pedido, METHODENCRIPT, KEY);
+                            $transaccion = openssl_encrypt($idtransaccionpaypal, METHODENCRIPT, KEY);
+
+                            $arrResponse = array(
+                                "status"        => true,
+                                "orden"         => $orden,
+                                "transaccion"   => $transaccion,
+                                "msg"           => 'Pedido realizado'
+                            );
+
+                            $_SESSION['dataorden'] = $arrResponse;
+
+                            //DESTRUIR LA VARIABLE SESSION CARRITO
+                            unset($_SESSION['arrCarrito']);
+                            session_regenerate_id(true);
+                        }
 
                     } else {
                         $jsonPaypal = $_POST['datapay'];
@@ -397,6 +433,7 @@
                                 ); 
 
                                 if($request_pedido > 0){
+                                    //INSERTAR DETALLE DEL PEDIDO
                                     foreach($_SESSION['arrCarrito'] as $producto){
                                         $productoid = $producto['idproducto'];
                                         $precio     = $producto['precio'];
@@ -415,6 +452,10 @@
                                     );
 
                                     $_SESSION['dataorden'] = $arrResponse;
+
+                                    //DESTRUIR LA VARIABLE SESSION CARRITO
+                                    unset($_SESSION['arrCarrito']);
+                                    session_regenerate_id(true);
                                     
                                 } else {
                                     $arrResponse = array("status" => false, "msg" => 'No es posible procesar el pedido.');
@@ -440,8 +481,31 @@
             
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             die();
+            
 
         }
+
+        public function confirmarpedido(){
+            if(empty($_SESSION['dataorden'])){
+                header("Location: ".base_url());
+            } else{
+                $dataorden = $_SESSION['dataorden'];
+                $idpedido  = openssl_decrypt($dataorden['orden'], METHODENCRIPT, KEY);
+                $transaccion = openssl_decrypt($dataorden['transaccion'], METHODENCRIPT, KEY);
+
+                $data['page_tag'] = "Confirmar Pedido";
+                $data['page_title'] = "Confirmar Pedido";
+                $data['page_name'] = "confirmarpedido";
+                $data['orden'] = $idpedido;
+                $data['transaccion'] = $transaccion;
+
+                $this->views->getView($this,"confirmarpedido",$data);
+
+            }
+            //DESTRUIR LA VARIABLE DE SESSION
+            unset($_SESSION['dataorden']);
+        }
+
 
     }
 

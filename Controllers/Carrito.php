@@ -38,6 +38,12 @@
                 $this->setDetalleTemp();
             }
             */
+
+            $infoOrden = $this->getPedido(28);
+            $dataEmailOrden = array('pedido' => $infoOrden);
+            $mail = getFile("Template/Email/confirmar_orden",$dataEmailOrden);
+            dep( $mail);
+
             $data['page_tag']   = NOMBRE_EMPRESA . ' - Procesar Pago';
             $data['page_title'] = 'Procesar Pago';
             $data['page_name']  = "procesarpago";

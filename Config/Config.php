@@ -32,8 +32,14 @@
     //Datos envío de correo
     const NOMBRE_REMITENTE  = "Tienda Virtual";
     const EMAIL_REMITENTE   = "no-reply@edankia.store";
-    const NOMBRE_EMPRESA    = "Tienda Virtual";
+    const NOMBRE_EMPRESA    = "SISTEMA DE VENTAS EDANKIA STORE";
     const WEB_EMPRESA       = "www.edankia.store";
+
+    //Datos Empresa
+    const DIRECCION     = "Calle Hipolito Unanue #802, Santa Rosa, Chiclayo, Perú";
+    const TELEMPRESA    = "+51 938724975";
+    const EMAIL_EMPRESA = "yoexereliasmoranurcia@gmail.com";
+    const EMAIL_PEDIDOS = "yoexereliasmoranurcia@gmail.com";
 
     //IDs que se mostrarán en el Slider y banner
     const CAT_SLIDER = "1,25,26,27,28,29";
@@ -44,6 +50,6 @@
     const METHODENCRIPT     = "AES-128-ECB";
 
     //Envío
-    const COSTOENVIO    = 1;
+    const COSTOENVIO    = 0;
 
 ?>
